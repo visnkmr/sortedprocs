@@ -13,6 +13,7 @@ export default function Home() {
     length: 2800,
     wheelbase: 2100,
     turnRadius: 3,
+    groundClearance:170,
   })
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
@@ -127,163 +128,177 @@ const data=[
 ];
   console.log(data)
   // Scale factor for visualization
-  const scale = 0.09
+  const scale = 0.5/8
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl mx-auto p-4">
-      <Card className="flex-1">
-        <CardHeader>
-          <CardTitle>Vehicle Dimensions</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="height-slider" className="text-sm font-medium">
-                Height
-              </label>
-              <span className="text-sm font-medium">{dimensions.height} units</span>
-            </div>
-            <Slider
-              id="height-slider"
-              min={1400}
-              max={2000}
-              step={50}
-              value={[dimensions.height]}
-              onValueChange={(value) => handleSliderChange(value, "height")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
+    <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
+      <div>
+        {data
+        .filter(item=>item.height>dimensions.height)
+        .filter(item=>item.width>dimensions.width)
+        .filter(item=>item.wheelbase>dimensions.wheelbase)
+        .filter(item=>item.groundClearance>dimensions.groundClearance)
+        .filter(item=>item.length>dimensions.length)
+        .filter(item=>item.turnRadius>dimensions.turnRadius)
+        .map(item=><div>{item.name}</div>)}
+      </div>
+      <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl mx-auto p-4">
 
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="width-slider" className="text-sm font-medium">
-                Width
-              </label>
-              <span className="text-sm font-medium">{dimensions.width} units</span>
+        <Card className="flex-1">
+          <CardHeader>
+            <CardTitle>Vehicle Dimensions</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="height-slider" className="text-sm font-medium">
+                  Height
+                </label>
+                <span className="text-sm font-medium">{dimensions.height} units</span>
+              </div>
+              <Slider
+                id="height-slider"
+                min={1400}
+                max={2000}
+                step={50}
+                value={[dimensions.height]}
+                onValueChange={(value) => handleSliderChange(value, "height")}
+                className="cursor-grab active:cursor-grabbing"
+              />
             </div>
-            <Slider
-              id="width-slider"
-              min={1300}
-              max={2000}
-              step={50}
-              value={[dimensions.width]}
-              onValueChange={(value) => handleSliderChange(value, "width")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
 
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="length-slider" className="text-sm font-medium">
-                Length
-              </label>
-              <span className="text-sm font-medium">{dimensions.length} units</span>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="width-slider" className="text-sm font-medium">
+                  Width
+                </label>
+                <span className="text-sm font-medium">{dimensions.width} units</span>
+              </div>
+              <Slider
+                id="width-slider"
+                min={1300}
+                max={2000}
+                step={50}
+                value={[dimensions.width]}
+                onValueChange={(value) => handleSliderChange(value, "width")}
+                className="cursor-grab active:cursor-grabbing"
+              />
             </div>
-            <Slider
-              id="length-slider"
-              min={2800}
-              max={6000}
-              step={100}
-              value={[dimensions.length]}
-              onValueChange={(value) => handleSliderChange(value, "length")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
 
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="wheelbase-slider" className="text-sm font-medium">
-                Wheelbase
-              </label>
-              <span className="text-sm font-medium">{dimensions.wheelbase} units</span>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="length-slider" className="text-sm font-medium">
+                  Length
+                </label>
+                <span className="text-sm font-medium">{dimensions.length} units</span>
+              </div>
+              <Slider
+                id="length-slider"
+                min={2800}
+                max={6000}
+                step={100}
+                value={[dimensions.length]}
+                onValueChange={(value) => handleSliderChange(value, "length")}
+                className="cursor-grab active:cursor-grabbing"
+              />
             </div>
-            <Slider
-              id="wheelbase-slider"
-              min={2100}
-              max={5500}
-              step={100}
-              value={[dimensions.wheelbase]}
-              onValueChange={(value) => handleSliderChange(value, "wheelbase")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
 
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="turn-radius-slider" className="text-sm font-medium">
-                Turn Radius
-              </label>
-              <span className="text-sm font-medium">{dimensions.turnRadius} units</span>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="wheelbase-slider" className="text-sm font-medium">
+                  Wheelbase
+                </label>
+                <span className="text-sm font-medium">{dimensions.wheelbase} units</span>
+              </div>
+              <Slider
+                id="wheelbase-slider"
+                min={2100}
+                max={5500}
+                step={100}
+                value={[dimensions.wheelbase]}
+                onValueChange={(value) => handleSliderChange(value, "wheelbase")}
+                className="cursor-grab active:cursor-grabbing"
+              />
             </div>
-            <Slider
-              id="turn-radius-slider"
-              min={3}
-              max={5}
-              step={.25}
-              value={[dimensions.turnRadius]}
-              onValueChange={(value) => handleSliderChange(value, "turnRadius")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-        </CardContent>
-      </Card>
 
-      <Card className="flex-1">
-        <CardHeader>
-          <CardTitle>Visual Representation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative w-full h-[400px] border border-dashed border-gray-300 rounded-md overflow-hidden">
-            {/* Top view of vehicle */}
-            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              {/* Vehicle body */}
-              <div
-                className="bg-primary/20 border-2 border-primary rounded-md relative"
-                style={{
-                  width: dimensions.width * scale,
-                  height: dimensions.length * scale,
-                }}
-              >
-                {/* Wheelbase visualization */}
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="turn-radius-slider" className="text-sm font-medium">
+                  Turn Radius
+                </label>
+                <span className="text-sm font-medium">{dimensions.turnRadius} units</span>
+              </div>
+              <Slider
+                id="turn-radius-slider"
+                min={3}
+                max={5}
+                step={.25}
+                value={[dimensions.turnRadius]}
+                onValueChange={(value) => handleSliderChange(value, "turnRadius")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="flex-1">
+          <CardHeader>
+            <CardTitle>Visual Representation</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="relative w-full h-[800px] border border-dashed border-gray-300 rounded-md overflow-hidden">
+              {/* Top view of vehicle */}
+              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                {/* Vehicle body */}
                 <div
-                  className="absolute left-1/2 transform -translate-x-1/2 border-l-2 border-dashed border-primary/70"
+                  className="bg-primary/20 border-2 border-primary rounded-md relative"
                   style={{
-                    height: dimensions.wheelbase * scale,
-                    top: (dimensions.length * scale - dimensions.wheelbase * scale) / 2,
+                    width: dimensions.width * scale,
+                    height: dimensions.length * scale,
                   }}
-                ></div>
+                >
+                  {/* Wheelbase visualization */}
+                  <div
+                    className="absolute left-1/2 transform -translate-x-1/2 border-l-2 border-dashed border-primary/70"
+                    style={{
+                      height: dimensions.wheelbase * scale,
+                      top: (dimensions.length * scale - dimensions.wheelbase * scale) / 2,
+                    }}
+                  ></div>
 
-                {/* Turn radius visualization */}
-                <div
-                  className="absolute border-2 border-dashed border-primary/50 rounded-full"
-                  style={{
-                    width: dimensions.turnRadius * 2 * scale,
-                    height: dimensions.turnRadius * 2 * scale,
-                    left: (dimensions.width * scale) / 2 - dimensions.turnRadius * scale,
-                    top: -dimensions.turnRadius * scale + (dimensions.length * scale) / 4,
-                  }}
-                ></div>
+                  {/* Turn radius visualization */}
+                  <div
+                    className="absolute border-2 border-dashed border-primary/50 rounded-full"
+                    style={{
+                      width: dimensions.turnRadius * 2 * scale*1000,
+                      height: dimensions.turnRadius * 2 * scale*1000,
+                      left: (dimensions.width * scale) / 2 - dimensions.turnRadius * scale*1000,
+                      top: -dimensions.turnRadius * scale*1000 + (dimensions.length * scale) / 4,
+                    }}
+                  ></div>
 
-                {/* Height indicator */}
-                <div className="absolute -right-16 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
-                  <div className="bg-primary/30 w-3" style={{ height: (dimensions.height * scale) / 2 }}></div>
-                  <span className="text-xs whitespace-nowrap">Height: {dimensions.height}</span>
-                </div>
+                  {/* Height indicator */}
+                  <div className="absolute -right-16 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+                    <div className="bg-primary/30 w-3" style={{ height: (dimensions.height * scale) / 2 }}></div>
+                    <span className="text-xs whitespace-nowrap">Height: {dimensions.height}</span>
+                  </div>
 
-                {/* Width label */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs whitespace-nowrap">
-                  Width: {dimensions.width}
-                </div>
+                  {/* Width label */}
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs whitespace-nowrap">
+                    Width: {dimensions.width}
+                  </div>
 
-                {/* Length label */}
-                <div className="absolute -left-8 top-1/2 transform -translate-y-1/2 rotate-90 origin-center text-xs whitespace-nowrap">
-                  Length: {dimensions.length}
+                  {/* Length label */}
+                  <div className="absolute -left-8 top-1/2 transform -translate-y-1/2 rotate-90 origin-center text-xs whitespace-nowrap">
+                    Length: {dimensions.length}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
+
     </div>
   )
 }
