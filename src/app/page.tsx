@@ -10,12 +10,12 @@ import { it } from "node:test"
 
 export default function VehicleDimensions() {
   const [dimensions, setDimensions] = useState({
-    height: [1300, 1500],
-    width: [1200, 1900],
-    length: [3500, 4300],
-    wheelbase: [2500, 2800],
-    turnRadius: [4.5, 5.5],
-    groundClearence:[160,170]
+    height: [1000, 2000],
+    width: [1300, 3000],
+    length: [2800, 6000],
+    wheelbase: [2100, 5500],
+    turnRadius: [3, 8],
+    groundClearence:[80,500]
   })
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
@@ -256,7 +256,7 @@ export default function VehicleDimensions() {
             </div>
             <Slider
               id="height-slider"
-              min={1400}
+              min={1000}
               max={2000}
               step={100}
               value={dimensions.height}
@@ -278,7 +278,7 @@ export default function VehicleDimensions() {
             <Slider
               id="width-slider"
               min={1300}
-              max={2000}
+              max={3000}
               step={100}
               value={dimensions.width}
               onValueChange={(value) => handleSliderChange(value, "width")}
@@ -341,10 +341,30 @@ export default function VehicleDimensions() {
             <Slider
               id="turn-radius-slider"
               min={3}
-              max={5}
-              step={.25}
+              max={8}
+              step={.5}
               value={dimensions.turnRadius}
               onValueChange={(value) => handleSliderChange(value, "turnRadius")}
+              className="cursor-grab active:cursor-grabbing"
+            />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <label htmlFor="gc-slider" className="text-sm font-medium">
+                Ground clearence
+              </label>
+              <div className="flex gap-2">
+                <Badge variant="outline">Min: {dimensions.groundClearence[0]}</Badge>
+                <Badge variant="outline">Max: {dimensions.groundClearence[1]}</Badge>
+              </div>
+            </div>
+            <Slider
+              id="gc-slider"
+              min={80}
+              max={500}
+              step={10}
+              value={dimensions.groundClearence}
+              onValueChange={(value) => handleSliderChange(value, "groundClearence")}
               className="cursor-grab active:cursor-grabbing"
             />
           </div>
@@ -463,7 +483,14 @@ export default function VehicleDimensions() {
           item.width<dimensions.width[1]&&
           item.width>dimensions.width[0]&&
           item.length<dimensions.length[1]&&
-          item.length>dimensions.length[0])
+          item.length>dimensions.length[0]&&
+          item.wheelbase<dimensions.wheelbase[1]&&
+          item.wheelbase>dimensions.wheelbase[0]&&
+          // item.turnRadius<dimensions.turnRadius[1]&&
+          // item.turnRadius>dimensions.turnRadius[0]&&
+          item.groundClearance<dimensions.groundClearence[1]&&
+          item.groundClearance>dimensions.groundClearence[0]
+          )
         
         .map(item=><Card key={item.name}>
               <CardHeader>
