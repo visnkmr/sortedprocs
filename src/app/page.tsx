@@ -4,7 +4,7 @@
 
 import { useState } from "react"
 import { Slider } from "../components/ui/slider"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
 import { it } from "node:test"
 
@@ -26,6 +26,106 @@ export default function VehicleDimensions() {
   }
 
   const data=[
+    {
+      "name": "Tesla Model S",
+      "description": "Tesla Model S - A full-size all-electric five-door liftback sedan known for its high performance and long range.",
+      "length": 4970,
+      "width": 1964,
+      "height": 1445,
+      "turnRadius": 5.8,
+      "groundClearance": 130,
+      "wheelbase": 2960
+    },
+    {
+      "name": "Tesla Model 3",
+      "description": "Tesla Model 3 - A compact all-electric sedan offering a balance of performance, safety, and spaciousness.",
+      "length": 4694,
+      "width": 1849,
+      "height": 1443,
+      "turnRadius": 5.4,
+      "groundClearance": 140,
+      "wheelbase": 2875
+    },
+    {
+      "name": "Tesla Model X",
+      "description": "Tesla Model X - A mid-size all-electric luxury SUV with falcon-wing doors and ample seating for up to 7 adults.",
+      "length": 5036,
+      "width": 2070,
+      "height": 1684,
+      "turnRadius": 6.1,
+      "groundClearance": 137,
+      "wheelbase": 2965
+    },
+    {
+      "name": "Tesla Model Y",
+      "description": "Tesla Model Y - A compact all-electric SUV with versatile seating options and advanced safety features.",
+      "length": 4751,
+      "width": 1921,
+      "height": 1624,
+      "turnRadius": 5.7,
+      "groundClearance": 170,
+      "wheelbase": 2700
+    },
+    {
+      "name": "Tesla Roadster",
+      "description": "Tesla Roadster - An all-electric sports car that emphasizes speed and performance with a sleek design.",
+      "length": 4380,
+      "width": 1940,
+      "height": 1150,
+      "turnRadius": 5.2,
+      "groundClearance": 100,
+      "wheelbase": 2450
+    },
+    {
+      "name": "Tesla Cybertruck",
+      "description": "Tesla Cybertruck - A futuristic all-electric pickup truck with a distinct angular design and high durability.",
+      "length": 5885,
+      "width": 2030,
+      "height": 1921,
+      "turnRadius": 7.0,
+      "groundClearance": 400,
+      "wheelbase": 3650
+    },
+    {
+      "name": "Tesla Model S Plaid",
+      "description": "Tesla Model S Plaid - The high-performance variant of the Model S, boasting extreme acceleration and cutting-edge technology.",
+      "length": 4970,
+      "width": 1964,
+      "height": 1445,
+      "turnRadius": 5.8,
+      "groundClearance": 130,
+      "wheelbase": 2960
+    },
+    {
+      "name": "Tesla Model 3 Performance",
+      "description": "Tesla Model 3 Performance - The performance-focused variant of the Model 3, offering enhanced power and handling.",
+      "length": 4694,
+      "width": 1849,
+      "height": 1443,
+      "turnRadius": 5.4,
+      "groundClearance": 140,
+      "wheelbase": 2875
+    },
+    {
+      "name": "Tesla Model X Plaid",
+      "description": "Tesla Model X Plaid - The performance edition of the Model X with superior acceleration and advanced features.",
+      "length": 5036,
+      "width": 2070,
+      "height": 1684,
+      "turnRadius": 6.1,
+      "groundClearance": 137,
+      "wheelbase": 2965
+    },
+    {
+      "name": "Tesla Roadster 2.0",
+      "description": "Tesla Roadster 2.0 - An updated version of the iconic Roadster aimed at delivering record-setting speeds and enhanced range.",
+      "length": 4400,
+      "width": 1950,
+      "height": 1160,
+      "turnRadius": 5.3,
+      "groundClearance": 105,
+      "wheelbase": 2470
+    },
     {
       "name": "MG Hector",
       "description": "MG Hector - A spacious SUV offering advanced infotainment and safety features.",
@@ -138,16 +238,6 @@ export default function VehicleDimensions() {
 
   return (
     <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
-      <div>
-        {data
-        .filter(item=>item.height<dimensions.height[1]&&
-          item.height>dimensions.height[0]&&
-          item.width<dimensions.width[1]&&
-          item.width>dimensions.width[0]&&
-          item.length<dimensions.length[1]&&
-          item.length>dimensions.length[0])
-        .map(item=><p>{item.name}</p>)}
-        </div>
       <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl mx-auto p-4">
 <Card className="flex-1">
         <CardHeader>
@@ -261,7 +351,7 @@ export default function VehicleDimensions() {
         </CardContent>
       </Card>
 
-      <Card className="flex-1">
+      <Card className="flex-1 hidden">
         <CardHeader>
           <CardTitle>Visual Representation</CardTitle>
         </CardHeader>
@@ -366,6 +456,31 @@ export default function VehicleDimensions() {
         </CardContent>
       </Card>
       </div>
+      <div>
+        {data
+        .filter(item=>item.height<dimensions.height[1]&&
+          item.height>dimensions.height[0]&&
+          item.width<dimensions.width[1]&&
+          item.width>dimensions.width[0]&&
+          item.length<dimensions.length[1]&&
+          item.length>dimensions.length[0])
+        
+        .map(item=><Card key={item.name}>
+              <CardHeader>
+                <CardTitle>{item.name}</CardTitle>
+                <CardDescription>{item.description}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <p>Length: {item.length} mm</p>
+                <p>Width: {item.width} mm</p>
+                <p>Height: {item.height} mm</p>
+                <p>Wheelbase: {item.wheelbase} mm</p>
+                <p>Turn Radius: {item.turnRadius} m</p>
+                <p>Ground Clearance: {item.groundClearance} mm</p>
+              </CardContent>
+        </Card>)}
+        </div>
+      
       
       
     </div>
