@@ -1,0 +1,102 @@
+[
+    {
+      "name": "MG Hector",
+      "description": "MG Hector - A spacious SUV offering advanced infotainment and safety features.",
+      "length": 4659,
+      "width": 1894,
+      "height": 1695,
+      "turnRadius": 5.7,
+      "groundClearance": 188,
+      "wheelbase": 2750
+    },
+    {
+      "name": "MG Hector Plus",
+      "description": "MG Hector Plus - Extended version of the Hector with 3-row seating and enhanced features.",
+      "length": 4793,
+      "width": 1894,
+      "height": 1710,
+      "turnRadius": 5.9,
+      "groundClearance": 190,
+      "wheelbase": 2780
+    },
+    {
+      "name": "MG ZS EV",
+      "description": "MG ZS EV - A fully electric compact SUV with modern connectivity and energy efficient drive.",
+      "length": 4300,
+      "width": 1800,
+      "height": 1620,
+      "turnRadius": 5.2,
+      "groundClearance": 170,
+      "wheelbase": 2650
+    },
+    {
+      "name": "MG Gloster",
+      "description": "MG Gloster - A premium 7-seater SUV with robust performance and luxurious appointments.",
+      "length": 5250,
+      "width": 1976,
+      "height": 1937,
+      "turnRadius": 6.5,
+      "groundClearance": 222,
+      "wheelbase": 3000
+    },
+    {
+      "name": "MG Hector Classic",
+      "description": "MG Hector Classic - A variant of the Hector focusing on timeless design and reliable performance.",
+      "length": 4659,
+      "width": 1894,
+      "height": 1690,
+      "turnRadius": 5.7,
+      "groundClearance": 188,
+      "wheelbase": 2750
+    },
+    {
+      "name": "MG Hector DSG",
+      "description": "MG Hector DSG - Equipped with a dual-clutch transmission for a smoother driving experience.",
+      "length": 4659,
+      "width": 1894,
+      "height": 1695,
+      "turnRadius": 5.7,
+      "groundClearance": 188,
+      "wheelbase": 2750
+    },
+    {
+      "name": "MG Hector Manual",
+      "description": "MG Hector Manual - The traditional manual gear variant offering direct control and efficiency.",
+      "length": 4659,
+      "width": 1894,
+      "height": 1695,
+      "turnRadius": 5.7,
+      "groundClearance": 188,
+      "wheelbase": 2750
+    },
+    {
+      "name": "MG Hector AMT",
+      "description": "MG Hector AMT - Featuring automated manual transmission for ease in urban driving.",
+      "length": 4659,
+      "width": 1894,
+      "height": 1695,
+      "turnRadius": 5.7,
+      "groundClearance": 188,
+      "wheelbase": 2750
+    },
+    {
+      "name": "MG ZS EV Plus",
+      "description": "MG ZS EV Plus - An enhanced variant of the ZS EV with greater range and premium features.",
+      "length": 4350,
+      "width": 1810,
+      "height": 1630,
+      "turnRadius": 5.3,
+      "groundClearance": 172,
+      "wheelbase": 2660
+    },
+    {
+      "name": "MG Gloster Limited",
+      "description": "MG Gloster Limited - A top-end variant of the Gloster with additional luxury and tech upgrades.",
+      "length": 5250,
+      "width": 1976,
+      "height": 1937,
+      "turnRadius": 6.5,
+      "groundClearance": 222,
+      "wheelbase": 3000
+    }
+  ]
