@@ -231,11 +231,6 @@ export default function VehicleDimensions() {
     // Scale factor for visualization
     const scale = 0.5/8
 
-  // Function to get the average value for visualization
-  const getAverage = (values: number[]) => {
-    return (values[0] + values[1]) / 2
-  }
-
   return (
     <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
       <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl mx-auto p-4">
