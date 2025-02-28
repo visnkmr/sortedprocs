@@ -1346,14 +1346,14 @@ export default function VehicleDimensions() {
       }
     })
 
-  const toggleSort = (field: typeof sortBy) => {
-    if (sortBy === field) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-    } else {
-      setSortBy(field)
-      setSortOrder("asc")
-    }
-  }
+  // const toggleSort = (field: typeof sortBy) => {
+  //   if (sortBy === field) {
+  //     setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+  //   } else {
+  //     setSortBy(field)
+  //     setSortOrder("asc")
+  //   }
+  // }
 
   return (
     <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
