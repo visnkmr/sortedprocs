@@ -37,7 +37,9 @@ const renault = [
     groundClearance: 180,
     wheelbase: 2422,
     turnRadius: 4.7,
-    price: 9999,
+    price: 4500,
+    capacity: "28 L",
+    manufacturer: "Renault",
   },
   {
     name: "Renault Triber",
@@ -51,7 +53,9 @@ const renault = [
     groundClearance: 182,
     wheelbase: 2636,
     turnRadius: 5.2,
-    price: 9999,
+    price: 6700,
+    capacity: "40 L",
+    manufacturer: "Renault",
   },
   {
     name: "Renault Kiger",
@@ -65,7 +69,9 @@ const renault = [
     groundClearance: 205,
     wheelbase: 2589,
     turnRadius: 5.2,
-    price: 9999,
+    price: 6000,
+    capacity: "38 L",
+    manufacturer: "Renault",
   },
   {
     name: "Renault Duster",
@@ -79,7 +85,9 @@ const renault = [
     groundClearance: 205,
     wheelbase: 2673,
     turnRadius: 5.3,
-    price: 9999,
+    price: 8500,
+    capacity: "50 L",
+    manufacturer: "Renault",
   },
 ]
 const nissan = [
@@ -95,7 +103,9 @@ const nissan = [
     groundClearance: 205,
     wheelbase: 2500,
     turnRadius: 5.2,
-    price: 9999,
+    price: 5500,
+    capacity: "42 L",
+    manufacturer: "Nissan",
   },
   {
     name: "Nissan Kicks",
@@ -109,7 +119,9 @@ const nissan = [
     groundClearance: 210,
     wheelbase: 2673,
     turnRadius: 5.3,
-    price: 9999,
+    price: 9000,
+    capacity: "45 L",
+    manufacturer: "Nissan",
   },
   // {
   //   "name": "Nissan X-Trail",
@@ -138,7 +150,9 @@ const byd = [
     groundClearance: 175,
     wheelbase: 2720,
     turnRadius: 0,
-    price: 9999,
+    price: 32000,
+    capacity: "50 L",
+    manufacturer: "BYD",
   },
   {
     name: "BYD SEAL",
@@ -152,7 +166,9 @@ const byd = [
     groundClearance: 130,
     wheelbase: 2765,
     turnRadius: 0,
-    price: 9999,
+    price: 45000,
+    capacity: "60 L",
+    manufacturer: "BYD",
   },
 ]
 const skoda = [
@@ -168,7 +184,9 @@ const skoda = [
     groundClearance: 189,
     wheelbase: 2566,
     turnRadius: 0,
-    price: 9999,
+    price: 18000,
+    capacity: "45 L",
+    manufacturer: "Škoda",
   },
   {
     name: "Skoda Kodiaq",
@@ -182,7 +200,9 @@ const skoda = [
     groundClearance: 190,
     wheelbase: 2765,
     turnRadius: 11.2,
-    price: 9999,
+    price: 35000,
+    capacity: "60 L",
+    manufacturer: "Škoda",
   },
   {
     name: "Skoda Kushaq",
@@ -196,7 +216,9 @@ const skoda = [
     groundClearance: 160,
     wheelbase: 2639,
     turnRadius: 10.4,
-    price: 9999,
+    price: 22000,
+    capacity: "50 L",
+    manufacturer: "Škoda",
   },
   {
     name: "Skoda Octavia",
@@ -210,7 +232,9 @@ const skoda = [
     groundClearance: 135,
     wheelbase: 2720,
     turnRadius: 10.9,
-    price: 9999,
+    price: 28000,
+    capacity: "55 L",
+    manufacturer: "Škoda",
   },
   {
     name: "Skoda Superb",
@@ -224,7 +248,9 @@ const skoda = [
     groundClearance: 130,
     wheelbase: 2810,
     turnRadius: 11.3,
-    price: 9999,
+    price: 38000,
+    capacity: "65 L",
+    manufacturer: "Škoda",
   },
   {
     name: "Skoda Rapid",
@@ -238,7 +264,9 @@ const skoda = [
     groundClearance: 140,
     wheelbase: 2630,
     turnRadius: 10.1,
-    price: 9999,
+    price: 19000,
+    capacity: "48 L",
+    manufacturer: "Škoda",
   },
 ]
 const maruti = [
@@ -254,7 +282,9 @@ const maruti = [
     groundClearance: 160,
     wheelbase: 2360,
     turnRadius: 4.9,
-    price: 9999,
+    price: 4000,
+    capacity: "25 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Wagon R",
@@ -268,7 +298,9 @@ const maruti = [
     groundClearance: 165,
     wheelbase: 2435,
     turnRadius: 5.2,
-    price: 9999,
+    price: 5000,
+    capacity: "30 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Swift",
@@ -282,7 +314,9 @@ const maruti = [
     groundClearance: 163,
     wheelbase: 2450,
     turnRadius: 5.4,
-    price: 9999,
+    price: 6500,
+    capacity: "35 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Baleno",
@@ -296,7 +330,9 @@ const maruti = [
     groundClearance: 170,
     wheelbase: 2600,
     turnRadius: 5.3,
-    price: 9999,
+    price: 7500,
+    capacity: "38 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Dzire",
@@ -310,7 +346,9 @@ const maruti = [
     groundClearance: 163,
     wheelbase: 2450,
     turnRadius: 5.3,
-    price: 9999,
+    price: 7000,
+    capacity: "35 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Vitara Brezza",
@@ -324,7 +362,9 @@ const maruti = [
     groundClearance: 198,
     wheelbase: 2500,
     turnRadius: 5.6,
-    price: 9999,
+    price: 8000,
+    capacity: "40 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Ertiga",
@@ -338,7 +378,9 @@ const maruti = [
     groundClearance: 185,
     wheelbase: 2740,
     turnRadius: 6.8,
-    price: 9999,
+    price: 10000,
+    capacity: "45 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti S-Cross",
@@ -352,7 +394,9 @@ const maruti = [
     groundClearance: 180,
     wheelbase: 2600,
     turnRadius: 6.6,
-    price: 9999,
+    price: 9500,
+    capacity: "42 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Celerio",
@@ -366,7 +410,9 @@ const maruti = [
     groundClearance: 170,
     wheelbase: 2435,
     turnRadius: 4.9,
-    price: 9999,
+    price: 5500,
+    capacity: "32 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti XL6",
@@ -380,7 +426,9 @@ const maruti = [
     groundClearance: 200,
     wheelbase: 2740,
     turnRadius: 6.9,
-    price: 9999,
+    price: 11000,
+    capacity: "48 L",
+    manufacturer: "Maruti",
   },
   {
     name: "Maruti Fronx",
@@ -394,7 +442,9 @@ const maruti = [
     groundClearance: 190,
     wheelbase: 2520,
     turnRadius: 5.1,
-    price: 9999,
+    price: 8000,
+    capacity: "40 L",
+    manufacturer: "Maruti",
   },
 ]
 const hyundai = [
@@ -410,7 +460,9 @@ const hyundai = [
     groundClearance: 170,
     wheelbase: 2570,
     turnRadius: 5.2,
-    price: 9999,
+    price: 7000,
+    capacity: "38 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Verna",
@@ -424,7 +476,9 @@ const hyundai = [
     groundClearance: 165,
     wheelbase: 2600,
     turnRadius: 5.3,
-    price: 9999,
+    price: 10000,
+    capacity: "45 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Creta",
@@ -438,7 +492,9 @@ const hyundai = [
     groundClearance: 190,
     wheelbase: 2610,
     turnRadius: 5.8,
-    price: 9999,
+    price: 12000,
+    capacity: "50 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Tucson",
@@ -452,7 +508,9 @@ const hyundai = [
     groundClearance: 172,
     wheelbase: 2670,
     turnRadius: 5.9,
-    price: 9999,
+    price: 25000,
+    capacity: "55 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Santro",
@@ -466,7 +524,9 @@ const hyundai = [
     groundClearance: 165,
     wheelbase: 2400,
     turnRadius: 4.8,
-    price: 9999,
+    price: 5000,
+    capacity: "30 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Aura",
@@ -480,7 +540,9 @@ const hyundai = [
     groundClearance: 165,
     wheelbase: 2450,
     turnRadius: 5.0,
-    price: 9999,
+    price: 6000,
+    capacity: "35 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Alcazar",
@@ -494,7 +556,9 @@ const hyundai = [
     groundClearance: 200,
     wheelbase: 2760,
     turnRadius: 6.1,
-    price: 9999,
+    price: 15000,
+    capacity: "55 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Venue",
@@ -508,7 +572,9 @@ const hyundai = [
     groundClearance: 190,
     wheelbase: 2500,
     turnRadius: 5.5,
-    price: 9999,
+    price: 8500,
+    capacity: "42 L",
+    manufacturer: "Hyundai",
   },
   {
     name: "Hyundai Exter",
@@ -522,7 +588,9 @@ const hyundai = [
     groundClearance: 190,
     wheelbase: 2450,
     turnRadius: 5.3,
-    price: 9999,
+    price: 6500,
+    capacity: "38 L",
+    manufacturer: "Hyundai",
   },
 ]
 const honda = [
@@ -538,7 +606,9 @@ const honda = [
     groundClearance: 165,
     wheelbase: 2600,
     turnRadius: 5.6,
-    price: 9999,
+    price: 9000,
+    capacity: "40 L",
+    manufacturer: "Honda",
   },
   {
     name: "Honda Civic",
@@ -552,7 +622,9 @@ const honda = [
     groundClearance: 150,
     wheelbase: 2700,
     turnRadius: 5.8,
-    price: 9999,
+    price: 18000,
+    capacity: "50 L",
+    manufacturer: "Honda",
   },
   {
     name: "Honda CR-V",
@@ -566,7 +638,9 @@ const honda = [
     groundClearance: 208,
     wheelbase: 2660,
     turnRadius: 6.3,
-    price: 9999,
+    price: 28000,
+    capacity: "55 L",
+    manufacturer: "Honda",
   },
   {
     name: "Honda Jazz",
@@ -580,7 +654,9 @@ const honda = [
     groundClearance: 165,
     wheelbase: 2530,
     turnRadius: 5.4,
-    price: 9999,
+    price: 8000,
+    capacity: "38 L",
+    manufacturer: "Honda",
   },
   {
     name: "Honda WR-V",
@@ -594,7 +670,9 @@ const honda = [
     groundClearance: 188,
     wheelbase: 2600,
     turnRadius: 5.6,
-    price: 9999,
+    price: 9000,
+    capacity: "42 L",
+    manufacturer: "Honda",
   },
   {
     name: "Honda Amaze",
@@ -608,7 +686,9 @@ const honda = [
     groundClearance: 170,
     wheelbase: 2470,
     turnRadius: 5.5,
-    price: 9999,
+    price: 7500,
+    capacity: "35 L",
+    manufacturer: "Honda",
   },
   {
     name: "Honda Elevate",
@@ -622,7 +702,9 @@ const honda = [
     groundClearance: 220,
     wheelbase: 2650,
     turnRadius: 6.9,
-    price: 9999,
+    price: 12000,
+    capacity: "48 L",
+    manufacturer: "Honda",
   },
 ]
 const tesla = [
@@ -639,6 +721,8 @@ const tesla = [
     wheelbase: 2960,
     turnRadius: 5.8,
     price: 74990,
+    capacity: "85 kWh",
+    manufacturer: "Tesla",
   },
   {
     name: "Tesla Model 3",
@@ -653,6 +737,8 @@ const tesla = [
     wheelbase: 2875,
     turnRadius: 5.4,
     price: 38990,
+    capacity: "50 kWh",
+    manufacturer: "Tesla",
   },
   {
     name: "Tesla Model X",
@@ -667,6 +753,8 @@ const tesla = [
     wheelbase: 2965,
     turnRadius: 6.1,
     price: 79990,
+    capacity: "100 kWh",
+    manufacturer: "Tesla",
   },
   {
     name: "Tesla Model Y",
@@ -681,6 +769,8 @@ const tesla = [
     wheelbase: 2700,
     turnRadius: 5.7,
     price: 43990,
+    capacity: "75 kWh",
+    manufacturer: "Tesla",
   },
   {
     name: "Tesla Roadster",
@@ -695,6 +785,8 @@ const tesla = [
     wheelbase: 2450,
     turnRadius: 5.2,
     price: 200000,
+    capacity: "53 kWh",
+    manufacturer: "Tesla",
   },
   {
     name: "Tesla Cybertruck",
@@ -709,6 +801,8 @@ const tesla = [
     wheelbase: 3650,
     turnRadius: 7.0,
     price: 60990,
+    capacity: "100 kWh",
+    manufacturer: "Tesla",
   },
 ]
 const mg = [
@@ -724,7 +818,9 @@ const mg = [
     groundClearance: 175,
     wheelbase: 2720,
     turnRadius: 5.6,
-    price: 9999,
+    price: 15000,
+    capacity: "50 L",
+    manufacturer: "MG",
   },
   {
     name: "MG ZS EV",
@@ -738,7 +834,9 @@ const mg = [
     groundClearance: 167,
     wheelbase: 2610,
     turnRadius: 5.3,
-    price: 9999,
+    price: 22000,
+    capacity: "44.5 kWh",
+    manufacturer: "MG",
   },
   {
     name: "MG Gloster",
@@ -752,7 +850,9 @@ const mg = [
     groundClearance: 230,
     wheelbase: 2950,
     turnRadius: 5.8,
-    price: 9999,
+    price: 35000,
+    capacity: "60 L",
+    manufacturer: "MG",
   },
   {
     name: "MG Comet",
@@ -767,6 +867,8 @@ const mg = [
     wheelbase: 2000,
     turnRadius: 4.7,
     price: 9999,
+    capacity: "17 kWh",
+    manufacturer: "MG",
   },
   {
     name: "Windsor",
@@ -780,7 +882,9 @@ const mg = [
     groundClearance: 155,
     wheelbase: 2750,
     turnRadius: 5.4,
-    price: 9999,
+    price: 19000,
+    capacity: "55 L",
+    manufacturer: "MG",
   },
 ]
 const fiat = [
@@ -796,7 +900,9 @@ const fiat = [
     groundClearance: 185,
     wheelbase: 2510,
     turnRadius: 5.2,
-    price: 9999,
+    price: 4800,
+    capacity: "35 L",
+    manufacturer: "Fiat",
   },
   {
     name: "Fiat Linea",
@@ -810,7 +916,9 @@ const fiat = [
     groundClearance: 185,
     wheelbase: 2603,
     turnRadius: 5.4,
-    price: 9999,
+    price: 6000,
+    capacity: "40 L",
+    manufacturer: "Fiat",
   },
   {
     name: "Fiat 500",
@@ -824,7 +932,9 @@ const fiat = [
     groundClearance: 130,
     wheelbase: 2300,
     turnRadius: 5.6,
-    price: 9999,
+    price: 5500,
+    capacity: "30 L",
+    manufacturer: "Fiat",
   },
   {
     name: "Fiat Avventura",
@@ -838,7 +948,9 @@ const fiat = [
     groundClearance: 205,
     wheelbase: 2578,
     turnRadius: 5.3,
-    price: 9999,
+    price: 6500,
+    capacity: "40 L",
+    manufacturer: "Fiat",
   },
 ]
 const tata = [
@@ -854,7 +966,9 @@ const tata = [
     groundClearance: 180,
     wheelbase: 2230,
     turnRadius: 4.5,
-    price: 9999,
+    price: 3000,
+    capacity: "20 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Indica",
@@ -868,7 +982,9 @@ const tata = [
     groundClearance: 165,
     wheelbase: 2420,
     turnRadius: 4.9,
-    price: 9999,
+    price: 4500,
+    capacity: "30 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Indigo",
@@ -882,7 +998,9 @@ const tata = [
     groundClearance: 165,
     wheelbase: 2520,
     turnRadius: 5.0,
-    price: 9999,
+    price: 5500,
+    capacity: "35 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Safari",
@@ -896,7 +1014,9 @@ const tata = [
     groundClearance: 200,
     wheelbase: 2650,
     turnRadius: 5.6,
-    price: 9999,
+    price: 18000,
+    capacity: "60 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Tigor",
@@ -910,7 +1030,9 @@ const tata = [
     groundClearance: 170,
     wheelbase: 2450,
     turnRadius: 5.2,
-    price: 9999,
+    price: 6000,
+    capacity: "35 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Tiago",
@@ -924,7 +1046,9 @@ const tata = [
     groundClearance: 170,
     wheelbase: 2400,
     turnRadius: 4.9,
-    price: 9999,
+    price: 5500,
+    capacity: "32 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Harrier",
@@ -938,7 +1062,9 @@ const tata = [
     groundClearance: 205,
     wheelbase: 2741,
     turnRadius: 5.6,
-    price: 9999,
+    price: 19000,
+    capacity: "60 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Nexon",
@@ -952,7 +1078,9 @@ const tata = [
     groundClearance: 209,
     wheelbase: 2498,
     turnRadius: 5.1,
-    price: 9999,
+    price: 8000,
+    capacity: "40 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Altroz",
@@ -966,7 +1094,9 @@ const tata = [
     groundClearance: 165,
     wheelbase: 2570,
     turnRadius: 5.0,
-    price: 9999,
+    price: 7000,
+    capacity: "38 L",
+    manufacturer: "Tata",
   },
   {
     name: "Tata Punch",
@@ -980,7 +1110,9 @@ const tata = [
     groundClearance: 187,
     wheelbase: 2445,
     turnRadius: 5.0,
-    price: 9999,
+    price: 6500,
+    capacity: "35 L",
+    manufacturer: "Tata",
   },
 ]
 const toyota = [
@@ -996,7 +1128,9 @@ const toyota = [
     groundClearance: 170,
     wheelbase: 2520,
     turnRadius: 4.8,
-    price: 9999,
+    price: 7000,
+    capacity: "38 L",
+    manufacturer: "Toyota",
   },
   {
     name: "Toyota Urban Cruiser",
@@ -1010,7 +1144,9 @@ const toyota = [
     groundClearance: 210,
     wheelbase: 2500,
     turnRadius: 5.2,
-    price: 9999,
+    price: 8500,
+    capacity: "42 L",
+    manufacturer: "Toyota",
   },
   {
     name: "Toyota Innova Crysta",
@@ -1024,7 +1160,9 @@ const toyota = [
     groundClearance: 170,
     wheelbase: 2750,
     turnRadius: 5.6,
-    price: 9999,
+    price: 20000,
+    capacity: "60 L",
+    manufacturer: "Toyota",
   },
   {
     name: "Toyota Fortuner",
@@ -1038,7 +1176,9 @@ const toyota = [
     groundClearance: 220,
     wheelbase: 2745,
     turnRadius: 5.9,
-    price: 9999,
+    price: 30000,
+    capacity: "70 L",
+    manufacturer: "Toyota",
   },
   {
     name: "Toyota Camry",
@@ -1052,7 +1192,9 @@ const toyota = [
     groundClearance: 160,
     wheelbase: 2825,
     turnRadius: 5.8,
-    price: 9999,
+    price: 25000,
+    capacity: "60 L",
+    manufacturer: "Toyota",
   },
 ]
 const kia = [
@@ -1068,7 +1210,9 @@ const kia = [
     groundClearance: 190,
     wheelbase: 2610,
     turnRadius: 5.3,
-    price: 9999,
+    price: 13000,
+    capacity: "50 L",
+    manufacturer: "Kia",
   },
   {
     name: "Kia Sonet",
@@ -1082,7 +1226,9 @@ const kia = [
     groundClearance: 205,
     wheelbase: 2610,
     turnRadius: 5.3,
-    price: 9999,
+    price: 10000,
+    capacity: "45 L",
+    manufacturer: "Kia",
   },
   {
     name: "Kia Carens",
@@ -1096,7 +1242,9 @@ const kia = [
     groundClearance: 190,
     wheelbase: 2780,
     turnRadius: 5.3,
-    price: 9999,
+    price: 15000,
+    capacity: "55 L",
+    manufacturer: "Kia",
   },
 ]
 const mahindra = [
@@ -1112,7 +1260,9 @@ const mahindra = [
     groundClearance: 200,
     wheelbase: 2750,
     turnRadius: 5.4,
-    price: 9999,
+    price: 20000,
+    capacity: "60 L",
+    manufacturer: "Mahindra",
   },
   {
     name: "Mahindra Thar",
@@ -1126,7 +1276,9 @@ const mahindra = [
     groundClearance: 226,
     wheelbase: 2450,
     turnRadius: 5.6,
-    price: 9999,
+    price: 15000,
+    capacity: "50 L",
+    manufacturer: "Mahindra",
   },
   {
     name: "Mahindra Scorpio-N",
@@ -1140,7 +1292,9 @@ const mahindra = [
     groundClearance: 187,
     wheelbase: 2750,
     turnRadius: 5.4,
-    price: 9999,
+    price: 18000,
+    capacity: "65 L",
+    manufacturer: "Mahindra",
   },
   {
     name: "Mahindra XUV300",
@@ -1154,7 +1308,9 @@ const mahindra = [
     groundClearance: 180,
     wheelbase: 2600,
     turnRadius: 5.4,
-    price: 9999,
+    price: 12000,
+    capacity: "45 L",
+    manufacturer: "Mahindra",
   },
   {
     name: "Mahindra XUV500",
@@ -1168,7 +1324,9 @@ const mahindra = [
     groundClearance: 200,
     wheelbase: 2700,
     turnRadius: 5.4,
-    price: 9999,
+    price: 16000,
+    capacity: "55 L",
+    manufacturer: "Mahindra",
   },
 ]
 const volkswagon = [
@@ -1184,7 +1342,9 @@ const volkswagon = [
     groundClearance: 179,
     wheelbase: 2651,
     turnRadius: 5.4,
-    price: 9999,
+    price: 14000,
+    capacity: "50 L",
+    manufacturer: "Volkswagen",
   },
   {
     name: "Volkswagen Taigun",
@@ -1198,7 +1358,9 @@ const volkswagon = [
     groundClearance: 188,
     wheelbase: 2651,
     turnRadius: 5.4,
-    price: 9999,
+    price: 12000,
+    capacity: "45 L",
+    manufacturer: "Volkswagen",
   },
   {
     name: "Volkswagen Tiguan",
@@ -1212,7 +1374,9 @@ const volkswagon = [
     groundClearance: 205,
     wheelbase: 2679,
     turnRadius: 5.5,
-    price: 9999,
+    price: 22000,
+    capacity: "55 L",
+    manufacturer: "Volkswagen",
   },
 ]
 type CarData = {
@@ -1228,6 +1392,8 @@ type CarData = {
   wheelbase: number
   turnRadius: number
   price: number
+  capacity: string
+  manufacturer: string
 }
 function finddataspecs(data: CarData[]) {
   // List of properties for which you want min and max values
@@ -1280,6 +1446,8 @@ export default function VehicleDimensions() {
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price">("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
+  const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
+  const [comparisonFilter, setComparisonFilter] = useState<"all" | "bigger" | "smaller">("all")
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
@@ -1313,6 +1481,9 @@ export default function VehicleDimensions() {
 
   finddataspecs(data)
 
+  const manufacturers = Array.from(new Set(data.map((car) => car.manufacturer))).sort()
+  const totalCarModels = data.length
+
   // Filter and sort data
   const filteredData = data
     .filter((item) => {
@@ -1338,6 +1509,25 @@ export default function VehicleDimensions() {
         item.groundClearance > dimensions.groundClearence[0]
       )
     })
+    .filter((item) => {
+      if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
+      if (pinnedCar && comparisonFilter !== "all") {
+        const compareFields: (keyof CarData)[] = [
+          "length",
+          "width",
+          "height",
+          "wheelbase",
+          "turnRadius",
+          "groundClearance",
+          "price",
+        ]
+        for (const field of compareFields) {
+          if (comparisonFilter === "bigger" && item[field] <= pinnedCar[field]) return false
+          if (comparisonFilter === "smaller" && item[field] >= pinnedCar[field]) return false
+        }
+      }
+      return true
+    })
     .sort((a, b) => {
       if (sortOrder === "asc") {
         return sortBy === "name" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
@@ -1355,16 +1545,33 @@ export default function VehicleDimensions() {
   //   }
   // }
 
+  const initialDimensions = {
+    height: [Math.min(...data.map((car) => car.height)), Math.max(...data.map((car) => car.height))],
+    width: [Math.min(...data.map((car) => car.width)), Math.max(...data.map((car) => car.width))],
+    length: [Math.min(...data.map((car) => car.length)), Math.max(...data.map((car) => car.length))],
+    wheelbase: [Math.min(...data.map((car) => car.wheelbase)), Math.max(...data.map((car) => car.wheelbase))],
+    turnRadius: [Math.min(...data.map((car) => car.turnRadius)), Math.max(...data.map((car) => car.turnRadius))],
+    groundClearance: [
+      Math.min(...data.map((car) => car.groundClearance)),
+      Math.max(...data.map((car) => car.groundClearance)),
+    ],
+  }
+
+  // setDimensions(initialDimensions)
+  const [showDimensionsRange, setShowDimensionsRange] = useState(true)
+
   return (
-    <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
+    <div className="flex flex-col gap-8 w-full max-w-[1600px] mx-auto p-4">
       {/* Header */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">SortedCars</h1>
-          <p>{filteredData.length} vehicles found</p>
+          <p>
+            {filteredData.length} of {totalCarModels} vehicles found
+          </p>
         </div>
 
-        {/* Search and Sort Controls */}
+        {/* Search, Sort, and Filter Controls */}
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <input
@@ -1376,20 +1583,29 @@ export default function VehicleDimensions() {
             />
           </div>
           <div className="flex gap-2">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">Sort by:</span>
-              <select
-                className="px-2 py-1 border rounded-md"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              >
-                <option value="name">Name</option>
-                <option value="length">Length</option>
-                <option value="width">Width</option>
-                <option value="height">Height</option>
-                <option value="price">Price</option>
-              </select>
-            </div>
+            <select
+              className="px-2 py-1 border rounded-md"
+              value={manufacturerFilter}
+              onChange={(e) => setManufacturerFilter(e.target.value)}
+            >
+              <option value="All">All Manufacturers</option>
+              {manufacturers.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              className="px-2 py-1 border rounded-md"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+            >
+              <option value="name">Sort by Name</option>
+              <option value="length">Sort by Length</option>
+              <option value="width">Sort by Width</option>
+              <option value="height">Sort by Height</option>
+              <option value="price">Sort by Price</option>
+            </select>
             <button
               className="px-3 py-1 border rounded-md flex items-center gap-1"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
@@ -1398,10 +1614,32 @@ export default function VehicleDimensions() {
             </button>
           </div>
         </div>
+
+        {/* Comparison Filter */}
+        {pinnedCar && (
+          <div className="flex gap-2 items-center">
+            <span>Compare to pinned car:</span>
+            <select
+              className="px-2 py-1 border rounded-md"
+              value={comparisonFilter}
+              onChange={(e) => setComparisonFilter(e.target.value as "all" | "bigger" | "smaller")}
+            >
+              <option value="all">Show All</option>
+              <option value="bigger">Bigger Than Pinned</option>
+              <option value="smaller">Smaller Than Pinned</option>
+            </select>
+          </div>
+        )}
+
+        {/* Toggle for Dimensions Range */}
+        <button className="px-3 py-1 border rounded-md" onClick={() => setShowDimensionsRange(!showDimensionsRange)}>
+          {showDimensionsRange ? "Hide" : "Show"} Dimensions Range
+        </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 w-full">
-        <Card className="flex-1">
+      {/* Dimensions Range Card */}
+      {showDimensionsRange && (
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>Vehicle Dimensions Range</CardTitle>
           </CardHeader>
@@ -1418,8 +1656,8 @@ export default function VehicleDimensions() {
               </div>
               <Slider
                 id="height-slider"
-                min={1000}
-                max={2000}
+                min={initialDimensions.height[0]}
+                max={initialDimensions.height[1]}
                 step={100}
                 value={dimensions.height}
                 onValueChange={(value) => handleSliderChange(value, "height")}
@@ -1439,8 +1677,8 @@ export default function VehicleDimensions() {
               </div>
               <Slider
                 id="width-slider"
-                min={1300}
-                max={3000}
+                min={initialDimensions.width[0]}
+                max={initialDimensions.width[1]}
                 step={100}
                 value={dimensions.width}
                 onValueChange={(value) => handleSliderChange(value, "width")}
@@ -1460,8 +1698,8 @@ export default function VehicleDimensions() {
               </div>
               <Slider
                 id="length-slider"
-                min={2800}
-                max={6000}
+                min={initialDimensions.length[0]}
+                max={initialDimensions.length[1]}
                 step={100}
                 value={dimensions.length}
                 onValueChange={(value) => handleSliderChange(value, "length")}
@@ -1481,8 +1719,8 @@ export default function VehicleDimensions() {
               </div>
               <Slider
                 id="wheelbase-slider"
-                min={2100}
-                max={5500}
+                min={initialDimensions.wheelbase[0]}
+                max={initialDimensions.wheelbase[1]}
                 step={100}
                 value={dimensions.wheelbase}
                 onValueChange={(value) => handleSliderChange(value, "wheelbase")}
@@ -1502,8 +1740,8 @@ export default function VehicleDimensions() {
               </div>
               <Slider
                 id="turn-radius-slider"
-                min={3}
-                max={15}
+                min={initialDimensions.turnRadius[0]}
+                max={initialDimensions.turnRadius[1]}
                 step={0.1}
                 value={dimensions.turnRadius}
                 onValueChange={(value) => handleSliderChange(value, "turnRadius")}
@@ -1522,8 +1760,8 @@ export default function VehicleDimensions() {
               </div>
               <Slider
                 id="gc-slider"
-                min={80}
-                max={500}
+                min={initialDimensions.groundClearance[0]}
+                max={initialDimensions.groundClearance[1]}
                 step={10}
                 value={dimensions.groundClearence}
                 onValueChange={(value) => handleSliderChange(value, "groundClearence")}
@@ -1532,17 +1770,15 @@ export default function VehicleDimensions() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      )}
 
       {/* Car Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
         {filteredData.map((item) => (
           <Card
             key={item.name}
             className={`${pinnedCar?.name === item.name ? "border-2 border-primary" : ""} ${
-              pinnedCar?.name === item.name && !item.height.toString().includes(dimensions.height[0].toString())
-                ? "bg-primary/5"
-                : ""
+              pinnedCar?.name === item.name && !dimensions.height.includes(item.height) ? "bg-primary/5" : ""
             }`}
           >
             <CardHeader className="flex flex-row items-start justify-between">
@@ -1668,18 +1904,57 @@ export default function VehicleDimensions() {
                 Ground Clearance: {item.groundClearance} mm
                 {pinnedCar && pinnedCar.name !== item.name && (
                   <Badge
-                    className={`                {pinnedCar && pinnedCar.name !== item.name && (
-                  <Badge className={\`ml-2 ${calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                    className={`ml-2 ${calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
                   >
                     {calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "+" : ""}
                     {calculatePercentage(item.groundClearance, pinnedCar.groundClearance)}%
                   </Badge>
                 )}
               </p>
+              <p>Capacity: {item.capacity}</p>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {/* Footer */}
+      <footer className="mt-8 text-center">
+        <div className="flex justify-center space-x-4 mb-4">
+          <a
+            href="https://github.com/visnkmr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700"
+          >
+            GitHub
+          </a>
+          {/* <a
+            href="https://telegram.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700"
+          >
+            Telegram
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700"
+          >
+            Twitter
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700"
+          >
+            LinkedIn
+          </a> */}
+        </div>
+        <p>Made by Vishnu</p>
+      </footer>
     </div>
   )
 }
