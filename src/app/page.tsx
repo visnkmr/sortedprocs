@@ -6,6 +6,90 @@ import { useState } from "react"
 import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
+//Brands added
+/*
+Honda
+Maruti
+Skoda
+MG
+Tata
+Fiat
+Hyundai
+Tesla */
+
+// groundClearance
+// : 
+// {min: 100, max: 400}
+// height
+// : 
+// {min: 1150, max: 1937}
+// length
+// : 
+// {min: 4300, max: 5885}
+// turnRadius
+// : 
+// {min: 5.2, max: 7}
+// wheelbase
+// : 
+// {min: 2450, max: 3650}
+// width
+// : 
+// {min: 1800, max: 2070}
+
+function finddataspecs(data){
+  type CarData = {
+    name: string;
+    description: string;
+    length: number;
+    width: number;
+    height: number;
+    turnRadius: number;
+    groundClearance: number;
+    wheelbase: number;
+  };
+// List of properties for which you want min and max values
+const properties: (keyof CarData)[] = [
+  "length",
+  "width",
+  "height",
+  "turnRadius",
+  "groundClearance",
+  "wheelbase",
+];
+  // Initialize an object to store the results
+type MinMax = { min: number; max: number };
+
+interface Stats {
+  [key: string]: MinMax;
+}
+
+const stats: Stats = {};
+
+// Initialize stats with the first element from data as reference (if available)
+if (data.length > 0) {
+  properties.forEach((prop) => {
+    stats[prop] = {
+      min: data[0][prop] as number,
+      max: data[0][prop] as number,
+    };
+  });
+}
+
+// Iterate over the data to compute min and max for each property
+data.forEach((item) => {
+  properties.forEach((prop) => {
+    const value = item[prop] as number;
+    if (value < stats[prop].min) {
+      stats[prop].min = value;
+    }
+    if (value > stats[prop].max) {
+      stats[prop].max = value;
+    }
+  });
+});
+
+console.log("Stats:", stats);
+}
 
 export default function VehicleDimensions() {
   const [dimensions, setDimensions] = useState({
@@ -13,7 +97,7 @@ export default function VehicleDimensions() {
     width: [1300, 3000],
     length: [2800, 6000],
     wheelbase: [2100, 5500],
-    turnRadius: [3, 8],
+    turnRadius: [3, 15],
     groundClearence:[80,500]
   })
 
@@ -25,6 +109,434 @@ export default function VehicleDimensions() {
   }
 
   const data=[
+    {
+      "name": "Skoda Kodiaq",
+      "yearsProduced": "2016 - Present",
+      "faceliftYears": "2020",
+      "power": "150 - 245",
+      "torque": "250 - 400",
+      "gears": "6",
+      "length": 4682,
+      "width": 1892,
+      "height": 1676,
+      "groundClearance": 190,
+      "wheelbase": 2765,
+      "turnRadius": 11.2
+    },
+    {
+      "name": "Skoda Kushaq",
+      "yearsProduced": "2021 - Present",
+      "faceliftYears": "",
+      "power": "115 - 150",
+      "torque": "250 - 265",
+      "gears": "6",
+      "length": 4246,
+      "width": 1824,
+      "height": 1530,
+      "groundClearance": 160,
+      "wheelbase": 2639,
+      "turnRadius": 10.4
+    },
+    {
+      "name": "Skoda Octavia",
+      "yearsProduced": "1996 - Present",
+      "faceliftYears": "2003, 2009, 2017",
+      "power": "148 - 245",
+      "torque": "250 - 370",
+      "gears": "6",
+      "length": 4765,
+      "width": 1820,
+      "height": 1460,
+      "groundClearance": 135,
+      "wheelbase": 2720,
+      "turnRadius": 10.9
+    },
+    {
+      "name": "Skoda Superb",
+      "yearsProduced": "2001 - Present",
+      "faceliftYears": "2008, 2013, 2020",
+      "power": "162 - 280",
+      "torque": "250 - 320",
+      "gears": "7",
+      "length": 4890,
+      "width": 1880,
+      "height": 1465,
+      "groundClearance": 130,
+      "wheelbase": 2810,
+      "turnRadius": 11.3
+    },
+    {
+      "name": "Skoda Rapid",
+      "yearsProduced": "2011 - 2019",
+      "faceliftYears": "2015",
+      "power": "115 - 150",
+      "torque": "200 - 230",
+      "gears": "5",
+      "length": 4540,
+      "width": 1740,
+      "height": 1460,
+      "groundClearance": 140,
+      "wheelbase": 2630,
+      "turnRadius": 10.1
+    },
+    {
+      "name": "Maruti Alto",
+      "yearsProduced": "2020 - Present",
+      "power": "47 - 68",
+      "torque": "69 - 90",
+      "gears": "5-speed manual / AMT",
+      "length": 3395,
+      "width": 1490,
+      "height": 1475,
+      "groundClearance": 160,
+      "wheelbase": 2360,
+      "turnRadius": 4.9
+    },
+    {
+      "name": "Maruti Wagon R",
+      "yearsProduced": "2020 - Present",
+      "power": "66 - 83",
+      "torque": "90 - 113",
+      "gears": "5-speed manual / AMT",
+      "length": 3655,
+      "width": 1490,
+      "height": 1675,
+      "groundClearance": 165,
+      "wheelbase": 2435,
+      "turnRadius": 5.2
+    },
+    {
+      "name": "Maruti Swift",
+      "yearsProduced": "2020 - Present",
+      "power": "82",
+      "torque": "113",
+      "gears": "5-speed manual / AMT",
+      "length": 3840,
+      "width": 1735,
+      "height": 1530,
+      "groundClearance": 163,
+      "wheelbase": 2450,
+      "turnRadius": 5.4
+    },
+    {
+      "name": "Maruti Baleno",
+      "yearsProduced": "2020 - Present",
+      "power": "82 - 90",
+      "torque": "113 - 113",
+      "gears": "5-speed manual / CVT",
+      "length": 3995,
+      "width": 1745,
+      "height": 1450,
+      "groundClearance": 170,
+      "wheelbase": 2600,
+      "turnRadius": 5.3
+    },
+    {
+      "name": "Maruti Dzire",
+      "yearsProduced": "2020 - Present",
+      "power": "82",
+      "torque": "113",
+      "gears": "5-speed manual / AMT",
+      "length": 3995,
+      "width": 1735,
+      "height": 1515,
+      "groundClearance": 163,
+      "wheelbase": 2450,
+      "turnRadius": 5.3
+    },
+    {
+      "name": "Maruti Vitara Brezza",
+      "yearsProduced": "2020 - Present",
+      "power": "103",
+      "torque": "138",
+      "gears": "5-speed manual / 6-speed automatic",
+      "length": 3995,
+      "width": 1790,
+      "height": 1640,
+      "groundClearance": 198,
+      "wheelbase": 2500,
+      "turnRadius": 5.6
+    },
+    {
+      "name": "Maruti Ertiga",
+      "yearsProduced": "2020 - Present",
+      "power": "103",
+      "torque": "138",
+      "gears": "5-speed manual / 6-speed automatic",
+      "length": 4395,
+      "width": 1735,
+      "height": 1685,
+      "groundClearance": 185,
+      "wheelbase": 2740,
+      "turnRadius": 6.8
+    },
+    {
+      "name": "Maruti S-Cross",
+      "yearsProduced": "2020 - Present",
+      "power": "103",
+      "torque": "138",
+      "gears": "6-speed manual / 6-speed automatic",
+      "length": 4300,
+      "width": 1785,
+      "height": 1595,
+      "groundClearance": 180,
+      "wheelbase": 2600,
+      "turnRadius": 6.6
+    },
+    {
+      "name": "Maruti Celerio",
+      "yearsProduced": "2021 - Present",
+      "power": "67",
+      "torque": "89",
+      "gears": "5-speed manual / AMT",
+      "length": 3695,
+      "width": 1655,
+      "height": 1555,
+      "groundClearance": 170,
+      "wheelbase": 2435,
+      "turnRadius": 4.9
+    },
+    {
+      "name": "Maruti XL6",
+      "yearsProduced": "2020 - Present",
+      "power": "103",
+      "torque": "138",
+      "gears": "5-speed manual / 6-speed automatic",
+      "length": 4395,
+      "width": 1775,
+      "height": 1675,
+      "groundClearance": 200,
+      "wheelbase": 2740,
+      "turnRadius": 6.9
+    },
+    {
+      "name": "Maruti Fronx",
+      "yearsProduced": "2023 - Present",
+      "power": "99 - 120",
+      "torque": "147 - 200",
+      "gears": "5-speed manual / 6-speed automatic",
+      "length": 3995,
+      "width": 1550,
+      "height": 1570,
+      "groundClearance": 190,
+      "wheelbase": 2520,
+      "turnRadius": 5.1
+    },
+    {
+      "name": "Hyundai i20",
+      "yearsProduced": "2020 - Present",
+      "power": "82 - 120",
+      "torque": "114 - 172",
+      "gears": "5-speed manual / CVT / 6-speed automatic",
+      "length": 4032,
+      "width": 1733,
+      "height": 1450,
+      "groundClearance": 170,
+      "wheelbase": 2570,
+      "turnRadius": 5.2
+    },
+    {
+      "name": "Hyundai Verna",
+      "yearsProduced": "2020 - Present",
+      "power": "121 - 158",
+      "torque": "151 - 250",
+      "gears": "6-speed manual / 6-speed automatic",
+      "length": 4440,
+      "width": 1729,
+      "height": 1475,
+      "groundClearance": 165,
+      "wheelbase": 2600,
+      "turnRadius": 5.3
+    },
+    {
+      "name": "Hyundai Creta",
+      "yearsProduced": "2020 - Present",
+      "power": "113 - 138",
+      "torque": "144 - 250",
+      "gears": "6-speed manual / 6-speed automatic / CVT",
+      "length": 4300,
+      "width": 1790,
+      "height": 1635,
+      "groundClearance": 190,
+      "wheelbase": 2610,
+      "turnRadius": 5.8
+    },
+    {
+      "name": "Hyundai Tucson",
+      "yearsProduced": "2020 - Present",
+      "power": "153 - 185",
+      "torque": "400 - 400",
+      "gears": "6-speed automatic",
+      "length": 4480,
+      "width": 1850,
+      "height": 1665,
+      "groundClearance": 172,
+      "wheelbase": 2670,
+      "turnRadius": 5.9
+    },
+    {
+      "name": "Hyundai Santro",
+      "yearsProduced": "2020 - Present",
+      "power": "68",
+      "torque": "99",
+      "gears": "5-speed manual / AMT",
+      "length": 3610,
+      "width": 1645,
+      "height": 1560,
+      "groundClearance": 165,
+      "wheelbase": 2400,
+      "turnRadius": 4.8
+    },
+    {
+      "name": "Hyundai Aura",
+      "yearsProduced": "2020 - Present",
+      "power": "68 - 83",
+      "torque": "99 - 113",
+      "gears": "5-speed manual / AMT",
+      "length": 3995,
+      "width": 1680,
+      "height": 1475,
+      "groundClearance": 165,
+      "wheelbase": 2450,
+      "turnRadius": 5.0
+    },
+    {
+      "name": "Hyundai Alcazar",
+      "yearsProduced": "2021 - Present",
+      "power": "113 - 184",
+      "torque": "250 - 300",
+      "gears": "6-speed manual / 6-speed automatic",
+      "length": 4500,
+      "width": 1790,
+      "height": 1675,
+      "groundClearance": 200,
+      "wheelbase": 2760,
+      "turnRadius": 6.1
+    },
+    {
+      "name": "Hyundai Venue",
+      "yearsProduced": "2020 - Present",
+      "power": "81 - 120",
+      "torque": "113 - 172",
+      "gears": "5-speed manual / 7-speed DCT / 6-speed automatic",
+      "length": 4000,
+      "width": 1770,
+      "height": 1560,
+      "groundClearance": 190,
+      "wheelbase": 2500,
+      "turnRadius": 5.5
+    },
+    {
+      "name": "Hyundai Exter",
+      "yearsProduced": "2023 - Present",
+      "power": "68 - 83",
+      "torque": "95 - 113",
+      "gears": "5-speed manual / AMT",
+      "length": 3815,
+      "width": 1710,
+      "height": 1635,
+      "groundClearance": 190,
+      "wheelbase": 2450,
+      "turnRadius": 5.3
+    },
+    {
+      "name": "Honda City",
+      "yearsProduced": "2008 - Present",
+      "faceliftYears": "2011, 2014, 2020",
+      "power": "121 - 149",
+      "torque": "145",
+      "gears": "5-speed manual / CVT",
+      "length": 4440,
+      "width": 1694,
+      "height": 1475,
+      "groundClearance": 165,
+      "wheelbase": 2600,
+      "turnRadius": 5.6
+    },
+    {
+      "name": "Honda Civic",
+      "yearsProduced": "2006 - 2013, 2019 - Present",
+      "faceliftYears": "2013, 2020",
+      "power": "140 - 180",
+      "torque": "174 - 220",
+      "gears": "6-speed manual / CVT",
+      "length": 4650,
+      "width": 1798,
+      "height": 1416,
+      "groundClearance": 150,
+      "wheelbase": 2700,
+      "turnRadius": 5.8
+    },
+    {
+      "name": "Honda CR-V",
+      "yearsProduced": "2007 - Present",
+      "faceliftYears": "2012, 2015, 2018",
+      "power": "154 - 190",
+      "torque": "190 - 240",
+      "gears": "5-speed automatic / CVT",
+      "length": 4600,
+      "width": 1855,
+      "height": 1685,
+      "groundClearance": 208,
+      "wheelbase": 2660,
+      "turnRadius": 6.3
+    },
+    {
+      "name": "Honda Jazz",
+      "yearsProduced": "2009 - Present",
+      "faceliftYears": "2015, 2020",
+      "power": "90 - 110",
+      "torque": "110 - 145",
+      "gears": "5-speed manual / CVT",
+      "length": 4000,
+      "width": 1694,
+      "height": 1525,
+      "groundClearance": 165,
+      "wheelbase": 2530,
+      "turnRadius": 5.4
+    },
+    {
+      "name": "Honda WR-V",
+      "yearsProduced": "2017 - Present",
+      "faceliftYears": "2020",
+      "power": "110",
+      "torque": "200",
+      "gears": "6-speed manual / CVT",
+      "length": 4000,
+      "width": 1777,
+      "height": 1600,
+      "groundClearance": 188,
+      "wheelbase": 2600,
+      "turnRadius": 5.6
+    },
+    {
+      "name": "Honda Amaze",
+      "yearsProduced": "2013 - Present",
+      "faceliftYears": "2016, 2021",
+      "power": "88 - 110",
+      "torque": "109 - 200",
+      "gears": "5-speed manual / CVT",
+      "length": 3995,
+      "width": 1680,
+      "height": 1485,
+      "groundClearance": 170,
+      "wheelbase": 2470,
+      "turnRadius": 5.5
+    },
+    {
+      "name": "Honda Elevate",
+      "yearsProduced": "2023 - Present",
+      "faceliftYears": "N/A",
+      "power": "121",
+      "torque": "145",
+      "gears": "6-speed manual / CVT",
+      "length": 4312,
+      "width": 1790,
+      "height": 1650,
+      "groundClearance": 220,
+      "wheelbase": 2650,
+      "turnRadius": 6.9
+    },
     {
       "name": "Tesla Model S",
       "description": "Tesla Model S - A full-size all-electric five-door liftback sedan known for its high performance and long range.",
@@ -127,111 +639,283 @@ export default function VehicleDimensions() {
     },
     {
       "name": "MG Hector",
-      "description": "MG Hector - A spacious SUV offering advanced infotainment and safety features.",
-      "length": 4659,
-      "width": 1894,
-      "height": 1695,
-      "turnRadius": 5.7,
-      "groundClearance": 188,
-      "wheelbase": 2750
-    },
-    {
-      "name": "MG Hector Plus",
-      "description": "MG Hector Plus - Extended version of the Hector with 3-row seating and enhanced features.",
-      "length": 4793,
-      "width": 1894,
-      "height": 1710,
-      "turnRadius": 5.9,
-      "groundClearance": 190,
-      "wheelbase": 2780
+      "yearsProduced": "2019 - Present",
+      "faceliftYears": "2020",
+      "power": "145 - 170",
+      "torque": "300",
+      "gears": "6",
+      "length": 4500,
+      "width": 1830,
+      "height": 1675,
+      "groundClearance": 175,
+      "wheelbase": 2720,
+      "turnRadius": "5.6"
     },
     {
       "name": "MG ZS EV",
-      "description": "MG ZS EV - A fully electric compact SUV with modern connectivity and energy efficient drive.",
+      "yearsProduced": "2019 - Present",
+      "faceliftYears": "2021",
+      "power": "141",
+      "torque": "353",
+      "gears": "1",
       "length": 4300,
-      "width": 1800,
-      "height": 1620,
-      "turnRadius": 5.2,
-      "groundClearance": 170,
-      "wheelbase": 2650
+      "width": 1820,
+      "height": 1604,
+      "groundClearance": 167,
+      "wheelbase": 2610,
+      "turnRadius": "5.3"
     },
     {
       "name": "MG Gloster",
-      "description": "MG Gloster - A premium 7-seater SUV with robust performance and luxurious appointments.",
-      "length": 5250,
-      "width": 1976,
-      "height": 1937,
-      "turnRadius": 6.5,
-      "groundClearance": 222,
-      "wheelbase": 3000
+      "yearsProduced": "2019 - Present",
+      "faceliftYears": "2022",
+      "power": "200 - 250",
+      "torque": "550",
+      "gears": "8",
+      "length": 5000,
+      "width": 1930,
+      "height": 1940,
+      "groundClearance": 230,
+      "wheelbase": 2950,
+      "turnRadius": "5.8"
     },
     {
-      "name": "MG Hector Classic",
-      "description": "MG Hector Classic - A variant of the Hector focusing on timeless design and reliable performance.",
-      "length": 4659,
+      "name": "MG Comet",
+      "yearsProduced": "2023 - Present",
+      "faceliftYears": "N/A",
+      "power": "40 - 55",
+      "torque": "100 - 120",
+      "gears": "1",
+      "length": 2974,
+      "width": 1501,
+      "height": 1601,
+      "groundClearance": 160,
+      "wheelbase": 2000,
+      "turnRadius": "4.7"
+    },
+    {
+      "name": "Windsor",
+      "yearsProduced": "2020 - Present",
+      "faceliftYears": "2023 - Present",
+      "power": "120 - 160",
+      "torque": "170 - 220",
+      "gears": "6",
+      "length": 4700,
+      "width": 1800,
+      "height": 1450,
+      "groundClearance": 155,
+      "wheelbase": 2750,
+      "turnRadius": "5.4"
+    },
+    {
+      "name": "Fiat Punto",
+      "yearsProduced": "2010 - 2016",
+      "faceliftYears": "2014 - 2016",
+      "power": "75 - 90",
+      "torque": "190 - 200",
+      "gears": "5",
+      "length": 3987,
+      "width": 1687,
+      "height": 1495,
+      "groundClearance": 185,
+      "wheelbase": 2510,
+      "turnRadius": "5.2"
+    },
+    {
+      "name": "Fiat Linea",
+      "yearsProduced": "2010 - 2016",
+      "faceliftYears": "2014 - 2016",
+      "power": "90 - 112",
+      "torque": "200 - 215",
+      "gears": "5",
+      "length": 4560,
+      "width": 1730,
+      "height": 1495,
+      "groundClearance": 185,
+      "wheelbase": 2603,
+      "turnRadius": "5.4"
+    },
+    {
+      "name": "Fiat 500",
+      "yearsProduced": "2010 - 2016",
+      "faceliftYears": "2014",
+      "power": "69",
+      "torque": "102",
+      "gears": "5",
+      "length": 3546,
+      "width": 1627,
+      "height": 1488,
+      "groundClearance": 130,
+      "wheelbase": 2300,
+      "turnRadius": "5.6"
+    },
+    {
+      "name": "Fiat Avventura",
+      "yearsProduced": "2014 - 2016",
+      "faceliftYears": "N/A",
+      "power": "90 - 112",
+      "torque": "200 - 215",
+      "gears": "5",
+      "length": 3995,
+      "width": 1706,
+      "height": 1550,
+      "groundClearance": 205,
+      "wheelbase": 2578,
+      "turnRadius": "5.3"
+    },
+    {
+      "name": "Tata Nano",
+      "yearsProduced": "2008 - 2018",
+      "faceliftYears": "2012 - 2018",
+      "power": "35",
+      "torque": "48",
+      "gears": "4",
+      "length": 3199,
+      "width": 1652,
+      "height": 1651,
+      "groundClearance": 180,
+      "wheelbase": 2230,
+      "turnRadius": "4.5"
+    },
+    {
+      "name": "Tata Indica",
+      "yearsProduced": "1998 - 2018",
+      "faceliftYears": "2009 - 2018",
+      "power": "60 - 70",
+      "torque": "135 - 140",
+      "gears": "5",
+      "length": 3795,
+      "width": 1665,
+      "height": 1535,
+      "groundClearance": 165,
+      "wheelbase": 2420,
+      "turnRadius": "4.9"
+    },
+    {
+      "name": "Tata Indigo",
+      "yearsProduced": "2002 - 2018",
+      "faceliftYears": "2008 - 2018",
+      "power": "70 - 90",
+      "torque": "140 - 190",
+      "gears": "5",
+      "length": 3990,
+      "width": 1695,
+      "height": 1550,
+      "groundClearance": 165,
+      "wheelbase": 2520,
+      "turnRadius": "5.0"
+    },
+    {
+      "name": "Tata Safari",
+      "yearsProduced": "1998 - Present",
+      "faceliftYears": "2012 - 2020",
+      "power": "140 - 170",
+      "torque": "320 - 400",
+      "gears": "5",
+      "length": 4665,
+      "width": 1918,
+      "height": 1925,
+      "groundClearance": 200,
+      "wheelbase": 2650,
+      "turnRadius": "5.6"
+    },
+    {
+      "name": "Tata Tigor",
+      "yearsProduced": "2017 - Present",
+      "faceliftYears": "2020 - Present",
+      "power": "85 - 113",
+      "torque": "114 - 170",
+      "gears": "5",
+      "length": 3990,
+      "width": 1677,
+      "height": 1537,
+      "groundClearance": 170,
+      "wheelbase": 2450,
+      "turnRadius": "5.2"
+    },
+    {
+      "name": "Tata Tiago",
+      "yearsProduced": "2016 - Present",
+      "faceliftYears": "2020 - Present",
+      "power": "85 - 113",
+      "torque": "114 - 170",
+      "gears": "5",
+      "length": 3746,
+      "width": 1647,
+      "height": 1537,
+      "groundClearance": 170,
+      "wheelbase": 2400,
+      "turnRadius": "4.9"
+    },
+    {
+      "name": "Tata Harrier",
+      "yearsProduced": "2019 - Present",
+      "faceliftYears": "2023 - Present",
+      "power": "140 - 170",
+      "torque": "350",
+      "gears": "6",
+      "length": 4598,
       "width": 1894,
-      "height": 1690,
-      "turnRadius": 5.7,
-      "groundClearance": 188,
-      "wheelbase": 2750
+      "height": 1706,
+      "groundClearance": 205,
+      "wheelbase": 2741,
+      "turnRadius": "5.6"
     },
     {
-      "name": "MG Hector DSG",
-      "description": "MG Hector DSG - Equipped with a dual-clutch transmission for a smoother driving experience.",
-      "length": 4659,
-      "width": 1894,
-      "height": 1695,
-      "turnRadius": 5.7,
-      "groundClearance": 188,
-      "wheelbase": 2750
+      "name": "Tata Nexon",
+      "yearsProduced": "2017 - Present",
+      "faceliftYears": "2020 - Present",
+      "power": "110 - 120",
+      "torque": "260",
+      "gears": "6",
+      "length": 3993,
+      "width": 1811,
+      "height": 1606,
+      "groundClearance": 209,
+      "wheelbase": 2498,
+      "turnRadius": "5.1"
     },
     {
-      "name": "MG Hector Manual",
-      "description": "MG Hector Manual - The traditional manual gear variant offering direct control and efficiency.",
-      "length": 4659,
-      "width": 1894,
-      "height": 1695,
-      "turnRadius": 5.7,
-      "groundClearance": 188,
-      "wheelbase": 2750
+      "name": "Tata Altroz",
+      "yearsProduced": "2020 - Present",
+      "faceliftYears": "N/A",
+      "power": "86 - 110",
+      "torque": "113 - 200",
+      "gears": "5",
+      "length": 3990,
+      "width": 1755,
+      "height": 1505,
+      "groundClearance": 165,
+      "wheelbase": 2570,
+      "turnRadius": "5.0"
     },
     {
-      "name": "MG Hector AMT",
-      "description": "MG Hector AMT - Featuring automated manual transmission for ease in urban driving.",
-      "length": 4659,
-      "width": 1894,
-      "height": 1695,
-      "turnRadius": 5.7,
-      "groundClearance": 188,
-      "wheelbase": 2750
-    },
-    {
-      "name": "MG ZS EV Plus",
-      "description": "MG ZS EV Plus - An enhanced variant of the ZS EV with greater range and premium features.",
-      "length": 4350,
-      "width": 1810,
-      "height": 1630,
-      "turnRadius": 5.3,
-      "groundClearance": 172,
-      "wheelbase": 2660
-    },
-    {
-      "name": "MG Gloster Limited",
-      "description": "MG Gloster Limited - A top-end variant of the Gloster with additional luxury and tech upgrades.",
-      "length": 5250,
-      "width": 1976,
-      "height": 1937,
-      "turnRadius": 6.5,
-      "groundClearance": 222,
-      "wheelbase": 3000
+      "name": "Tata Punch",
+      "yearsProduced": "2021 - Present",
+      "faceliftYears": "N/A",
+      "power": "84",
+      "torque": "113",
+      "gears": "5",
+      "length": 3827,
+      "width": 1742,
+      "height": 1615,
+      "groundClearance": 187,
+      "wheelbase": 2445,
+      "turnRadius": "5.0"
     }
+
   ];
+  finddataspecs(data);
+
+
     console.log(data)
+    
     // Scale factor for visualization
     const scale = 0.5/8
 
   return (
     <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
+    <p>{data.length} vehicles found</p>
       <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl mx-auto p-4">
 <Card className="flex-1">
         <CardHeader>
@@ -480,8 +1164,8 @@ export default function VehicleDimensions() {
           item.length>dimensions.length[0]&&
           item.wheelbase<dimensions.wheelbase[1]&&
           item.wheelbase>dimensions.wheelbase[0]&&
-          // item.turnRadius<dimensions.turnRadius[1]&&
-          // item.turnRadius>dimensions.turnRadius[0]&&
+          item.turnRadius<dimensions.turnRadius[1]&&
+          item.turnRadius>dimensions.turnRadius[0]&&
           item.groundClearance<dimensions.groundClearence[1]&&
           item.groundClearance>dimensions.groundClearence[0]
           )
