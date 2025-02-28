@@ -14,6 +14,7 @@ Skoda
 MG
 Tata
 Fiat
+Toyota
 Hyundai
 Tesla */
 
@@ -98,7 +99,7 @@ export default function VehicleDimensions() {
     length: [2800, 6000],
     wheelbase: [2100, 5500],
     turnRadius: [3, 15],
-    groundClearence:[80,500]
+    groundClearence:[0,500]
   })
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
@@ -109,6 +110,48 @@ export default function VehicleDimensions() {
   }
 
   const data=[
+    {
+      "name": "BYD ATTO 3",
+      "yearsProduced": "2022 - Present",
+      "faceliftYears": "N/A",
+      "power": "201",
+      "torque": "310",
+      "gears": "Single-speed automatic",
+      "length": 4455,
+      "width": 1875,
+      "height": 1615,
+      "groundClearance": 175,
+      "wheelbase": 2720,
+      "turnRadius": 0
+    },
+    {
+      "name": "BYD SEAL",
+      "yearsProduced": "2023 - Present",
+      "faceliftYears": "N/A",
+      "power": "308",
+      "torque": "360",
+      "gears": "Single-speed automatic",
+      "length": 4800,
+      "width": 1875,
+      "height": 1500,
+      "groundClearance": 130,
+      "wheelbase": 2765,
+      "turnRadius": 0
+    },
+    {
+      "name": "Škoda Kylaq",
+      "yearsProduced": "2025 - Present",
+      "faceliftYears": "N/A",
+      "power": "115",
+      "torque": "178",
+      "gears": "6-speed manual / 6-speed automatic",
+      "length": 3995,
+      "width": 1783,
+      "height": 1619,
+      "groundClearance": 189,
+      "wheelbase": 2566,
+      "turnRadius": 0
+    },
     {
       "name": "Skoda Kodiaq",
       "yearsProduced": "2016 - Present",
@@ -902,7 +945,77 @@ export default function VehicleDimensions() {
       "groundClearance": 187,
       "wheelbase": 2445,
       "turnRadius": 5.0
-    }
+    },
+    {
+      "name": "Toyota Glanza",
+      "yearsProduced": "2019 - Present",
+      "faceliftYears": "2022",
+      "power": "82 - 89",
+      "torque": "113 - 140",
+      "gears": "5-speed manual / CVT",
+      "length": 3995,
+      "width": 1745,
+      "height": 1500,
+      "groundClearance": 170,
+      "wheelbase": 2520,
+      "turnRadius": 4.8
+      },
+      {
+      "name": "Toyota Urban Cruiser",
+      "yearsProduced": "2020 - Present",
+      "faceliftYears": "",
+      "power": "103",
+      "torque": "138",
+      "gears": "5-speed manual / 4-speed AT",
+      "length": 3995,
+      "width": 1790,
+      "height": 1640,
+      "groundClearance": 210,
+      "wheelbase": 2500,
+      "turnRadius": 5.2
+      },
+      {
+      "name": "Toyota Innova Crysta",
+      "yearsProduced": "2016 - Present",
+      "faceliftYears": "2020",
+      "power": "148 - 163",
+      "torque": "243 - 360",
+      "gears": "5-speed manual / 6-speed AT",
+      "length": 4735,
+      "width": 1830,
+      "height": 1795,
+      "groundClearance": 170,
+      "wheelbase": 2750,
+      "turnRadius": 5.6
+      },
+      {
+      "name": "Toyota Fortuner",
+      "yearsProduced": "2016 - Present",
+      "faceliftYears": "2021",
+      "power": "201 - 204",
+      "torque": "320 - 500",
+      "gears": "6-speed manual / 6-speed AT",
+      "length": 4795,
+      "width": 1855,
+      "height": 1835,
+      "groundClearance": 220,
+      "wheelbase": 2745,
+      "turnRadius": 5.9
+      },
+      {
+      "name": "Toyota Camry",
+      "yearsProduced": "2019 - Present",
+      "faceliftYears": "",
+      "power": "178",
+      "torque": "221",
+      "gears": "6-speed AT",
+      "length": 4885,
+      "width": 1840,
+      "height": 1445,
+      "groundClearance": 160,
+      "wheelbase": 2825,
+      "turnRadius": 5.8
+      }
 
   ];
   finddataspecs(data);
