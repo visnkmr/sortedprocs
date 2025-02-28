@@ -30,7 +30,6 @@ const renault=[
   {
     "name": "Renault Kwid",
     "yearsProduced": "2015 - Present",
-    "faceliftYears": "2019",
     "power": "53 - 68",
     "torque": "72 - 91",
     "gears": "5-speed manual / AMT",
@@ -44,7 +43,6 @@ const renault=[
   {
     "name": "Renault Triber",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "N/A",
     "power": "71",
     "torque": "96",
     "gears": "5-speed manual / AMT",
@@ -58,7 +56,6 @@ const renault=[
   {
     "name": "Renault Kiger",
     "yearsProduced": "2021 - Present",
-    "faceliftYears": "N/A",
     "power": "71 - 98",
     "torque": "96 - 160",
     "gears": "5-speed manual / CVT",
@@ -72,7 +69,6 @@ const renault=[
   {
     "name": "Renault Duster",
     "yearsProduced": "2012 - Present",
-    "faceliftYears": "2016, 2025",
     "power": "104 - 153",
     "torque": "142 - 250",
     "gears": "5-speed manual / 6-speed manual / CVT",
@@ -88,7 +84,6 @@ const nissan=[
   {
     "name": "Nissan Magnite",
     "yearsProduced": "2020 - Present",
-    "faceliftYears": "N/A",
     "power": "71 - 98",
     "torque": "96 - 160",
     "gears": "5-speed manual / CVT",
@@ -102,7 +97,6 @@ const nissan=[
   {
     "name": "Nissan Kicks",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "N/A",
     "power": "104 - 153",
     "torque": "142 - 250",
     "gears": "5-speed manual / 6-speed manual / CVT",
@@ -116,7 +110,6 @@ const nissan=[
   // {
   //   "name": "Nissan X-Trail",
   //   "yearsProduced": "2023 - Present",
-  //   "faceliftYears": "N/A",
   //   "power": "N/A",
   //   "torque": "N/A",
   //   "gears": "N/A",
@@ -132,7 +125,6 @@ const byd=[
   {
     "name": "BYD ATTO 3",
     "yearsProduced": "2022 - Present",
-    "faceliftYears": "N/A",
     "power": "201",
     "torque": "310",
     "gears": "Single-speed automatic",
@@ -146,7 +138,6 @@ const byd=[
   {
     "name": "BYD SEAL",
     "yearsProduced": "2023 - Present",
-    "faceliftYears": "N/A",
     "power": "308",
     "torque": "360",
     "gears": "Single-speed automatic",
@@ -162,7 +153,6 @@ const skoda=[
   {
     "name": "Škoda Kylaq",
     "yearsProduced": "2025 - Present",
-    "faceliftYears": "N/A",
     "power": "115",
     "torque": "178",
     "gears": "6-speed manual / 6-speed automatic",
@@ -176,7 +166,6 @@ const skoda=[
   {
     "name": "Skoda Kodiaq",
     "yearsProduced": "2016 - Present",
-    "faceliftYears": "2020",
     "power": "150 - 245",
     "torque": "250 - 400",
     "gears": "6",
@@ -190,7 +179,6 @@ const skoda=[
   {
     "name": "Skoda Kushaq",
     "yearsProduced": "2021 - Present",
-    "faceliftYears": "",
     "power": "115 - 150",
     "torque": "250 - 265",
     "gears": "6",
@@ -204,7 +192,6 @@ const skoda=[
   {
     "name": "Skoda Octavia",
     "yearsProduced": "1996 - Present",
-    "faceliftYears": "2003, 2009, 2017",
     "power": "148 - 245",
     "torque": "250 - 370",
     "gears": "6",
@@ -218,7 +205,6 @@ const skoda=[
   {
     "name": "Skoda Superb",
     "yearsProduced": "2001 - Present",
-    "faceliftYears": "2008, 2013, 2020",
     "power": "162 - 280",
     "torque": "250 - 320",
     "gears": "7",
@@ -232,7 +218,6 @@ const skoda=[
   {
     "name": "Skoda Rapid",
     "yearsProduced": "2011 - 2019",
-    "faceliftYears": "2015",
     "power": "115 - 150",
     "torque": "200 - 230",
     "gears": "5",
@@ -512,7 +497,6 @@ const honda=[
   {
     "name": "Honda City",
     "yearsProduced": "2008 - Present",
-    "faceliftYears": "2011, 2014, 2020",
     "power": "121 - 149",
     "torque": "145",
     "gears": "5-speed manual / CVT",
@@ -526,7 +510,6 @@ const honda=[
   {
     "name": "Honda Civic",
     "yearsProduced": "2006 - 2013, 2019 - Present",
-    "faceliftYears": "2013, 2020",
     "power": "140 - 180",
     "torque": "174 - 220",
     "gears": "6-speed manual / CVT",
@@ -540,7 +523,6 @@ const honda=[
   {
     "name": "Honda CR-V",
     "yearsProduced": "2007 - Present",
-    "faceliftYears": "2012, 2015, 2018",
     "power": "154 - 190",
     "torque": "190 - 240",
     "gears": "5-speed automatic / CVT",
@@ -554,7 +536,6 @@ const honda=[
   {
     "name": "Honda Jazz",
     "yearsProduced": "2009 - Present",
-    "faceliftYears": "2015, 2020",
     "power": "90 - 110",
     "torque": "110 - 145",
     "gears": "5-speed manual / CVT",
@@ -568,7 +549,6 @@ const honda=[
   {
     "name": "Honda WR-V",
     "yearsProduced": "2017 - Present",
-    "faceliftYears": "2020",
     "power": "110",
     "torque": "200",
     "gears": "6-speed manual / CVT",
@@ -582,7 +562,6 @@ const honda=[
   {
     "name": "Honda Amaze",
     "yearsProduced": "2013 - Present",
-    "faceliftYears": "2016, 2021",
     "power": "88 - 110",
     "torque": "109 - 200",
     "gears": "5-speed manual / CVT",
@@ -596,7 +575,6 @@ const honda=[
   {
     "name": "Honda Elevate",
     "yearsProduced": "2023 - Present",
-    "faceliftYears": "N/A",
     "power": "121",
     "torque": "145",
     "gears": "6-speed manual / CVT",
@@ -608,113 +586,112 @@ const honda=[
     "turnRadius": 6.9
   }
 ];
-const tesla=[
-  {
-    "name": "Tesla Model S",
-    "description": "Tesla Model S - A full-size all-electric five-door liftback sedan known for its high performance and long range.",
-    "length": 4970,
-    "width": 1964,
-    "height": 1445,
-    "turnRadius":5.8,
-    "groundClearance": 130,
-    "wheelbase": 2960
-  },
-  {
-    "name": "Tesla Model 3",
-    "description": "Tesla Model 3 - A compact all-electric sedan offering a balance of performance, safety, and spaciousness.",
-    "length": 4694,
-    "width": 1849,
-    "height": 1443,
-    "turnRadius":5.4,
-    "groundClearance": 140,
-    "wheelbase": 2875
-  },
-  {
-    "name": "Tesla Model X",
-    "description": "Tesla Model X - A mid-size all-electric luxury SUV with falcon-wing doors and ample seating for up to 7 adults.",
-    "length": 5036,
-    "width": 2070,
-    "height": 1684,
-    "turnRadius":6.1,
-    "groundClearance": 137,
-    "wheelbase": 2965
-  },
-  {
-    "name": "Tesla Model Y",
-    "description": "Tesla Model Y - A compact all-electric SUV with versatile seating options and advanced safety features.",
-    "length": 4751,
-    "width": 1921,
-    "height": 1624,
-    "turnRadius":5.7,
-    "groundClearance": 170,
-    "wheelbase": 2700
-  },
-  {
-    "name": "Tesla Roadster",
-    "description": "Tesla Roadster - An all-electric sports car that emphasizes speed and performance with a sleek design.",
-    "length": 4380,
-    "width": 1940,
-    "height": 1150,
-    "turnRadius":5.2,
-    "groundClearance": 100,
-    "wheelbase": 2450
-  },
-  {
-    "name": "Tesla Cybertruck",
-    "description": "Tesla Cybertruck - A futuristic all-electric pickup truck with a distinct angular design and high durability.",
-    "length": 5885,
-    "width": 2030,
-    "height": 1921,
-    "turnRadius":7.0,
-    "groundClearance": 400,
-    "wheelbase": 3650
-  },
-  {
-    "name": "Tesla Model S Plaid",
-    "description": "Tesla Model S Plaid - The high-performance variant of the Model S, boasting extreme acceleration and cutting-edge technology.",
-    "length": 4970,
-    "width": 1964,
-    "height": 1445,
-    "turnRadius":5.8,
-    "groundClearance": 130,
-    "wheelbase": 2960
-  },
-  {
-    "name": "Tesla Model 3 Performance",
-    "description": "Tesla Model 3 Performance - The performance-focused variant of the Model 3, offering enhanced power and handling.",
-    "length": 4694,
-    "width": 1849,
-    "height": 1443,
-    "turnRadius":5.4,
-    "groundClearance": 140,
-    "wheelbase": 2875
-  },
-  {
-    "name": "Tesla Model X Plaid",
-    "description": "Tesla Model X Plaid - The performance edition of the Model X with superior acceleration and advanced features.",
-    "length": 5036,
-    "width": 2070,
-    "height": 1684,
-    "turnRadius":6.1,
-    "groundClearance": 137,
-    "wheelbase": 2965
-  },
-  {
-    "name": "Tesla Roadster 2.0",
-    "description": "Tesla Roadster 2.0 - An updated version of the iconic Roadster aimed at delivering record-setting speeds and enhanced range.",
-    "length": 4400,
-    "width": 1950,
-    "height": 1160,
-    "turnRadius":5.3,
-    "groundClearance": 105,
-    "wheelbase": 2470
-  },
-];
+// const tesla=[
+//   {
+//     "name": "Tesla Model S",
+//     "description": "Tesla Model S - A full-size all-electric five-door liftback sedan known for its high performance and long range.",
+//     "length": 4970,
+//     "width": 1964,
+//     "height": 1445,
+//     "turnRadius":5.8,
+//     "groundClearance": 130,
+//     "wheelbase": 2960
+//   },
+//   {
+//     "name": "Tesla Model 3",
+//     "description": "Tesla Model 3 - A compact all-electric sedan offering a balance of performance, safety, and spaciousness.",
+//     "length": 4694,
+//     "width": 1849,
+//     "height": 1443,
+//     "turnRadius":5.4,
+//     "groundClearance": 140,
+//     "wheelbase": 2875
+//   },
+//   {
+//     "name": "Tesla Model X",
+//     "description": "Tesla Model X - A mid-size all-electric luxury SUV with falcon-wing doors and ample seating for up to 7 adults.",
+//     "length": 5036,
+//     "width": 2070,
+//     "height": 1684,
+//     "turnRadius":6.1,
+//     "groundClearance": 137,
+//     "wheelbase": 2965
+//   },
+//   {
+//     "name": "Tesla Model Y",
+//     "description": "Tesla Model Y - A compact all-electric SUV with versatile seating options and advanced safety features.",
+//     "length": 4751,
+//     "width": 1921,
+//     "height": 1624,
+//     "turnRadius":5.7,
+//     "groundClearance": 170,
+//     "wheelbase": 2700
+//   },
+//   {
+//     "name": "Tesla Roadster",
+//     "description": "Tesla Roadster - An all-electric sports car that emphasizes speed and performance with a sleek design.",
+//     "length": 4380,
+//     "width": 1940,
+//     "height": 1150,
+//     "turnRadius":5.2,
+//     "groundClearance": 100,
+//     "wheelbase": 2450
+//   },
+//   {
+//     "name": "Tesla Cybertruck",
+//     "description": "Tesla Cybertruck - A futuristic all-electric pickup truck with a distinct angular design and high durability.",
+//     "length": 5885,
+//     "width": 2030,
+//     "height": 1921,
+//     "turnRadius":7.0,
+//     "groundClearance": 400,
+//     "wheelbase": 3650
+//   },
+//   {
+//     "name": "Tesla Model S Plaid",
+//     "description": "Tesla Model S Plaid - The high-performance variant of the Model S, boasting extreme acceleration and cutting-edge technology.",
+//     "length": 4970,
+//     "width": 1964,
+//     "height": 1445,
+//     "turnRadius":5.8,
+//     "groundClearance": 130,
+//     "wheelbase": 2960
+//   },
+//   {
+//     "name": "Tesla Model 3 Performance",
+//     "description": "Tesla Model 3 Performance - The performance-focused variant of the Model 3, offering enhanced power and handling.",
+//     "length": 4694,
+//     "width": 1849,
+//     "height": 1443,
+//     "turnRadius":5.4,
+//     "groundClearance": 140,
+//     "wheelbase": 2875
+//   },
+//   {
+//     "name": "Tesla Model X Plaid",
+//     "description": "Tesla Model X Plaid - The performance edition of the Model X with superior acceleration and advanced features.",
+//     "length": 5036,
+//     "width": 2070,
+//     "height": 1684,
+//     "turnRadius":6.1,
+//     "groundClearance": 137,
+//     "wheelbase": 2965
+//   },
+//   {
+//     "name": "Tesla Roadster 2.0",
+//     "description": "Tesla Roadster 2.0 - An updated version of the iconic Roadster aimed at delivering record-setting speeds and enhanced range.",
+//     "length": 4400,
+//     "width": 1950,
+//     "height": 1160,
+//     "turnRadius":5.3,
+//     "groundClearance": 105,
+//     "wheelbase": 2470
+//   },
+// ];
 const mg=[
   {
   "name": "MG Hector",
   "yearsProduced": "2019 - Present",
-  "faceliftYears": "2020",
   "power": "145 - 170",
   "torque": "300",
   "gears": "6",
@@ -728,7 +705,6 @@ const mg=[
 {
   "name": "MG ZS EV",
   "yearsProduced": "2019 - Present",
-  "faceliftYears": "2021",
   "power": "141",
   "torque": "353",
   "gears": "1",
@@ -742,7 +718,6 @@ const mg=[
 {
   "name": "MG Gloster",
   "yearsProduced": "2019 - Present",
-  "faceliftYears": "2022",
   "power": "200 - 250",
   "torque": "550",
   "gears": "8",
@@ -756,7 +731,6 @@ const mg=[
 {
   "name": "MG Comet",
   "yearsProduced": "2023 - Present",
-  "faceliftYears": "N/A",
   "power": "40 - 55",
   "torque": "100 - 120",
   "gears": "1",
@@ -770,7 +744,6 @@ const mg=[
 {
   "name": "Windsor",
   "yearsProduced": "2020 - Present",
-  "faceliftYears": "2023 - Present",
   "power": "120 - 160",
   "torque": "170 - 220",
   "gears": "6",
@@ -785,7 +758,6 @@ const fiat=[
   {
     "name": "Fiat Punto",
     "yearsProduced": "2010 - 2016",
-    "faceliftYears": "2014 - 2016",
     "power": "75 - 90",
     "torque": "190 - 200",
     "gears": "5",
@@ -799,7 +771,6 @@ const fiat=[
   {
     "name": "Fiat Linea",
     "yearsProduced": "2010 - 2016",
-    "faceliftYears": "2014 - 2016",
     "power": "90 - 112",
     "torque": "200 - 215",
     "gears": "5",
@@ -813,7 +784,6 @@ const fiat=[
   {
     "name": "Fiat 500",
     "yearsProduced": "2010 - 2016",
-    "faceliftYears": "2014",
     "power": "69",
     "torque": "102",
     "gears": "5",
@@ -827,7 +797,6 @@ const fiat=[
   {
     "name": "Fiat Avventura",
     "yearsProduced": "2014 - 2016",
-    "faceliftYears": "N/A",
     "power": "90 - 112",
     "torque": "200 - 215",
     "gears": "5",
@@ -843,7 +812,6 @@ const tata=[
   {
     "name": "Tata Nano",
     "yearsProduced": "2008 - 2018",
-    "faceliftYears": "2012 - 2018",
     "power": "35",
     "torque": "48",
     "gears": "4",
@@ -857,7 +825,6 @@ const tata=[
   {
     "name": "Tata Indica",
     "yearsProduced": "1998 - 2018",
-    "faceliftYears": "2009 - 2018",
     "power": "60 - 70",
     "torque": "135 - 140",
     "gears": "5",
@@ -871,7 +838,6 @@ const tata=[
   {
     "name": "Tata Indigo",
     "yearsProduced": "2002 - 2018",
-    "faceliftYears": "2008 - 2018",
     "power": "70 - 90",
     "torque": "140 - 190",
     "gears": "5",
@@ -885,7 +851,6 @@ const tata=[
   {
     "name": "Tata Safari",
     "yearsProduced": "1998 - Present",
-    "faceliftYears": "2012 - 2020",
     "power": "140 - 170",
     "torque": "320 - 400",
     "gears": "5",
@@ -899,7 +864,6 @@ const tata=[
   {
     "name": "Tata Tigor",
     "yearsProduced": "2017 - Present",
-    "faceliftYears": "2020 - Present",
     "power": "85 - 113",
     "torque": "114 - 170",
     "gears": "5",
@@ -913,7 +877,6 @@ const tata=[
   {
     "name": "Tata Tiago",
     "yearsProduced": "2016 - Present",
-    "faceliftYears": "2020 - Present",
     "power": "85 - 113",
     "torque": "114 - 170",
     "gears": "5",
@@ -927,7 +890,6 @@ const tata=[
   {
     "name": "Tata Harrier",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "2023 - Present",
     "power": "140 - 170",
     "torque": "350",
     "gears": "6",
@@ -941,7 +903,6 @@ const tata=[
   {
     "name": "Tata Nexon",
     "yearsProduced": "2017 - Present",
-    "faceliftYears": "2020 - Present",
     "power": "110 - 120",
     "torque": "260",
     "gears": "6",
@@ -955,7 +916,6 @@ const tata=[
   {
     "name": "Tata Altroz",
     "yearsProduced": "2020 - Present",
-    "faceliftYears": "N/A",
     "power": "86 - 110",
     "torque": "113 - 200",
     "gears": "5",
@@ -969,7 +929,6 @@ const tata=[
   {
     "name": "Tata Punch",
     "yearsProduced": "2021 - Present",
-    "faceliftYears": "N/A",
     "power": "84",
     "torque": "113",
     "gears": "5",
@@ -985,7 +944,6 @@ const toyota=[
   {
     "name": "Toyota Glanza",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "2022",
     "power": "82 - 89",
     "torque": "113 - 140",
     "gears": "5-speed manual / CVT",
@@ -999,7 +957,6 @@ const toyota=[
     {
     "name": "Toyota Urban Cruiser",
     "yearsProduced": "2020 - Present",
-    "faceliftYears": "",
     "power": "103",
     "torque": "138",
     "gears": "5-speed manual / 4-speed AT",
@@ -1013,7 +970,6 @@ const toyota=[
     {
     "name": "Toyota Innova Crysta",
     "yearsProduced": "2016 - Present",
-    "faceliftYears": "2020",
     "power": "148 - 163",
     "torque": "243 - 360",
     "gears": "5-speed manual / 6-speed AT",
@@ -1027,7 +983,6 @@ const toyota=[
     {
     "name": "Toyota Fortuner",
     "yearsProduced": "2016 - Present",
-    "faceliftYears": "2021",
     "power": "201 - 204",
     "torque": "320 - 500",
     "gears": "6-speed manual / 6-speed AT",
@@ -1041,7 +996,6 @@ const toyota=[
     {
     "name": "Toyota Camry",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "",
     "power": "178",
     "torque": "221",
     "gears": "6-speed AT",
@@ -1057,7 +1011,6 @@ const kia=[
   {
     "name": "Kia Seltos",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "2023",
     "power": "115 - 138",
     "torque": "144 - 242",
     "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
@@ -1071,7 +1024,6 @@ const kia=[
   {
     "name": "Kia Sonet",
     "yearsProduced": "2020 - Present",
-    "faceliftYears": "2023",
     "power": "99 - 118",
     "torque": "240 - 260",
     "gears": "5-speed manual / 6-speed manual / 6-speed automatic / 7-speed DCT",
@@ -1085,7 +1037,6 @@ const kia=[
   {
     "name": "Kia Carens",
     "yearsProduced": "2022 - Present",
-    "faceliftYears": "N/A",
     "power": "115 - 138",
     "torque": "144 - 242",
     "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
@@ -1101,7 +1052,6 @@ const mahindra=[
   {
     "name": "Mahindra XUV700",
     "yearsProduced": "2021 - Present",
-    "faceliftYears": "N/A",
     "power": "155 - 200",
     "torque": "360 - 380",
     "gears": "6-speed manual / 6-speed automatic",
@@ -1115,7 +1065,6 @@ const mahindra=[
   {
     "name": "Mahindra Thar",
     "yearsProduced": "2020 - Present",
-    "faceliftYears": "N/A",
     "power": "130 - 150",
     "torque": "300 - 320",
     "gears": "6-speed manual / 6-speed automatic",
@@ -1129,7 +1078,6 @@ const mahindra=[
   {
     "name": "Mahindra Scorpio-N",
     "yearsProduced": "2022 - Present",
-    "faceliftYears": "N/A",
     "power": "130 - 200",
     "torque": "300 - 380",
     "gears": "6-speed manual / 6-speed automatic",
@@ -1143,7 +1091,6 @@ const mahindra=[
   {
     "name": "Mahindra XUV300",
     "yearsProduced": "2019 - Present",
-    "faceliftYears": "2024",
     "power": "108 - 115",
     "torque": "200 - 300",
     "gears": "6-speed manual / 6-speed automatic",
@@ -1157,7 +1104,6 @@ const mahindra=[
   {
     "name": "Mahindra XUV500",
     "yearsProduced": "2011 - 2021",
-    "faceliftYears": "2015, 2018",
     "power": "140 - 155",
     "torque": "330 - 360",
     "gears": "6-speed manual / 6-speed automatic",
@@ -1173,7 +1119,6 @@ const volkswagon=[
   {
     "name": "Volkswagen Virtus",
     "yearsProduced": "2022 - Present",
-    "faceliftYears": "N/A",
     "power": "113 - 148",
     "torque": "178 - 250",
     "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
@@ -1187,7 +1132,6 @@ const volkswagon=[
   {
     "name": "Volkswagen Taigun",
     "yearsProduced": "2021 - Present",
-    "faceliftYears": "N/A",
     "power": "113 - 148",
     "torque": "178 - 250",
     "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
@@ -1201,7 +1145,6 @@ const volkswagon=[
   {
     "name": "Volkswagen Tiguan",
     "yearsProduced": "2017 - Present",
-    "faceliftYears": "2025",
     "power": "187",
     "torque": "320",
     "gears": "7-speed DCT",
@@ -1213,17 +1156,21 @@ const volkswagon=[
     "turnRadius": 5.5
   }
 ];
-function finddataspecs(data){
-  type CarData = {
-    name: string;
-    description: string;
-    length: number;
-    width: number;
-    height: number;
-    turnRadius: number;
-    groundClearance: number;
-    wheelbase: number;
-  };
+type CarData = {
+  name: string,
+  yearsProduced: string,
+  power:string,
+  torque:string,
+  gears: string,
+  length: number,
+  width: number,
+  height: number,
+  groundClearance: number,
+  wheelbase: number,
+  turnRadius: number
+};
+function finddataspecs(data:CarData[]){
+  
 // List of properties for which you want min and max values
 const properties: (keyof CarData)[] = [
   "length",
@@ -1293,7 +1240,7 @@ export default function VehicleDimensions() {
    ...maruti,
    ...hyundai,
     ...honda,
-    ...tesla,
+    // ...tesla,
     ...mg,
     ...fiat,
     ...tata,
@@ -1570,7 +1517,7 @@ export default function VehicleDimensions() {
         .map(item=><Card key={item.name}>
               <CardHeader>
                 <CardTitle>{item.name}</CardTitle>
-                <CardDescription>{item.description}</CardDescription>
+                <CardDescription>{item.torque}<br/>{item.power}<br/>{item.gears}<br/>{item.yearsProduced}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <p>Length: {item.length} mm</p>
