@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useState } from "react"
@@ -8,104 +6,110 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "../components/ui/badge"
 
 // groundClearance
-// : 
+// :
 // {min: 100, max: 400}
 // height
-// : 
+// :
 // {min: 1150, max: 1937}
 // length
-// : 
+// :
 // {min: 4300, max: 5885}
 // turnRadius
-// : 
+// :
 // {min: 5.2, max: 7}
 // wheelbase
-// : 
+// :
 // {min: 2450, max: 3650}
 // width
-// : 
+// :
 // {min: 1800, max: 2070}
 
-const renault=[
+const renault = [
   {
-    "name": "Renault Kwid",
-    "yearsProduced": "2015 - Present",
-    "power": "53 - 68",
-    "torque": "72 - 91",
-    "gears": "5-speed manual / AMT",
-    "length": 3731,
-    "width": 1579,
-    "height": 1478,
-    "groundClearance": 180,
-    "wheelbase": 2422,
-    "turnRadius": 4.7
+    name: "Renault Kwid",
+    yearsProduced: "2015 - Present",
+    power: "53 - 68",
+    torque: "72 - 91",
+    gears: "5-speed manual / AMT",
+    length: 3731,
+    width: 1579,
+    height: 1478,
+    groundClearance: 180,
+    wheelbase: 2422,
+    turnRadius: 4.7,
+    price: 9999,
   },
   {
-    "name": "Renault Triber",
-    "yearsProduced": "2019 - Present",
-    "power": "71",
-    "torque": "96",
-    "gears": "5-speed manual / AMT",
-    "length": 3990,
-    "width": 1739,
-    "height": 1643,
-    "groundClearance": 182,
-    "wheelbase": 2636,
-    "turnRadius": 5.2
+    name: "Renault Triber",
+    yearsProduced: "2019 - Present",
+    power: "71",
+    torque: "96",
+    gears: "5-speed manual / AMT",
+    length: 3990,
+    width: 1739,
+    height: 1643,
+    groundClearance: 182,
+    wheelbase: 2636,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Renault Kiger",
-    "yearsProduced": "2021 - Present",
-    "power": "71 - 98",
-    "torque": "96 - 160",
-    "gears": "5-speed manual / CVT",
-    "length": 3991,
-    "width": 1750,
-    "height": 1600,
-    "groundClearance": 205,
-    "wheelbase": 2589,
-    "turnRadius": 5.2
+    name: "Renault Kiger",
+    yearsProduced: "2021 - Present",
+    power: "71 - 98",
+    torque: "96 - 160",
+    gears: "5-speed manual / CVT",
+    length: 3991,
+    width: 1750,
+    height: 1600,
+    groundClearance: 205,
+    wheelbase: 2589,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Renault Duster",
-    "yearsProduced": "2012 - Present",
-    "power": "104 - 153",
-    "torque": "142 - 250",
-    "gears": "5-speed manual / 6-speed manual / CVT",
-    "length": 4315,
-    "width": 1822,
-    "height": 1695,
-    "groundClearance": 205,
-    "wheelbase": 2673,
-    "turnRadius": 5.3
-  }
-];
-const nissan=[
+    name: "Renault Duster",
+    yearsProduced: "2012 - Present",
+    power: "104 - 153",
+    torque: "142 - 250",
+    gears: "5-speed manual / 6-speed manual / CVT",
+    length: 4315,
+    width: 1822,
+    height: 1695,
+    groundClearance: 205,
+    wheelbase: 2673,
+    turnRadius: 5.3,
+    price: 9999,
+  },
+]
+const nissan = [
   {
-    "name": "Nissan Magnite",
-    "yearsProduced": "2020 - Present",
-    "power": "71 - 98",
-    "torque": "96 - 160",
-    "gears": "5-speed manual / CVT",
-    "length": 3994,
-    "width": 1758,
-    "height": 1572,
-    "groundClearance": 205,
-    "wheelbase": 2500,
-    "turnRadius": 5.2
+    name: "Nissan Magnite",
+    yearsProduced: "2020 - Present",
+    power: "71 - 98",
+    torque: "96 - 160",
+    gears: "5-speed manual / CVT",
+    length: 3994,
+    width: 1758,
+    height: 1572,
+    groundClearance: 205,
+    wheelbase: 2500,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Nissan Kicks",
-    "yearsProduced": "2019 - Present",
-    "power": "104 - 153",
-    "torque": "142 - 250",
-    "gears": "5-speed manual / 6-speed manual / CVT",
-    "length": 4384,
-    "width": 1813,
-    "height": 1656,
-    "groundClearance": 210,
-    "wheelbase": 2673,
-    "turnRadius": 5.3
+    name: "Nissan Kicks",
+    yearsProduced: "2019 - Present",
+    power: "104 - 153",
+    torque: "142 - 250",
+    gears: "5-speed manual / 6-speed manual / CVT",
+    length: 4384,
+    width: 1813,
+    height: 1656,
+    groundClearance: 210,
+    wheelbase: 2673,
+    turnRadius: 5.3,
+    price: 9999,
   },
   // {
   //   "name": "Nissan X-Trail",
@@ -120,1099 +124,1147 @@ const nissan=[
   //   "wheelbase": "N/A",
   //   "turnRadius": "N/A"
   // }
-];
-const byd=[
+]
+const byd = [
   {
-    "name": "BYD ATTO 3",
-    "yearsProduced": "2022 - Present",
-    "power": "201",
-    "torque": "310",
-    "gears": "Single-speed automatic",
-    "length": 4455,
-    "width": 1875,
-    "height": 1615,
-    "groundClearance": 175,
-    "wheelbase": 2720,
-    "turnRadius": 0
+    name: "BYD ATTO 3",
+    yearsProduced: "2022 - Present",
+    power: "201",
+    torque: "310",
+    gears: "Single-speed automatic",
+    length: 4455,
+    width: 1875,
+    height: 1615,
+    groundClearance: 175,
+    wheelbase: 2720,
+    turnRadius: 0,
+    price: 9999,
   },
   {
-    "name": "BYD SEAL",
-    "yearsProduced": "2023 - Present",
-    "power": "308",
-    "torque": "360",
-    "gears": "Single-speed automatic",
-    "length": 4800,
-    "width": 1875,
-    "height": 1500,
-    "groundClearance": 130,
-    "wheelbase": 2765,
-    "turnRadius": 0
+    name: "BYD SEAL",
+    yearsProduced: "2023 - Present",
+    power: "308",
+    torque: "360",
+    gears: "Single-speed automatic",
+    length: 4800,
+    width: 1875,
+    height: 1500,
+    groundClearance: 130,
+    wheelbase: 2765,
+    turnRadius: 0,
+    price: 9999,
   },
-];
-const skoda=[
+]
+const skoda = [
   {
-    "name": "Škoda Kylaq",
-    "yearsProduced": "2025 - Present",
-    "power": "115",
-    "torque": "178",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 3995,
-    "width": 1783,
-    "height": 1619,
-    "groundClearance": 189,
-    "wheelbase": 2566,
-    "turnRadius": 0
-  },
-  {
-    "name": "Skoda Kodiaq",
-    "yearsProduced": "2016 - Present",
-    "power": "150 - 245",
-    "torque": "250 - 400",
-    "gears": "6",
-    "length": 4682,
-    "width": 1892,
-    "height": 1676,
-    "groundClearance": 190,
-    "wheelbase": 2765,
-    "turnRadius": 11.2
+    name: "Škoda Kylaq",
+    yearsProduced: "2025 - Present",
+    power: "115",
+    torque: "178",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 3995,
+    width: 1783,
+    height: 1619,
+    groundClearance: 189,
+    wheelbase: 2566,
+    turnRadius: 0,
+    price: 9999,
   },
   {
-    "name": "Skoda Kushaq",
-    "yearsProduced": "2021 - Present",
-    "power": "115 - 150",
-    "torque": "250 - 265",
-    "gears": "6",
-    "length": 4246,
-    "width": 1824,
-    "height": 1530,
-    "groundClearance": 160,
-    "wheelbase": 2639,
-    "turnRadius": 10.4
+    name: "Skoda Kodiaq",
+    yearsProduced: "2016 - Present",
+    power: "150 - 245",
+    torque: "250 - 400",
+    gears: "6",
+    length: 4682,
+    width: 1892,
+    height: 1676,
+    groundClearance: 190,
+    wheelbase: 2765,
+    turnRadius: 11.2,
+    price: 9999,
   },
   {
-    "name": "Skoda Octavia",
-    "yearsProduced": "1996 - Present",
-    "power": "148 - 245",
-    "torque": "250 - 370",
-    "gears": "6",
-    "length": 4765,
-    "width": 1820,
-    "height": 1460,
-    "groundClearance": 135,
-    "wheelbase": 2720,
-    "turnRadius": 10.9
+    name: "Skoda Kushaq",
+    yearsProduced: "2021 - Present",
+    power: "115 - 150",
+    torque: "250 - 265",
+    gears: "6",
+    length: 4246,
+    width: 1824,
+    height: 1530,
+    groundClearance: 160,
+    wheelbase: 2639,
+    turnRadius: 10.4,
+    price: 9999,
   },
   {
-    "name": "Skoda Superb",
-    "yearsProduced": "2001 - Present",
-    "power": "162 - 280",
-    "torque": "250 - 320",
-    "gears": "7",
-    "length": 4890,
-    "width": 1880,
-    "height": 1465,
-    "groundClearance": 130,
-    "wheelbase": 2810,
-    "turnRadius": 11.3
+    name: "Skoda Octavia",
+    yearsProduced: "1996 - Present",
+    power: "148 - 245",
+    torque: "250 - 370",
+    gears: "6",
+    length: 4765,
+    width: 1820,
+    height: 1460,
+    groundClearance: 135,
+    wheelbase: 2720,
+    turnRadius: 10.9,
+    price: 9999,
   },
   {
-    "name": "Skoda Rapid",
-    "yearsProduced": "2011 - 2019",
-    "power": "115 - 150",
-    "torque": "200 - 230",
-    "gears": "5",
-    "length": 4540,
-    "width": 1740,
-    "height": 1460,
-    "groundClearance": 140,
-    "wheelbase": 2630,
-    "turnRadius": 10.1
-  },
-];
-const maruti=[
-  {
-    "name": "Maruti Alto",
-    "yearsProduced": "2020 - Present",
-    "power": "47 - 68",
-    "torque": "69 - 90",
-    "gears": "5-speed manual / AMT",
-    "length": 3395,
-    "width": 1490,
-    "height": 1475,
-    "groundClearance": 160,
-    "wheelbase": 2360,
-    "turnRadius": 4.9
+    name: "Skoda Superb",
+    yearsProduced: "2001 - Present",
+    power: "162 - 280",
+    torque: "250 - 320",
+    gears: "7",
+    length: 4890,
+    width: 1880,
+    height: 1465,
+    groundClearance: 130,
+    wheelbase: 2810,
+    turnRadius: 11.3,
+    price: 9999,
   },
   {
-    "name": "Maruti Wagon R",
-    "yearsProduced": "2020 - Present",
-    "power": "66 - 83",
-    "torque": "90 - 113",
-    "gears": "5-speed manual / AMT",
-    "length": 3655,
-    "width": 1490,
-    "height": 1675,
-    "groundClearance": 165,
-    "wheelbase": 2435,
-    "turnRadius": 5.2
+    name: "Skoda Rapid",
+    yearsProduced: "2011 - 2019",
+    power: "115 - 150",
+    torque: "200 - 230",
+    gears: "5",
+    length: 4540,
+    width: 1740,
+    height: 1460,
+    groundClearance: 140,
+    wheelbase: 2630,
+    turnRadius: 10.1,
+    price: 9999,
+  },
+]
+const maruti = [
+  {
+    name: "Maruti Alto",
+    yearsProduced: "2020 - Present",
+    power: "47 - 68",
+    torque: "69 - 90",
+    gears: "5-speed manual / AMT",
+    length: 3395,
+    width: 1490,
+    height: 1475,
+    groundClearance: 160,
+    wheelbase: 2360,
+    turnRadius: 4.9,
+    price: 9999,
   },
   {
-    "name": "Maruti Swift",
-    "yearsProduced": "2020 - Present",
-    "power": "82",
-    "torque": "113",
-    "gears": "5-speed manual / AMT",
-    "length": 3840,
-    "width": 1735,
-    "height": 1530,
-    "groundClearance": 163,
-    "wheelbase": 2450,
-    "turnRadius": 5.4
+    name: "Maruti Wagon R",
+    yearsProduced: "2020 - Present",
+    power: "66 - 83",
+    torque: "90 - 113",
+    gears: "5-speed manual / AMT",
+    length: 3655,
+    width: 1490,
+    height: 1675,
+    groundClearance: 165,
+    wheelbase: 2435,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Maruti Baleno",
-    "yearsProduced": "2020 - Present",
-    "power": "82 - 90",
-    "torque": "113 - 113",
-    "gears": "5-speed manual / CVT",
-    "length": 3995,
-    "width": 1745,
-    "height": 1450,
-    "groundClearance": 170,
-    "wheelbase": 2600,
-    "turnRadius": 5.3
+    name: "Maruti Swift",
+    yearsProduced: "2020 - Present",
+    power: "82",
+    torque: "113",
+    gears: "5-speed manual / AMT",
+    length: 3840,
+    width: 1735,
+    height: 1530,
+    groundClearance: 163,
+    wheelbase: 2450,
+    turnRadius: 5.4,
+    price: 9999,
   },
   {
-    "name": "Maruti Dzire",
-    "yearsProduced": "2020 - Present",
-    "power": "82",
-    "torque": "113",
-    "gears": "5-speed manual / AMT",
-    "length": 3995,
-    "width": 1735,
-    "height": 1515,
-    "groundClearance": 163,
-    "wheelbase": 2450,
-    "turnRadius": 5.3
+    name: "Maruti Baleno",
+    yearsProduced: "2020 - Present",
+    power: "82 - 90",
+    torque: "113 - 113",
+    gears: "5-speed manual / CVT",
+    length: 3995,
+    width: 1745,
+    height: 1450,
+    groundClearance: 170,
+    wheelbase: 2600,
+    turnRadius: 5.3,
+    price: 9999,
   },
   {
-    "name": "Maruti Vitara Brezza",
-    "yearsProduced": "2020 - Present",
-    "power": "103",
-    "torque": "138",
-    "gears": "5-speed manual / 6-speed automatic",
-    "length": 3995,
-    "width": 1790,
-    "height": 1640,
-    "groundClearance": 198,
-    "wheelbase": 2500,
-    "turnRadius": 5.6
+    name: "Maruti Dzire",
+    yearsProduced: "2020 - Present",
+    power: "82",
+    torque: "113",
+    gears: "5-speed manual / AMT",
+    length: 3995,
+    width: 1735,
+    height: 1515,
+    groundClearance: 163,
+    wheelbase: 2450,
+    turnRadius: 5.3,
+    price: 9999,
   },
   {
-    "name": "Maruti Ertiga",
-    "yearsProduced": "2020 - Present",
-    "power": "103",
-    "torque": "138",
-    "gears": "5-speed manual / 6-speed automatic",
-    "length": 4395,
-    "width": 1735,
-    "height": 1685,
-    "groundClearance": 185,
-    "wheelbase": 2740,
-    "turnRadius": 6.8
+    name: "Maruti Vitara Brezza",
+    yearsProduced: "2020 - Present",
+    power: "103",
+    torque: "138",
+    gears: "5-speed manual / 6-speed automatic",
+    length: 3995,
+    width: 1790,
+    height: 1640,
+    groundClearance: 198,
+    wheelbase: 2500,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Maruti S-Cross",
-    "yearsProduced": "2020 - Present",
-    "power": "103",
-    "torque": "138",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 4300,
-    "width": 1785,
-    "height": 1595,
-    "groundClearance": 180,
-    "wheelbase": 2600,
-    "turnRadius": 6.6
+    name: "Maruti Ertiga",
+    yearsProduced: "2020 - Present",
+    power: "103",
+    torque: "138",
+    gears: "5-speed manual / 6-speed automatic",
+    length: 4395,
+    width: 1735,
+    height: 1685,
+    groundClearance: 185,
+    wheelbase: 2740,
+    turnRadius: 6.8,
+    price: 9999,
   },
   {
-    "name": "Maruti Celerio",
-    "yearsProduced": "2021 - Present",
-    "power": "67",
-    "torque": "89",
-    "gears": "5-speed manual / AMT",
-    "length": 3695,
-    "width": 1655,
-    "height": 1555,
-    "groundClearance": 170,
-    "wheelbase": 2435,
-    "turnRadius": 4.9
+    name: "Maruti S-Cross",
+    yearsProduced: "2020 - Present",
+    power: "103",
+    torque: "138",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 4300,
+    width: 1785,
+    height: 1595,
+    groundClearance: 180,
+    wheelbase: 2600,
+    turnRadius: 6.6,
+    price: 9999,
   },
   {
-    "name": "Maruti XL6",
-    "yearsProduced": "2020 - Present",
-    "power": "103",
-    "torque": "138",
-    "gears": "5-speed manual / 6-speed automatic",
-    "length": 4395,
-    "width": 1775,
-    "height": 1675,
-    "groundClearance": 200,
-    "wheelbase": 2740,
-    "turnRadius": 6.9
+    name: "Maruti Celerio",
+    yearsProduced: "2021 - Present",
+    power: "67",
+    torque: "89",
+    gears: "5-speed manual / AMT",
+    length: 3695,
+    width: 1655,
+    height: 1555,
+    groundClearance: 170,
+    wheelbase: 2435,
+    turnRadius: 4.9,
+    price: 9999,
   },
   {
-    "name": "Maruti Fronx",
-    "yearsProduced": "2023 - Present",
-    "power": "99 - 120",
-    "torque": "147 - 200",
-    "gears": "5-speed manual / 6-speed automatic",
-    "length": 3995,
-    "width": 1550,
-    "height": 1570,
-    "groundClearance": 190,
-    "wheelbase": 2520,
-    "turnRadius": 5.1
-  },
-];
-const hyundai=[
-  {
-    "name": "Hyundai i20",
-    "yearsProduced": "2020 - Present",
-    "power": "82 - 120",
-    "torque": "114 - 172",
-    "gears": "5-speed manual / CVT / 6-speed automatic",
-    "length": 4032,
-    "width": 1733,
-    "height": 1450,
-    "groundClearance": 170,
-    "wheelbase": 2570,
-    "turnRadius": 5.2
+    name: "Maruti XL6",
+    yearsProduced: "2020 - Present",
+    power: "103",
+    torque: "138",
+    gears: "5-speed manual / 6-speed automatic",
+    length: 4395,
+    width: 1775,
+    height: 1675,
+    groundClearance: 200,
+    wheelbase: 2740,
+    turnRadius: 6.9,
+    price: 9999,
   },
   {
-    "name": "Hyundai Verna",
-    "yearsProduced": "2020 - Present",
-    "power": "121 - 158",
-    "torque": "151 - 250",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 4440,
-    "width": 1729,
-    "height": 1475,
-    "groundClearance": 165,
-    "wheelbase": 2600,
-    "turnRadius": 5.3
+    name: "Maruti Fronx",
+    yearsProduced: "2023 - Present",
+    power: "99 - 120",
+    torque: "147 - 200",
+    gears: "5-speed manual / 6-speed automatic",
+    length: 3995,
+    width: 1550,
+    height: 1570,
+    groundClearance: 190,
+    wheelbase: 2520,
+    turnRadius: 5.1,
+    price: 9999,
+  },
+]
+const hyundai = [
+  {
+    name: "Hyundai i20",
+    yearsProduced: "2020 - Present",
+    power: "82 - 120",
+    torque: "114 - 172",
+    gears: "5-speed manual / CVT / 6-speed automatic",
+    length: 4032,
+    width: 1733,
+    height: 1450,
+    groundClearance: 170,
+    wheelbase: 2570,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Hyundai Creta",
-    "yearsProduced": "2020 - Present",
-    "power": "113 - 138",
-    "torque": "144 - 250",
-    "gears": "6-speed manual / 6-speed automatic / CVT",
-    "length": 4300,
-    "width": 1790,
-    "height": 1635,
-    "groundClearance": 190,
-    "wheelbase": 2610,
-    "turnRadius": 5.8
+    name: "Hyundai Verna",
+    yearsProduced: "2020 - Present",
+    power: "121 - 158",
+    torque: "151 - 250",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 4440,
+    width: 1729,
+    height: 1475,
+    groundClearance: 165,
+    wheelbase: 2600,
+    turnRadius: 5.3,
+    price: 9999,
   },
   {
-    "name": "Hyundai Tucson",
-    "yearsProduced": "2020 - Present",
-    "power": "153 - 185",
-    "torque": "400 - 400",
-    "gears": "6-speed automatic",
-    "length": 4480,
-    "width": 1850,
-    "height": 1665,
-    "groundClearance": 172,
-    "wheelbase": 2670,
-    "turnRadius": 5.9
+    name: "Hyundai Creta",
+    yearsProduced: "2020 - Present",
+    power: "113 - 138",
+    torque: "144 - 250",
+    gears: "6-speed manual / 6-speed automatic / CVT",
+    length: 4300,
+    width: 1790,
+    height: 1635,
+    groundClearance: 190,
+    wheelbase: 2610,
+    turnRadius: 5.8,
+    price: 9999,
   },
   {
-    "name": "Hyundai Santro",
-    "yearsProduced": "2020 - Present",
-    "power": "68",
-    "torque": "99",
-    "gears": "5-speed manual / AMT",
-    "length": 3610,
-    "width": 1645,
-    "height": 1560,
-    "groundClearance": 165,
-    "wheelbase": 2400,
-    "turnRadius": 4.8
+    name: "Hyundai Tucson",
+    yearsProduced: "2020 - Present",
+    power: "153 - 185",
+    torque: "400 - 400",
+    gears: "6-speed automatic",
+    length: 4480,
+    width: 1850,
+    height: 1665,
+    groundClearance: 172,
+    wheelbase: 2670,
+    turnRadius: 5.9,
+    price: 9999,
   },
   {
-    "name": "Hyundai Aura",
-    "yearsProduced": "2020 - Present",
-    "power": "68 - 83",
-    "torque": "99 - 113",
-    "gears": "5-speed manual / AMT",
-    "length": 3995,
-    "width": 1680,
-    "height": 1475,
-    "groundClearance": 165,
-    "wheelbase": 2450,
-    "turnRadius": 5.0
+    name: "Hyundai Santro",
+    yearsProduced: "2020 - Present",
+    power: "68",
+    torque: "99",
+    gears: "5-speed manual / AMT",
+    length: 3610,
+    width: 1645,
+    height: 1560,
+    groundClearance: 165,
+    wheelbase: 2400,
+    turnRadius: 4.8,
+    price: 9999,
   },
   {
-    "name": "Hyundai Alcazar",
-    "yearsProduced": "2021 - Present",
-    "power": "113 - 184",
-    "torque": "250 - 300",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 4500,
-    "width": 1790,
-    "height": 1675,
-    "groundClearance": 200,
-    "wheelbase": 2760,
-    "turnRadius": 6.1
+    name: "Hyundai Aura",
+    yearsProduced: "2020 - Present",
+    power: "68 - 83",
+    torque: "99 - 113",
+    gears: "5-speed manual / AMT",
+    length: 3995,
+    width: 1680,
+    height: 1475,
+    groundClearance: 165,
+    wheelbase: 2450,
+    turnRadius: 5.0,
+    price: 9999,
   },
   {
-    "name": "Hyundai Venue",
-    "yearsProduced": "2020 - Present",
-    "power": "81 - 120",
-    "torque": "113 - 172",
-    "gears": "5-speed manual / 7-speed DCT / 6-speed automatic",
-    "length": 4000,
-    "width": 1770,
-    "height": 1560,
-    "groundClearance": 190,
-    "wheelbase": 2500,
-    "turnRadius": 5.5
+    name: "Hyundai Alcazar",
+    yearsProduced: "2021 - Present",
+    power: "113 - 184",
+    torque: "250 - 300",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 4500,
+    width: 1790,
+    height: 1675,
+    groundClearance: 200,
+    wheelbase: 2760,
+    turnRadius: 6.1,
+    price: 9999,
   },
   {
-    "name": "Hyundai Exter",
-    "yearsProduced": "2023 - Present",
-    "power": "68 - 83",
-    "torque": "95 - 113",
-    "gears": "5-speed manual / AMT",
-    "length": 3815,
-    "width": 1710,
-    "height": 1635,
-    "groundClearance": 190,
-    "wheelbase": 2450,
-    "turnRadius": 5.3
-  },
-];
-const honda=[
-  {
-    "name": "Honda City",
-    "yearsProduced": "2008 - Present",
-    "power": "121 - 149",
-    "torque": "145",
-    "gears": "5-speed manual / CVT",
-    "length": 4440,
-    "width": 1694,
-    "height": 1475,
-    "groundClearance": 165,
-    "wheelbase": 2600,
-    "turnRadius": 5.6
+    name: "Hyundai Venue",
+    yearsProduced: "2020 - Present",
+    power: "81 - 120",
+    torque: "113 - 172",
+    gears: "5-speed manual / 7-speed DCT / 6-speed automatic",
+    length: 4000,
+    width: 1770,
+    height: 1560,
+    groundClearance: 190,
+    wheelbase: 2500,
+    turnRadius: 5.5,
+    price: 9999,
   },
   {
-    "name": "Honda Civic",
-    "yearsProduced": "2006 - 2013, 2019 - Present",
-    "power": "140 - 180",
-    "torque": "174 - 220",
-    "gears": "6-speed manual / CVT",
-    "length": 4650,
-    "width": 1798,
-    "height": 1416,
-    "groundClearance": 150,
-    "wheelbase": 2700,
-    "turnRadius": 5.8
+    name: "Hyundai Exter",
+    yearsProduced: "2023 - Present",
+    power: "68 - 83",
+    torque: "95 - 113",
+    gears: "5-speed manual / AMT",
+    length: 3815,
+    width: 1710,
+    height: 1635,
+    groundClearance: 190,
+    wheelbase: 2450,
+    turnRadius: 5.3,
+    price: 9999,
+  },
+]
+const honda = [
+  {
+    name: "Honda City",
+    yearsProduced: "2008 - Present",
+    power: "121 - 149",
+    torque: "145",
+    gears: "5-speed manual / CVT",
+    length: 4440,
+    width: 1694,
+    height: 1475,
+    groundClearance: 165,
+    wheelbase: 2600,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Honda CR-V",
-    "yearsProduced": "2007 - Present",
-    "power": "154 - 190",
-    "torque": "190 - 240",
-    "gears": "5-speed automatic / CVT",
-    "length": 4600,
-    "width": 1855,
-    "height": 1685,
-    "groundClearance": 208,
-    "wheelbase": 2660,
-    "turnRadius": 6.3
+    name: "Honda Civic",
+    yearsProduced: "2006 - 2013, 2019 - Present",
+    power: "140 - 180",
+    torque: "174 - 220",
+    gears: "6-speed manual / CVT",
+    length: 4650,
+    width: 1798,
+    height: 1416,
+    groundClearance: 150,
+    wheelbase: 2700,
+    turnRadius: 5.8,
+    price: 9999,
   },
   {
-    "name": "Honda Jazz",
-    "yearsProduced": "2009 - Present",
-    "power": "90 - 110",
-    "torque": "110 - 145",
-    "gears": "5-speed manual / CVT",
-    "length": 4000,
-    "width": 1694,
-    "height": 1525,
-    "groundClearance": 165,
-    "wheelbase": 2530,
-    "turnRadius": 5.4
+    name: "Honda CR-V",
+    yearsProduced: "2007 - Present",
+    power: "154 - 190",
+    torque: "190 - 240",
+    gears: "5-speed automatic / CVT",
+    length: 4600,
+    width: 1855,
+    height: 1685,
+    groundClearance: 208,
+    wheelbase: 2660,
+    turnRadius: 6.3,
+    price: 9999,
   },
   {
-    "name": "Honda WR-V",
-    "yearsProduced": "2017 - Present",
-    "power": "110",
-    "torque": "200",
-    "gears": "6-speed manual / CVT",
-    "length": 4000,
-    "width": 1777,
-    "height": 1600,
-    "groundClearance": 188,
-    "wheelbase": 2600,
-    "turnRadius": 5.6
+    name: "Honda Jazz",
+    yearsProduced: "2009 - Present",
+    power: "90 - 110",
+    torque: "110 - 145",
+    gears: "5-speed manual / CVT",
+    length: 4000,
+    width: 1694,
+    height: 1525,
+    groundClearance: 165,
+    wheelbase: 2530,
+    turnRadius: 5.4,
+    price: 9999,
   },
   {
-    "name": "Honda Amaze",
-    "yearsProduced": "2013 - Present",
-    "power": "88 - 110",
-    "torque": "109 - 200",
-    "gears": "5-speed manual / CVT",
-    "length": 3995,
-    "width": 1680,
-    "height": 1485,
-    "groundClearance": 170,
-    "wheelbase": 2470,
-    "turnRadius": 5.5
+    name: "Honda WR-V",
+    yearsProduced: "2017 - Present",
+    power: "110",
+    torque: "200",
+    gears: "6-speed manual / CVT",
+    length: 4000,
+    width: 1777,
+    height: 1600,
+    groundClearance: 188,
+    wheelbase: 2600,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Honda Elevate",
-    "yearsProduced": "2023 - Present",
-    "power": "121",
-    "torque": "145",
-    "gears": "6-speed manual / CVT",
-    "length": 4312,
-    "width": 1790,
-    "height": 1650,
-    "groundClearance": 220,
-    "wheelbase": 2650,
-    "turnRadius": 6.9
-  }
-];
-// const tesla=[
-//   {
-//     "name": "Tesla Model S",
-//     "description": "Tesla Model S - A full-size all-electric five-door liftback sedan known for its high performance and long range.",
-//     "length": 4970,
-//     "width": 1964,
-//     "height": 1445,
-//     "turnRadius":5.8,
-//     "groundClearance": 130,
-//     "wheelbase": 2960
-//   },
-//   {
-//     "name": "Tesla Model 3",
-//     "description": "Tesla Model 3 - A compact all-electric sedan offering a balance of performance, safety, and spaciousness.",
-//     "length": 4694,
-//     "width": 1849,
-//     "height": 1443,
-//     "turnRadius":5.4,
-//     "groundClearance": 140,
-//     "wheelbase": 2875
-//   },
-//   {
-//     "name": "Tesla Model X",
-//     "description": "Tesla Model X - A mid-size all-electric luxury SUV with falcon-wing doors and ample seating for up to 7 adults.",
-//     "length": 5036,
-//     "width": 2070,
-//     "height": 1684,
-//     "turnRadius":6.1,
-//     "groundClearance": 137,
-//     "wheelbase": 2965
-//   },
-//   {
-//     "name": "Tesla Model Y",
-//     "description": "Tesla Model Y - A compact all-electric SUV with versatile seating options and advanced safety features.",
-//     "length": 4751,
-//     "width": 1921,
-//     "height": 1624,
-//     "turnRadius":5.7,
-//     "groundClearance": 170,
-//     "wheelbase": 2700
-//   },
-//   {
-//     "name": "Tesla Roadster",
-//     "description": "Tesla Roadster - An all-electric sports car that emphasizes speed and performance with a sleek design.",
-//     "length": 4380,
-//     "width": 1940,
-//     "height": 1150,
-//     "turnRadius":5.2,
-//     "groundClearance": 100,
-//     "wheelbase": 2450
-//   },
-//   {
-//     "name": "Tesla Cybertruck",
-//     "description": "Tesla Cybertruck - A futuristic all-electric pickup truck with a distinct angular design and high durability.",
-//     "length": 5885,
-//     "width": 2030,
-//     "height": 1921,
-//     "turnRadius":7.0,
-//     "groundClearance": 400,
-//     "wheelbase": 3650
-//   },
-//   {
-//     "name": "Tesla Model S Plaid",
-//     "description": "Tesla Model S Plaid - The high-performance variant of the Model S, boasting extreme acceleration and cutting-edge technology.",
-//     "length": 4970,
-//     "width": 1964,
-//     "height": 1445,
-//     "turnRadius":5.8,
-//     "groundClearance": 130,
-//     "wheelbase": 2960
-//   },
-//   {
-//     "name": "Tesla Model 3 Performance",
-//     "description": "Tesla Model 3 Performance - The performance-focused variant of the Model 3, offering enhanced power and handling.",
-//     "length": 4694,
-//     "width": 1849,
-//     "height": 1443,
-//     "turnRadius":5.4,
-//     "groundClearance": 140,
-//     "wheelbase": 2875
-//   },
-//   {
-//     "name": "Tesla Model X Plaid",
-//     "description": "Tesla Model X Plaid - The performance edition of the Model X with superior acceleration and advanced features.",
-//     "length": 5036,
-//     "width": 2070,
-//     "height": 1684,
-//     "turnRadius":6.1,
-//     "groundClearance": 137,
-//     "wheelbase": 2965
-//   },
-//   {
-//     "name": "Tesla Roadster 2.0",
-//     "description": "Tesla Roadster 2.0 - An updated version of the iconic Roadster aimed at delivering record-setting speeds and enhanced range.",
-//     "length": 4400,
-//     "width": 1950,
-//     "height": 1160,
-//     "turnRadius":5.3,
-//     "groundClearance": 105,
-//     "wheelbase": 2470
-//   },
-// ];
-const mg=[
-  {
-  "name": "MG Hector",
-  "yearsProduced": "2019 - Present",
-  "power": "145 - 170",
-  "torque": "300",
-  "gears": "6",
-  "length": 4500,
-  "width": 1830,
-  "height": 1675,
-  "groundClearance": 175,
-  "wheelbase": 2720,
-  "turnRadius": 5.6
-},
-{
-  "name": "MG ZS EV",
-  "yearsProduced": "2019 - Present",
-  "power": "141",
-  "torque": "353",
-  "gears": "1",
-  "length": 4300,
-  "width": 1820,
-  "height": 1604,
-  "groundClearance": 167,
-  "wheelbase": 2610,
-  "turnRadius": 5.3
-},
-{
-  "name": "MG Gloster",
-  "yearsProduced": "2019 - Present",
-  "power": "200 - 250",
-  "torque": "550",
-  "gears": "8",
-  "length": 5000,
-  "width": 1930,
-  "height": 1940,
-  "groundClearance": 230,
-  "wheelbase": 2950,
-  "turnRadius": 5.8
-},
-{
-  "name": "MG Comet",
-  "yearsProduced": "2023 - Present",
-  "power": "40 - 55",
-  "torque": "100 - 120",
-  "gears": "1",
-  "length": 2974,
-  "width": 1501,
-  "height": 1601,
-  "groundClearance": 160,
-  "wheelbase": 2000,
-  "turnRadius": 4.7
-},
-{
-  "name": "Windsor",
-  "yearsProduced": "2020 - Present",
-  "power": "120 - 160",
-  "torque": "170 - 220",
-  "gears": "6",
-  "length": 4700,
-  "width": 1800,
-  "height": 1450,
-  "groundClearance": 155,
-  "wheelbase": 2750,
-  "turnRadius": 5.4
-},];
-const fiat=[
-  {
-    "name": "Fiat Punto",
-    "yearsProduced": "2010 - 2016",
-    "power": "75 - 90",
-    "torque": "190 - 200",
-    "gears": "5",
-    "length": 3987,
-    "width": 1687,
-    "height": 1495,
-    "groundClearance": 185,
-    "wheelbase": 2510,
-    "turnRadius": 5.2
+    name: "Honda Amaze",
+    yearsProduced: "2013 - Present",
+    power: "88 - 110",
+    torque: "109 - 200",
+    gears: "5-speed manual / CVT",
+    length: 3995,
+    width: 1680,
+    height: 1485,
+    groundClearance: 170,
+    wheelbase: 2470,
+    turnRadius: 5.5,
+    price: 9999,
   },
   {
-    "name": "Fiat Linea",
-    "yearsProduced": "2010 - 2016",
-    "power": "90 - 112",
-    "torque": "200 - 215",
-    "gears": "5",
-    "length": 4560,
-    "width": 1730,
-    "height": 1495,
-    "groundClearance": 185,
-    "wheelbase": 2603,
-    "turnRadius": 5.4
+    name: "Honda Elevate",
+    yearsProduced: "2023 - Present",
+    power: "121",
+    torque: "145",
+    gears: "6-speed manual / CVT",
+    length: 4312,
+    width: 1790,
+    height: 1650,
+    groundClearance: 220,
+    wheelbase: 2650,
+    turnRadius: 6.9,
+    price: 9999,
+  },
+]
+const tesla = [
+  {
+    name: "Tesla Model S",
+    yearsProduced: "2012 - Present",
+    power: "670 - 1020",
+    torque: "840 - 1050",
+    gears: "Single-speed automatic",
+    length: 4970,
+    width: 1964,
+    height: 1445,
+    groundClearance: 130,
+    wheelbase: 2960,
+    turnRadius: 5.8,
+    price: 74990,
   },
   {
-    "name": "Fiat 500",
-    "yearsProduced": "2010 - 2016",
-    "power": "69",
-    "torque": "102",
-    "gears": "5",
-    "length": 3546,
-    "width": 1627,
-    "height": 1488,
-    "groundClearance": 130,
-    "wheelbase": 2300,
-    "turnRadius": 5.6
+    name: "Tesla Model 3",
+    yearsProduced: "2017 - Present",
+    power: "283 - 450",
+    torque: "420 - 639",
+    gears: "Single-speed automatic",
+    length: 4694,
+    width: 1849,
+    height: 1443,
+    groundClearance: 140,
+    wheelbase: 2875,
+    turnRadius: 5.4,
+    price: 38990,
   },
   {
-    "name": "Fiat Avventura",
-    "yearsProduced": "2014 - 2016",
-    "power": "90 - 112",
-    "torque": "200 - 215",
-    "gears": "5",
-    "length": 3995,
-    "width": 1706,
-    "height": 1550,
-    "groundClearance": 205,
-    "wheelbase": 2578,
-    "turnRadius": 5.3
-  },
-];
-const tata=[
-  {
-    "name": "Tata Nano",
-    "yearsProduced": "2008 - 2018",
-    "power": "35",
-    "torque": "48",
-    "gears": "4",
-    "length": 3199,
-    "width": 1652,
-    "height": 1651,
-    "groundClearance": 180,
-    "wheelbase": 2230,
-    "turnRadius": 4.5
+    name: "Tesla Model X",
+    yearsProduced: "2015 - Present",
+    power: "670 - 1020",
+    torque: "840 - 1050",
+    gears: "Single-speed automatic",
+    length: 5036,
+    width: 2070,
+    height: 1684,
+    groundClearance: 137,
+    wheelbase: 2965,
+    turnRadius: 6.1,
+    price: 79990,
   },
   {
-    "name": "Tata Indica",
-    "yearsProduced": "1998 - 2018",
-    "power": "60 - 70",
-    "torque": "135 - 140",
-    "gears": "5",
-    "length": 3795,
-    "width": 1665,
-    "height": 1535,
-    "groundClearance": 165,
-    "wheelbase": 2420,
-    "turnRadius": 4.9
+    name: "Tesla Model Y",
+    yearsProduced: "2020 - Present",
+    power: "350 - 456",
+    torque: "510 - 639",
+    gears: "Single-speed automatic",
+    length: 4751,
+    width: 1921,
+    height: 1624,
+    groundClearance: 170,
+    wheelbase: 2700,
+    turnRadius: 5.7,
+    price: 43990,
   },
   {
-    "name": "Tata Indigo",
-    "yearsProduced": "2002 - 2018",
-    "power": "70 - 90",
-    "torque": "140 - 190",
-    "gears": "5",
-    "length": 3990,
-    "width": 1695,
-    "height": 1550,
-    "groundClearance": 165,
-    "wheelbase": 2520,
-    "turnRadius": 5.0
+    name: "Tesla Roadster",
+    yearsProduced: "2008 - 2012",
+    power: "248",
+    torque: "400",
+    gears: "Single-speed automatic",
+    length: 4380,
+    width: 1940,
+    height: 1150,
+    groundClearance: 100,
+    wheelbase: 2450,
+    turnRadius: 5.2,
+    price: 200000,
   },
   {
-    "name": "Tata Safari",
-    "yearsProduced": "1998 - Present",
-    "power": "140 - 170",
-    "torque": "320 - 400",
-    "gears": "5",
-    "length": 4665,
-    "width": 1918,
-    "height": 1925,
-    "groundClearance": 200,
-    "wheelbase": 2650,
-    "turnRadius": 5.6
+    name: "Tesla Cybertruck",
+    yearsProduced: "2023 - Present",
+    power: "600 - 800",
+    torque: "1000 - 1200",
+    gears: "Single-speed automatic",
+    length: 5885,
+    width: 2030,
+    height: 1921,
+    groundClearance: 400,
+    wheelbase: 3650,
+    turnRadius: 7.0,
+    price: 60990,
+  },
+]
+const mg = [
+  {
+    name: "MG Hector",
+    yearsProduced: "2019 - Present",
+    power: "145 - 170",
+    torque: "300",
+    gears: "6",
+    length: 4500,
+    width: 1830,
+    height: 1675,
+    groundClearance: 175,
+    wheelbase: 2720,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Tata Tigor",
-    "yearsProduced": "2017 - Present",
-    "power": "85 - 113",
-    "torque": "114 - 170",
-    "gears": "5",
-    "length": 3990,
-    "width": 1677,
-    "height": 1537,
-    "groundClearance": 170,
-    "wheelbase": 2450,
-    "turnRadius": 5.2
+    name: "MG ZS EV",
+    yearsProduced: "2019 - Present",
+    power: "141",
+    torque: "353",
+    gears: "1",
+    length: 4300,
+    width: 1820,
+    height: 1604,
+    groundClearance: 167,
+    wheelbase: 2610,
+    turnRadius: 5.3,
+    price: 9999,
   },
   {
-    "name": "Tata Tiago",
-    "yearsProduced": "2016 - Present",
-    "power": "85 - 113",
-    "torque": "114 - 170",
-    "gears": "5",
-    "length": 3746,
-    "width": 1647,
-    "height": 1537,
-    "groundClearance": 170,
-    "wheelbase": 2400,
-    "turnRadius": 4.9
+    name: "MG Gloster",
+    yearsProduced: "2019 - Present",
+    power: "200 - 250",
+    torque: "550",
+    gears: "8",
+    length: 5000,
+    width: 1930,
+    height: 1940,
+    groundClearance: 230,
+    wheelbase: 2950,
+    turnRadius: 5.8,
+    price: 9999,
   },
   {
-    "name": "Tata Harrier",
-    "yearsProduced": "2019 - Present",
-    "power": "140 - 170",
-    "torque": "350",
-    "gears": "6",
-    "length": 4598,
-    "width": 1894,
-    "height": 1706,
-    "groundClearance": 205,
-    "wheelbase": 2741,
-    "turnRadius": 5.6
+    name: "MG Comet",
+    yearsProduced: "2023 - Present",
+    power: "40 - 55",
+    torque: "100 - 120",
+    gears: "1",
+    length: 2974,
+    width: 1501,
+    height: 1601,
+    groundClearance: 160,
+    wheelbase: 2000,
+    turnRadius: 4.7,
+    price: 9999,
   },
   {
-    "name": "Tata Nexon",
-    "yearsProduced": "2017 - Present",
-    "power": "110 - 120",
-    "torque": "260",
-    "gears": "6",
-    "length": 3993,
-    "width": 1811,
-    "height": 1606,
-    "groundClearance": 209,
-    "wheelbase": 2498,
-    "turnRadius": 5.1
+    name: "Windsor",
+    yearsProduced: "2020 - Present",
+    power: "120 - 160",
+    torque: "170 - 220",
+    gears: "6",
+    length: 4700,
+    width: 1800,
+    height: 1450,
+    groundClearance: 155,
+    wheelbase: 2750,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+]
+const fiat = [
+  {
+    name: "Fiat Punto",
+    yearsProduced: "2010 - 2016",
+    power: "75 - 90",
+    torque: "190 - 200",
+    gears: "5",
+    length: 3987,
+    width: 1687,
+    height: 1495,
+    groundClearance: 185,
+    wheelbase: 2510,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Tata Altroz",
-    "yearsProduced": "2020 - Present",
-    "power": "86 - 110",
-    "torque": "113 - 200",
-    "gears": "5",
-    "length": 3990,
-    "width": 1755,
-    "height": 1505,
-    "groundClearance": 165,
-    "wheelbase": 2570,
-    "turnRadius": 5.0
+    name: "Fiat Linea",
+    yearsProduced: "2010 - 2016",
+    power: "90 - 112",
+    torque: "200 - 215",
+    gears: "5",
+    length: 4560,
+    width: 1730,
+    height: 1495,
+    groundClearance: 185,
+    wheelbase: 2603,
+    turnRadius: 5.4,
+    price: 9999,
   },
   {
-    "name": "Tata Punch",
-    "yearsProduced": "2021 - Present",
-    "power": "84",
-    "torque": "113",
-    "gears": "5",
-    "length": 3827,
-    "width": 1742,
-    "height": 1615,
-    "groundClearance": 187,
-    "wheelbase": 2445,
-    "turnRadius": 5.0
-  },
-];
-const toyota=[
-  {
-    "name": "Toyota Glanza",
-    "yearsProduced": "2019 - Present",
-    "power": "82 - 89",
-    "torque": "113 - 140",
-    "gears": "5-speed manual / CVT",
-    "length": 3995,
-    "width": 1745,
-    "height": 1500,
-    "groundClearance": 170,
-    "wheelbase": 2520,
-    "turnRadius": 4.8
-    },
-    {
-    "name": "Toyota Urban Cruiser",
-    "yearsProduced": "2020 - Present",
-    "power": "103",
-    "torque": "138",
-    "gears": "5-speed manual / 4-speed AT",
-    "length": 3995,
-    "width": 1790,
-    "height": 1640,
-    "groundClearance": 210,
-    "wheelbase": 2500,
-    "turnRadius": 5.2
-    },
-    {
-    "name": "Toyota Innova Crysta",
-    "yearsProduced": "2016 - Present",
-    "power": "148 - 163",
-    "torque": "243 - 360",
-    "gears": "5-speed manual / 6-speed AT",
-    "length": 4735,
-    "width": 1830,
-    "height": 1795,
-    "groundClearance": 170,
-    "wheelbase": 2750,
-    "turnRadius": 5.6
-    },
-    {
-    "name": "Toyota Fortuner",
-    "yearsProduced": "2016 - Present",
-    "power": "201 - 204",
-    "torque": "320 - 500",
-    "gears": "6-speed manual / 6-speed AT",
-    "length": 4795,
-    "width": 1855,
-    "height": 1835,
-    "groundClearance": 220,
-    "wheelbase": 2745,
-    "turnRadius": 5.9
-    },
-    {
-    "name": "Toyota Camry",
-    "yearsProduced": "2019 - Present",
-    "power": "178",
-    "torque": "221",
-    "gears": "6-speed AT",
-    "length": 4885,
-    "width": 1840,
-    "height": 1445,
-    "groundClearance": 160,
-    "wheelbase": 2825,
-    "turnRadius": 5.8
-    }
-];
-const kia=[
-  {
-    "name": "Kia Seltos",
-    "yearsProduced": "2019 - Present",
-    "power": "115 - 138",
-    "torque": "144 - 242",
-    "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
-    "length": 4315,
-    "width": 1800,
-    "height": 1645,
-    "groundClearance": 190,
-    "wheelbase": 2610,
-    "turnRadius": 5.3
+    name: "Fiat 500",
+    yearsProduced: "2010 - 2016",
+    power: "69",
+    torque: "102",
+    gears: "5",
+    length: 3546,
+    width: 1627,
+    height: 1488,
+    groundClearance: 130,
+    wheelbase: 2300,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Kia Sonet",
-    "yearsProduced": "2020 - Present",
-    "power": "99 - 118",
-    "torque": "240 - 260",
-    "gears": "5-speed manual / 6-speed manual / 6-speed automatic / 7-speed DCT",
-    "length": 3995,
-    "width": 1790,
-    "height": 1642,
-    "groundClearance": 205,
-    "wheelbase": 2610,
-    "turnRadius": 5.3
+    name: "Fiat Avventura",
+    yearsProduced: "2014 - 2016",
+    power: "90 - 112",
+    torque: "200 - 215",
+    gears: "5",
+    length: 3995,
+    width: 1706,
+    height: 1550,
+    groundClearance: 205,
+    wheelbase: 2578,
+    turnRadius: 5.3,
+    price: 9999,
+  },
+]
+const tata = [
+  {
+    name: "Tata Nano",
+    yearsProduced: "2008 - 2018",
+    power: "35",
+    torque: "48",
+    gears: "4",
+    length: 3199,
+    width: 1652,
+    height: 1651,
+    groundClearance: 180,
+    wheelbase: 2230,
+    turnRadius: 4.5,
+    price: 9999,
   },
   {
-    "name": "Kia Carens",
-    "yearsProduced": "2022 - Present",
-    "power": "115 - 138",
-    "torque": "144 - 242",
-    "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
-    "length": 4540,
-    "width": 1800,
-    "height": 1708,
-    "groundClearance": 190,
-    "wheelbase": 2780,
-    "turnRadius": 5.3
-  }
-];
-const mahindra=[
-  {
-    "name": "Mahindra XUV700",
-    "yearsProduced": "2021 - Present",
-    "power": "155 - 200",
-    "torque": "360 - 380",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 4695,
-    "width": 1890,
-    "height": 1755,
-    "groundClearance": 200,
-    "wheelbase": 2750,
-    "turnRadius": 5.4
+    name: "Tata Indica",
+    yearsProduced: "1998 - 2018",
+    power: "60 - 70",
+    torque: "135 - 140",
+    gears: "5",
+    length: 3795,
+    width: 1665,
+    height: 1535,
+    groundClearance: 165,
+    wheelbase: 2420,
+    turnRadius: 4.9,
+    price: 9999,
   },
   {
-    "name": "Mahindra Thar",
-    "yearsProduced": "2020 - Present",
-    "power": "130 - 150",
-    "torque": "300 - 320",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 3985,
-    "width": 1855,
-    "height": 1844,
-    "groundClearance": 226,
-    "wheelbase": 2450,
-    "turnRadius": 5.6
+    name: "Tata Indigo",
+    yearsProduced: "2002 - 2018",
+    power: "70 - 90",
+    torque: "140 - 190",
+    gears: "5",
+    length: 3990,
+    width: 1695,
+    height: 1550,
+    groundClearance: 165,
+    wheelbase: 2520,
+    turnRadius: 5.0,
+    price: 9999,
   },
   {
-    "name": "Mahindra Scorpio-N",
-    "yearsProduced": "2022 - Present",
-    "power": "130 - 200",
-    "torque": "300 - 380",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 4662,
-    "width": 1917,
-    "height": 1857,
-    "groundClearance": 187,
-    "wheelbase": 2750,
-    "turnRadius": 5.4
+    name: "Tata Safari",
+    yearsProduced: "1998 - Present",
+    power: "140 - 170",
+    torque: "320 - 400",
+    gears: "5",
+    length: 4665,
+    width: 1918,
+    height: 1925,
+    groundClearance: 200,
+    wheelbase: 2650,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Mahindra XUV300",
-    "yearsProduced": "2019 - Present",
-    "power": "108 - 115",
-    "torque": "200 - 300",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 3995,
-    "width": 1821,
-    "height": 1627,
-    "groundClearance": 180,
-    "wheelbase": 2600,
-    "turnRadius": 5.4
+    name: "Tata Tigor",
+    yearsProduced: "2017 - Present",
+    power: "85 - 113",
+    torque: "114 - 170",
+    gears: "5",
+    length: 3990,
+    width: 1677,
+    height: 1537,
+    groundClearance: 170,
+    wheelbase: 2450,
+    turnRadius: 5.2,
+    price: 9999,
   },
   {
-    "name": "Mahindra XUV500",
-    "yearsProduced": "2011 - 2021",
-    "power": "140 - 155",
-    "torque": "330 - 360",
-    "gears": "6-speed manual / 6-speed automatic",
-    "length": 4585,
-    "width": 1890,
-    "height": 1785,
-    "groundClearance": 200,
-    "wheelbase": 2700,
-    "turnRadius": 5.4
-  }
-];
-const volkswagon=[
-  {
-    "name": "Volkswagen Virtus",
-    "yearsProduced": "2022 - Present",
-    "power": "113 - 148",
-    "torque": "178 - 250",
-    "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
-    "length": 4561,
-    "width": 1759,
-    "height": 1507,
-    "groundClearance": 179,
-    "wheelbase": 2651,
-    "turnRadius": 5.4
+    name: "Tata Tiago",
+    yearsProduced: "2016 - Present",
+    power: "85 - 113",
+    torque: "114 - 170",
+    gears: "5",
+    length: 3746,
+    width: 1647,
+    height: 1537,
+    groundClearance: 170,
+    wheelbase: 2400,
+    turnRadius: 4.9,
+    price: 9999,
   },
   {
-    "name": "Volkswagen Taigun",
-    "yearsProduced": "2021 - Present",
-    "power": "113 - 148",
-    "torque": "178 - 250",
-    "gears": "6-speed manual / 6-speed automatic / 7-speed DCT",
-    "length": 4221,
-    "width": 1760,
-    "height": 1612,
-    "groundClearance": 188,
-    "wheelbase": 2651,
-    "turnRadius": 5.4
+    name: "Tata Harrier",
+    yearsProduced: "2019 - Present",
+    power: "140 - 170",
+    torque: "350",
+    gears: "6",
+    length: 4598,
+    width: 1894,
+    height: 1706,
+    groundClearance: 205,
+    wheelbase: 2741,
+    turnRadius: 5.6,
+    price: 9999,
   },
   {
-    "name": "Volkswagen Tiguan",
-    "yearsProduced": "2017 - Present",
-    "power": "187",
-    "torque": "320",
-    "gears": "7-speed DCT",
-    "length": 4486,
-    "width": 1839,
-    "height": 1665,
-    "groundClearance": 205,
-    "wheelbase": 2679,
-    "turnRadius": 5.5
-  }
-];
+    name: "Tata Nexon",
+    yearsProduced: "2017 - Present",
+    power: "110 - 120",
+    torque: "260",
+    gears: "6",
+    length: 3993,
+    width: 1811,
+    height: 1606,
+    groundClearance: 209,
+    wheelbase: 2498,
+    turnRadius: 5.1,
+    price: 9999,
+  },
+  {
+    name: "Tata Altroz",
+    yearsProduced: "2020 - Present",
+    power: "86 - 110",
+    torque: "113 - 200",
+    gears: "5",
+    length: 3990,
+    width: 1755,
+    height: 1505,
+    groundClearance: 165,
+    wheelbase: 2570,
+    turnRadius: 5.0,
+    price: 9999,
+  },
+  {
+    name: "Tata Punch",
+    yearsProduced: "2021 - Present",
+    power: "84",
+    torque: "113",
+    gears: "5",
+    length: 3827,
+    width: 1742,
+    height: 1615,
+    groundClearance: 187,
+    wheelbase: 2445,
+    turnRadius: 5.0,
+    price: 9999,
+  },
+]
+const toyota = [
+  {
+    name: "Toyota Glanza",
+    yearsProduced: "2019 - Present",
+    power: "82 - 89",
+    torque: "113 - 140",
+    gears: "5-speed manual / CVT",
+    length: 3995,
+    width: 1745,
+    height: 1500,
+    groundClearance: 170,
+    wheelbase: 2520,
+    turnRadius: 4.8,
+    price: 9999,
+  },
+  {
+    name: "Toyota Urban Cruiser",
+    yearsProduced: "2020 - Present",
+    power: "103",
+    torque: "138",
+    gears: "5-speed manual / 4-speed AT",
+    length: 3995,
+    width: 1790,
+    height: 1640,
+    groundClearance: 210,
+    wheelbase: 2500,
+    turnRadius: 5.2,
+    price: 9999,
+  },
+  {
+    name: "Toyota Innova Crysta",
+    yearsProduced: "2016 - Present",
+    power: "148 - 163",
+    torque: "243 - 360",
+    gears: "5-speed manual / 6-speed AT",
+    length: 4735,
+    width: 1830,
+    height: 1795,
+    groundClearance: 170,
+    wheelbase: 2750,
+    turnRadius: 5.6,
+    price: 9999,
+  },
+  {
+    name: "Toyota Fortuner",
+    yearsProduced: "2016 - Present",
+    power: "201 - 204",
+    torque: "320 - 500",
+    gears: "6-speed manual / 6-speed AT",
+    length: 4795,
+    width: 1855,
+    height: 1835,
+    groundClearance: 220,
+    wheelbase: 2745,
+    turnRadius: 5.9,
+    price: 9999,
+  },
+  {
+    name: "Toyota Camry",
+    yearsProduced: "2019 - Present",
+    power: "178",
+    torque: "221",
+    gears: "6-speed AT",
+    length: 4885,
+    width: 1840,
+    height: 1445,
+    groundClearance: 160,
+    wheelbase: 2825,
+    turnRadius: 5.8,
+    price: 9999,
+  },
+]
+const kia = [
+  {
+    name: "Kia Seltos",
+    yearsProduced: "2019 - Present",
+    power: "115 - 138",
+    torque: "144 - 242",
+    gears: "6-speed manual / 6-speed automatic / 7-speed DCT",
+    length: 4315,
+    width: 1800,
+    height: 1645,
+    groundClearance: 190,
+    wheelbase: 2610,
+    turnRadius: 5.3,
+    price: 9999,
+  },
+  {
+    name: "Kia Sonet",
+    yearsProduced: "2020 - Present",
+    power: "99 - 118",
+    torque: "240 - 260",
+    gears: "5-speed manual / 6-speed manual / 6-speed automatic / 7-speed DCT",
+    length: 3995,
+    width: 1790,
+    height: 1642,
+    groundClearance: 205,
+    wheelbase: 2610,
+    turnRadius: 5.3,
+    price: 9999,
+  },
+  {
+    name: "Kia Carens",
+    yearsProduced: "2022 - Present",
+    power: "115 - 138",
+    torque: "144 - 242",
+    gears: "6-speed manual / 6-speed automatic / 7-speed DCT",
+    length: 4540,
+    width: 1800,
+    height: 1708,
+    groundClearance: 190,
+    wheelbase: 2780,
+    turnRadius: 5.3,
+    price: 9999,
+  },
+]
+const mahindra = [
+  {
+    name: "Mahindra XUV700",
+    yearsProduced: "2021 - Present",
+    power: "155 - 200",
+    torque: "360 - 380",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 4695,
+    width: 1890,
+    height: 1755,
+    groundClearance: 200,
+    wheelbase: 2750,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+  {
+    name: "Mahindra Thar",
+    yearsProduced: "2020 - Present",
+    power: "130 - 150",
+    torque: "300 - 320",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 3985,
+    width: 1855,
+    height: 1844,
+    groundClearance: 226,
+    wheelbase: 2450,
+    turnRadius: 5.6,
+    price: 9999,
+  },
+  {
+    name: "Mahindra Scorpio-N",
+    yearsProduced: "2022 - Present",
+    power: "130 - 200",
+    torque: "300 - 380",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 4662,
+    width: 1917,
+    height: 1857,
+    groundClearance: 187,
+    wheelbase: 2750,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+  {
+    name: "Mahindra XUV300",
+    yearsProduced: "2019 - Present",
+    power: "108 - 115",
+    torque: "200 - 300",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 3995,
+    width: 1821,
+    height: 1627,
+    groundClearance: 180,
+    wheelbase: 2600,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+  {
+    name: "Mahindra XUV500",
+    yearsProduced: "2011 - 2021",
+    power: "140 - 155",
+    torque: "330 - 360",
+    gears: "6-speed manual / 6-speed automatic",
+    length: 4585,
+    width: 1890,
+    height: 1785,
+    groundClearance: 200,
+    wheelbase: 2700,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+]
+const volkswagon = [
+  {
+    name: "Volkswagen Virtus",
+    yearsProduced: "2022 - Present",
+    power: "113 - 148",
+    torque: "178 - 250",
+    gears: "6-speed manual / 6-speed automatic / 7-speed DCT",
+    length: 4561,
+    width: 1759,
+    height: 1507,
+    groundClearance: 179,
+    wheelbase: 2651,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+  {
+    name: "Volkswagen Taigun",
+    yearsProduced: "2021 - Present",
+    power: "113 - 148",
+    torque: "178 - 250",
+    gears: "6-speed manual / 6-speed automatic / 7-speed DCT",
+    length: 4221,
+    width: 1760,
+    height: 1612,
+    groundClearance: 188,
+    wheelbase: 2651,
+    turnRadius: 5.4,
+    price: 9999,
+  },
+  {
+    name: "Volkswagen Tiguan",
+    yearsProduced: "2017 - Present",
+    power: "187",
+    torque: "320",
+    gears: "7-speed DCT",
+    length: 4486,
+    width: 1839,
+    height: 1665,
+    groundClearance: 205,
+    wheelbase: 2679,
+    turnRadius: 5.5,
+    price: 9999,
+  },
+]
 type CarData = {
-  name: string,
-  yearsProduced: string,
-  power:string,
-  torque:string,
-  gears: string,
-  length: number,
-  width: number,
-  height: number,
-  groundClearance: number,
-  wheelbase: number,
+  name: string
+  yearsProduced: string
+  power: string
+  torque: string
+  gears: string
+  length: number
+  width: number
+  height: number
+  groundClearance: number
+  wheelbase: number
   turnRadius: number
-};
-function finddataspecs(data:CarData[]){
-  
-// List of properties for which you want min and max values
-const properties: (keyof CarData)[] = [
-  "length",
-  "width",
-  "height",
-"turnRadius",
-  "groundClearance",
-  "wheelbase",
-];
+  price: number
+}
+function finddataspecs(data: CarData[]) {
+  // List of properties for which you want min and max values
+  const properties: (keyof CarData)[] = ["length", "width", "height", "turnRadius", "groundClearance", "wheelbase"]
   // Initialize an object to store the results
-type MinMax = { min: number; max: number };
+  type MinMax = { min: number; max: number }
 
-interface Stats {
-  [key: string]: MinMax;
-}
+  interface Stats {
+    [key: string]: MinMax
+  }
 
-const stats: Stats = {};
+  const stats: Stats = {}
 
-// Initialize stats with the first element from data as reference (if available)
-if (data.length > 0) {
-  properties.forEach((prop) => {
-    stats[prop] = {
-      min: data[0][prop] as number,
-      max: data[0][prop] as number,
-    };
-  });
-}
+  // Initialize stats with the first element from data as reference (if available)
+  if (data.length > 0) {
+    properties.forEach((prop) => {
+      stats[prop] = {
+        min: data[0][prop] as number,
+        max: data[0][prop] as number,
+      }
+    })
+  }
 
-// Iterate over the data to compute min and max for each property
-data.forEach((item) => {
-  properties.forEach((prop) => {
-    const value = item[prop] as number;
-    if (value < stats[prop].min) {
-      stats[prop].min = value;
-    }
-    if (value > stats[prop].max) {
-      stats[prop].max = value;
-    }
-  });
-});
+  // Iterate over the data to compute min and max for each property
+  data.forEach((item) => {
+    properties.forEach((prop) => {
+      const value = item[prop] as number
+      if (value < stats[prop].min) {
+        stats[prop].min = value
+      }
+      if (value > stats[prop].max) {
+        stats[prop].max = value
+      }
+    })
+  })
 
-console.log("Stats:", stats);
+  console.log("Stats:", stats)
 }
 
 export default function VehicleDimensions() {
@@ -1222,8 +1274,12 @@ export default function VehicleDimensions() {
     length: [2800, 6000],
     wheelbase: [2100, 5500],
     turnRadius: [3, 15],
-    groundClearence:[0,500]
+    groundClearence: [0, 500],
   })
+  const [pinnedCar, setPinnedCar] = useState<CarData | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price">("name")
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
@@ -1232,306 +1288,398 @@ export default function VehicleDimensions() {
     }))
   }
 
-  const data=[
+  const calculatePercentage = (value: number, reference: number): number => {
+    if (!reference) return 0
+    return Math.round(((value - reference) / reference) * 100)
+  }
+
+  const data = [
     ...renault,
     ...nissan,
     ...byd,
     ...skoda,
-   ...maruti,
-   ...hyundai,
+    ...maruti,
+    ...hyundai,
     ...honda,
-    // ...tesla,
+    ...tesla,
     ...mg,
     ...fiat,
     ...tata,
     ...toyota,
     ...kia,
     ...mahindra,
-    ...volkswagon
-  ];
-  finddataspecs(data);
+    ...volkswagon,
+  ]
 
+  finddataspecs(data)
 
-    console.log(data)
-    
-    // Scale factor for visualization
-    const scale = 0.5/8
+  // Filter and sort data
+  const filteredData = data
+    .filter((item) => {
+      // Always include pinned car
+      if (pinnedCar && item.name === pinnedCar.name) return true
+
+      // Filter by search query
+      if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
+
+      // Filter by dimension sliders
+      return (
+        item.height < dimensions.height[1] &&
+        item.height > dimensions.height[0] &&
+        item.width < dimensions.width[1] &&
+        item.width > dimensions.width[0] &&
+        item.length < dimensions.length[1] &&
+        item.length > dimensions.length[0] &&
+        item.wheelbase < dimensions.wheelbase[1] &&
+        item.wheelbase > dimensions.wheelbase[0] &&
+        item.turnRadius < dimensions.turnRadius[1] &&
+        item.turnRadius > dimensions.turnRadius[0] &&
+        item.groundClearance < dimensions.groundClearence[1] &&
+        item.groundClearance > dimensions.groundClearence[0]
+      )
+    })
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return sortBy === "name" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
+      } else {
+        return sortBy === "name" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
+      }
+    })
+
+  const toggleSort = (field: typeof sortBy) => {
+    if (sortBy === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+    } else {
+      setSortBy(field)
+      setSortOrder("asc")
+    }
+  }
 
   return (
     <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto p-4">
-    <p>{data.length} vehicles found</p>
-      <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl mx-auto p-4">
-<Card className="flex-1">
-        <CardHeader>
-          <CardTitle>Vehicle Dimensions Range</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="height-slider" className="text-sm font-medium">
-                Height
-              </label>
-              <div className="flex gap-2">
-                <Badge variant="outline">Min: {dimensions.height[0]}</Badge>
-                <Badge variant="outline">Max: {dimensions.height[1]}</Badge>
-              </div>
-            </div>
-            <Slider
-              id="height-slider"
-              min={1000}
-              max={2000}
-              step={100}
-              value={dimensions.height}
-              onValueChange={(value) => handleSliderChange(value, "height")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="width-slider" className="text-sm font-medium">
-                Width
-              </label>
-              <div className="flex gap-2">
-                <Badge variant="outline">Min: {dimensions.width[0]}</Badge>
-                <Badge variant="outline">Max: {dimensions.width[1]}</Badge>
-              </div>
-            </div>
-            <Slider
-              id="width-slider"
-              min={1300}
-              max={3000}
-              step={100}
-              value={dimensions.width}
-              onValueChange={(value) => handleSliderChange(value, "width")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="length-slider" className="text-sm font-medium">
-                Length
-              </label>
-              <div className="flex gap-2">
-                <Badge variant="outline">Min: {dimensions.length[0]}</Badge>
-                <Badge variant="outline">Max: {dimensions.length[1]}</Badge>
-              </div>
-            </div>
-            <Slider
-              id="length-slider"
-              min={2800}
-              max={6000}
-              step={100}
-              value={dimensions.length}
-              onValueChange={(value) => handleSliderChange(value, "length")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="wheelbase-slider" className="text-sm font-medium">
-                Wheelbase
-              </label>
-              <div className="flex gap-2">
-                <Badge variant="outline">Min: {dimensions.wheelbase[0]}</Badge>
-                <Badge variant="outline">Max: {dimensions.wheelbase[1]}</Badge>
-              </div>
-            </div>
-            <Slider
-              id="wheelbase-slider"
-              min={2100}
-              max={5500}
-              step={100}
-              value={dimensions.wheelbase}
-              onValueChange={(value) => handleSliderChange(value, "wheelbase")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="turn-radius-slider" className="text-sm font-medium">
-                Turn Radius
-              </label>
-              <div className="flex gap-2">
-                <Badge variant="outline">Min: {dimensions.turnRadius[0]}</Badge>
-                <Badge variant="outline">Max: {dimensions.turnRadius[1]}</Badge>
-              </div>
-            </div>
-            <Slider
-              id="turn-radius-slider"
-              min={3}
-              max={15}
-              step={.1}
-              value={dimensions.turnRadius}
-              onValueChange={(value) => handleSliderChange(value, "turnRadius")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <label htmlFor="gc-slider" className="text-sm font-medium">
-                Ground clearence
-              </label>
-              <div className="flex gap-2">
-                <Badge variant="outline">Min: {dimensions.groundClearence[0]}</Badge>
-                <Badge variant="outline">Max: {dimensions.groundClearence[1]}</Badge>
-              </div>
-            </div>
-            <Slider
-              id="gc-slider"
-              min={80}
-              max={500}
-              step={10}
-              value={dimensions.groundClearence}
-              onValueChange={(value) => handleSliderChange(value, "groundClearence")}
-              className="cursor-grab active:cursor-grabbing"
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="flex-1 hidden">
-        <CardHeader>
-          <CardTitle>Visual Representation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative w-full h-[800px] border border-dashed border-gray-300 rounded-md overflow-hidden">
-            {/* Min dimensions visualization */}
-            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div
-                className="bg-primary/10 border border-primary/30 rounded-md"
-                style={{
-                  width: dimensions.width[0] * scale,
-                  height: dimensions.length[0] * scale,
-                }}
-              >
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-xs text-primary/70">
-                  Min
-                </div>
-              </div>
-            </div>
-
-            {/* Max dimensions visualization */}
-            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div
-                className="bg-primary/20 border-2 border-primary rounded-md relative"
-                style={{
-                  width: dimensions.width[1] * scale,
-                  height: dimensions.length[1] * scale,
-                }}
-              >
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-xs font-bold text-primary">
-                  Max
-                </div>
-
-                {/* Wheelbase visualization - min and max */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-                  <div
-                    className="border-l border-dashed border-primary/40"
-                    style={{
-                      height: dimensions.wheelbase[0] * scale,
-                      top: (dimensions.length[1] * scale - dimensions.wheelbase[0] * scale) / 2,
-                    }}
-                  ></div>
-                  <div
-                    className="border-l-2 border-dashed border-primary/70 absolute"
-                    style={{
-                      height: dimensions.wheelbase[1] * scale,
-                      top: (dimensions.length[1] * scale - dimensions.wheelbase[1] * scale) / 2,
-                    }}
-                  ></div>
-                </div>
-
-                {/* Turn radius visualization - min and max */}
-                <div
-                  className="absolute border border-dashed border-primary/30 rounded-full"
-                  style={{
-                    width: dimensions.turnRadius[0] * 2 * scale,
-                    height: dimensions.turnRadius[0] * 2 * scale,
-                    left: (dimensions.width[1] * scale) / 2 - dimensions.turnRadius[0] * scale,
-                    top: -dimensions.turnRadius[0] * scale + (dimensions.length[1] * scale) / 4,
-                  }}
-                ></div>
-                <div
-                  className="absolute border-2 border-dashed border-primary/50 rounded-full"
-                  style={{
-                    width: dimensions.turnRadius[1] * 2 * 1000 * scale,
-                    height: dimensions.turnRadius[1] * 2 * 1000 * scale,
-                    left: (dimensions.width[1] * scale) / 2 - dimensions.turnRadius[1] * scale * 1000,
-                    top: -dimensions.turnRadius[1] * scale * 1000+ (dimensions.length[1] * scale) / 4,
-                  }}
-                ></div>
-
-                {/* Height indicator - min and max */}
-                <div className="absolute -right-24 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="bg-primary/20 w-2" style={{ height: (dimensions.height[0] * scale) / 2 }}></div>
-                    <span className="text-xs whitespace-nowrap">Min: {dimensions.height[0]}</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="bg-primary/40 w-3" style={{ height: (dimensions.height[1] * scale) / 2 }}></div>
-                    <span className="text-xs whitespace-nowrap">Max: {dimensions.height[1]}</span>
-                  </div>
-                </div>
-
-                {/* Width labels */}
-                <div className="absolute -top-16 left-0 w-full flex justify-between text-xs">
-                  <span className="whitespace-nowrap">Min width: {dimensions.width[0]}</span>
-                  <span className="whitespace-nowrap">Max width: {dimensions.width[1]}</span>
-                </div>
-
-                {/* Length labels */}
-                <div className="absolute -left-16 top-0 h-full flex flex-col justify-between items-start">
-                  <span className="whitespace-nowrap transform -rotate-90 origin-left">
-                    Min length: {dimensions.length[0]}
-                  </span>
-                  <span className="whitespace-nowrap transform -rotate-90 origin-left">
-                    Max length: {dimensions.length[1]}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      </div>
-      <div>
-        {data
-        .filter(item=>item.height<dimensions.height[1]&&
-          item.height>dimensions.height[0]&&
-          item.width<dimensions.width[1]&&
-          item.width>dimensions.width[0]&&
-          item.length<dimensions.length[1]&&
-          item.length>dimensions.length[0]&&
-          item.wheelbase<dimensions.wheelbase[1]&&
-          item.wheelbase>dimensions.wheelbase[0]&&
-          item.turnRadius<dimensions.turnRadius[1]&&
-          item.turnRadius>dimensions.turnRadius[0]&&
-          item.groundClearance<dimensions.groundClearence[1]&&
-          item.groundClearance>dimensions.groundClearence[0]
-          )
-        
-        .map(item=><Card key={item.name}>
-              <CardHeader>
-                <CardTitle>{item.name}</CardTitle>
-                <CardDescription>{item.torque}<br/>{item.power}<br/>{item.gears}<br/>{item.yearsProduced}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <p>Length: {item.length} mm</p>
-                <p>Width: {item.width} mm</p>
-                <p>Height: {item.height} mm</p>
-                <p>Wheelbase: {item.wheelbase} mm</p>
-                <p>Turn Radius: {item.turnRadius} m</p>
-                <p>Ground Clearance: {item.groundClearance} mm</p>
-              </CardContent>
-        </Card>)}
+      {/* Header */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">SortedCars</h1>
+          <p>{filteredData.length} vehicles found</p>
         </div>
-      
-      
-      
+
+        {/* Search and Sort Controls */}
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Search cars by name..."
+              className="w-full px-4 py-2 border rounded-md"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Sort by:</span>
+              <select
+                className="px-2 py-1 border rounded-md"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+              >
+                <option value="name">Name</option>
+                <option value="length">Length</option>
+                <option value="width">Width</option>
+                <option value="height">Height</option>
+                <option value="price">Price</option>
+              </select>
+            </div>
+            <button
+              className="px-3 py-1 border rounded-md flex items-center gap-1"
+              onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+            >
+              {sortOrder === "asc" ? "↑ Asc" : "↓ Desc"}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-8 w-full">
+        <Card className="flex-1">
+          <CardHeader>
+            <CardTitle>Vehicle Dimensions Range</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="height-slider" className="text-sm font-medium">
+                  Height
+                </label>
+                <div className="flex gap-2">
+                  <Badge variant="outline">Min: {dimensions.height[0]}</Badge>
+                  <Badge variant="outline">Max: {dimensions.height[1]}</Badge>
+                </div>
+              </div>
+              <Slider
+                id="height-slider"
+                min={1000}
+                max={2000}
+                step={100}
+                value={dimensions.height}
+                onValueChange={(value) => handleSliderChange(value, "height")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="width-slider" className="text-sm font-medium">
+                  Width
+                </label>
+                <div className="flex gap-2">
+                  <Badge variant="outline">Min: {dimensions.width[0]}</Badge>
+                  <Badge variant="outline">Max: {dimensions.width[1]}</Badge>
+                </div>
+              </div>
+              <Slider
+                id="width-slider"
+                min={1300}
+                max={3000}
+                step={100}
+                value={dimensions.width}
+                onValueChange={(value) => handleSliderChange(value, "width")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="length-slider" className="text-sm font-medium">
+                  Length
+                </label>
+                <div className="flex gap-2">
+                  <Badge variant="outline">Min: {dimensions.length[0]}</Badge>
+                  <Badge variant="outline">Max: {dimensions.length[1]}</Badge>
+                </div>
+              </div>
+              <Slider
+                id="length-slider"
+                min={2800}
+                max={6000}
+                step={100}
+                value={dimensions.length}
+                onValueChange={(value) => handleSliderChange(value, "length")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="wheelbase-slider" className="text-sm font-medium">
+                  Wheelbase
+                </label>
+                <div className="flex gap-2">
+                  <Badge variant="outline">Min: {dimensions.wheelbase[0]}</Badge>
+                  <Badge variant="outline">Max: {dimensions.wheelbase[1]}</Badge>
+                </div>
+              </div>
+              <Slider
+                id="wheelbase-slider"
+                min={2100}
+                max={5500}
+                step={100}
+                value={dimensions.wheelbase}
+                onValueChange={(value) => handleSliderChange(value, "wheelbase")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="turn-radius-slider" className="text-sm font-medium">
+                  Turn Radius
+                </label>
+                <div className="flex gap-2">
+                  <Badge variant="outline">Min: {dimensions.turnRadius[0]}</Badge>
+                  <Badge variant="outline">Max: {dimensions.turnRadius[1]}</Badge>
+                </div>
+              </div>
+              <Slider
+                id="turn-radius-slider"
+                min={3}
+                max={15}
+                step={0.1}
+                value={dimensions.turnRadius}
+                onValueChange={(value) => handleSliderChange(value, "turnRadius")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label htmlFor="gc-slider" className="text-sm font-medium">
+                  Ground clearance
+                </label>
+                <div className="flex gap-2">
+                  <Badge variant="outline">Min: {dimensions.groundClearence[0]}</Badge>
+                  <Badge variant="outline">Max: {dimensions.groundClearence[1]}</Badge>
+                </div>
+              </div>
+              <Slider
+                id="gc-slider"
+                min={80}
+                max={500}
+                step={10}
+                value={dimensions.groundClearence}
+                onValueChange={(value) => handleSliderChange(value, "groundClearence")}
+                className="cursor-grab active:cursor-grabbing"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Car Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filteredData.map((item) => (
+          <Card
+            key={item.name}
+            className={`${pinnedCar?.name === item.name ? "border-2 border-primary" : ""} ${
+              pinnedCar?.name === item.name && !item.height.toString().includes(dimensions.height[0].toString())
+                ? "bg-primary/5"
+                : ""
+            }`}
+          >
+            <CardHeader className="flex flex-row items-start justify-between">
+              <div>
+                <CardTitle>{item.name}</CardTitle>
+                <CardDescription>
+                  {item.yearsProduced}
+                  <br />
+                  Power: {item.power}
+                  <br />
+                  Torque: {item.torque}
+                  <br />
+                  Gears: {item.gears}
+                </CardDescription>
+              </div>
+              <button
+                onClick={() => setPinnedCar(pinnedCar?.name === item.name ? null : item)}
+                className="p-2 rounded-full hover:bg-muted"
+                title={pinnedCar?.name === item.name ? "Unpin this car" : "Pin this car for comparison"}
+              >
+                {pinnedCar?.name === item.name ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-primary"
+                  >
+                    <path d="M12 2a4 4 0 0 0-4 4v8a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"></path>
+                    <path d="M4 16.5V17a7 7 0 0 0 14 0v-.5"></path>
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 2a4 4 0 0 0-4 4v8a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"></path>
+                    <path d="M4 16.5V17a7 7 0 0 0 14 0v-.5"></path>
+                  </svg>
+                )}
+              </button>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <p>
+                Price: ${item.price?.toLocaleString() || "9999"}
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`ml-2 ${calculatePercentage(item.price, pinnedCar.price) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
+                  >
+                    {calculatePercentage(item.price, pinnedCar.price) > 0 ? "+" : ""}
+                    {calculatePercentage(item.price, pinnedCar.price)}%
+                  </Badge>
+                )}
+              </p>
+              <p>
+                Length: {item.length} mm
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`ml-2 ${calculatePercentage(item.length, pinnedCar.length) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                  >
+                    {calculatePercentage(item.length, pinnedCar.length) > 0 ? "+" : ""}
+                    {calculatePercentage(item.length, pinnedCar.length)}%
+                  </Badge>
+                )}
+              </p>
+              <p>
+                Width: {item.width} mm
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`ml-2 ${calculatePercentage(item.width, pinnedCar.width) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                  >
+                    {calculatePercentage(item.width, pinnedCar.width) > 0 ? "+" : ""}
+                    {calculatePercentage(item.width, pinnedCar.width)}%
+                  </Badge>
+                )}
+              </p>
+              <p>
+                Height: {item.height} mm
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`ml-2 ${calculatePercentage(item.height, pinnedCar.height) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                  >
+                    {calculatePercentage(item.height, pinnedCar.height) > 0 ? "+" : ""}
+                    {calculatePercentage(item.height, pinnedCar.height)}%
+                  </Badge>
+                )}
+              </p>
+              <p>
+                Wheelbase: {item.wheelbase} mm
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`ml-2 ${calculatePercentage(item.wheelbase, pinnedCar.wheelbase) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                  >
+                    {calculatePercentage(item.wheelbase, pinnedCar.wheelbase) > 0 ? "+" : ""}
+                    {calculatePercentage(item.wheelbase, pinnedCar.wheelbase)}%
+                  </Badge>
+                )}
+              </p>
+              <p>
+                Turn Radius: {item.turnRadius} m
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`ml-2 ${calculatePercentage(item.turnRadius, pinnedCar.turnRadius) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
+                  >
+                    {calculatePercentage(item.turnRadius, pinnedCar.turnRadius) > 0 ? "+" : ""}
+                    {calculatePercentage(item.turnRadius, pinnedCar.turnRadius)}%
+                  </Badge>
+                )}
+              </p>
+              <p>
+                Ground Clearance: {item.groundClearance} mm
+                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge
+                    className={`                {pinnedCar && pinnedCar.name !== item.name && (
+                  <Badge className={\`ml-2 ${calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                  >
+                    {calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "+" : ""}
+                    {calculatePercentage(item.groundClearance, pinnedCar.groundClearance)}%
+                  </Badge>
+                )}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }
