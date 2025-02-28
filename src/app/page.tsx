@@ -52,7 +52,7 @@ const properties: (keyof CarData)[] = [
   "length",
   "width",
   "height",
-  "turnRadius",
+"turnRadius",
   "groundClearance",
   "wheelbase",
 ];
@@ -543,7 +543,7 @@ export default function VehicleDimensions() {
       "length": 4970,
       "width": 1964,
       "height": 1445,
-      "turnRadius": 5.8,
+      "turnRadius":5.8,
       "groundClearance": 130,
       "wheelbase": 2960
     },
@@ -553,7 +553,7 @@ export default function VehicleDimensions() {
       "length": 4694,
       "width": 1849,
       "height": 1443,
-      "turnRadius": 5.4,
+      "turnRadius":5.4,
       "groundClearance": 140,
       "wheelbase": 2875
     },
@@ -563,7 +563,7 @@ export default function VehicleDimensions() {
       "length": 5036,
       "width": 2070,
       "height": 1684,
-      "turnRadius": 6.1,
+      "turnRadius":6.1,
       "groundClearance": 137,
       "wheelbase": 2965
     },
@@ -573,7 +573,7 @@ export default function VehicleDimensions() {
       "length": 4751,
       "width": 1921,
       "height": 1624,
-      "turnRadius": 5.7,
+      "turnRadius":5.7,
       "groundClearance": 170,
       "wheelbase": 2700
     },
@@ -583,7 +583,7 @@ export default function VehicleDimensions() {
       "length": 4380,
       "width": 1940,
       "height": 1150,
-      "turnRadius": 5.2,
+      "turnRadius":5.2,
       "groundClearance": 100,
       "wheelbase": 2450
     },
@@ -593,7 +593,7 @@ export default function VehicleDimensions() {
       "length": 5885,
       "width": 2030,
       "height": 1921,
-      "turnRadius": 7.0,
+      "turnRadius":7.0,
       "groundClearance": 400,
       "wheelbase": 3650
     },
@@ -603,7 +603,7 @@ export default function VehicleDimensions() {
       "length": 4970,
       "width": 1964,
       "height": 1445,
-      "turnRadius": 5.8,
+      "turnRadius":5.8,
       "groundClearance": 130,
       "wheelbase": 2960
     },
@@ -613,7 +613,7 @@ export default function VehicleDimensions() {
       "length": 4694,
       "width": 1849,
       "height": 1443,
-      "turnRadius": 5.4,
+      "turnRadius":5.4,
       "groundClearance": 140,
       "wheelbase": 2875
     },
@@ -623,7 +623,7 @@ export default function VehicleDimensions() {
       "length": 5036,
       "width": 2070,
       "height": 1684,
-      "turnRadius": 6.1,
+      "turnRadius":6.1,
       "groundClearance": 137,
       "wheelbase": 2965
     },
@@ -633,7 +633,7 @@ export default function VehicleDimensions() {
       "length": 4400,
       "width": 1950,
       "height": 1160,
-      "turnRadius": 5.3,
+      "turnRadius":5.3,
       "groundClearance": 105,
       "wheelbase": 2470
     },
@@ -649,7 +649,7 @@ export default function VehicleDimensions() {
       "height": 1675,
       "groundClearance": 175,
       "wheelbase": 2720,
-      "turnRadius": "5.6"
+      "turnRadius": 5.6
     },
     {
       "name": "MG ZS EV",
@@ -663,7 +663,7 @@ export default function VehicleDimensions() {
       "height": 1604,
       "groundClearance": 167,
       "wheelbase": 2610,
-      "turnRadius": "5.3"
+      "turnRadius": 5.3
     },
     {
       "name": "MG Gloster",
@@ -677,7 +677,7 @@ export default function VehicleDimensions() {
       "height": 1940,
       "groundClearance": 230,
       "wheelbase": 2950,
-      "turnRadius": "5.8"
+      "turnRadius": 5.8
     },
     {
       "name": "MG Comet",
@@ -691,7 +691,7 @@ export default function VehicleDimensions() {
       "height": 1601,
       "groundClearance": 160,
       "wheelbase": 2000,
-      "turnRadius": "4.7"
+      "turnRadius": 4.7
     },
     {
       "name": "Windsor",
@@ -705,7 +705,7 @@ export default function VehicleDimensions() {
       "height": 1450,
       "groundClearance": 155,
       "wheelbase": 2750,
-      "turnRadius": "5.4"
+      "turnRadius": 5.4
     },
     {
       "name": "Fiat Punto",
@@ -719,7 +719,7 @@ export default function VehicleDimensions() {
       "height": 1495,
       "groundClearance": 185,
       "wheelbase": 2510,
-      "turnRadius": "5.2"
+      "turnRadius": 5.2
     },
     {
       "name": "Fiat Linea",
@@ -733,7 +733,7 @@ export default function VehicleDimensions() {
       "height": 1495,
       "groundClearance": 185,
       "wheelbase": 2603,
-      "turnRadius": "5.4"
+      "turnRadius": 5.4
     },
     {
       "name": "Fiat 500",
@@ -747,7 +747,7 @@ export default function VehicleDimensions() {
       "height": 1488,
       "groundClearance": 130,
       "wheelbase": 2300,
-      "turnRadius": "5.6"
+      "turnRadius": 5.6
     },
     {
       "name": "Fiat Avventura",
@@ -761,7 +761,7 @@ export default function VehicleDimensions() {
       "height": 1550,
       "groundClearance": 205,
       "wheelbase": 2578,
-      "turnRadius": "5.3"
+      "turnRadius": 5.3
     },
     {
       "name": "Tata Nano",
@@ -775,7 +775,7 @@ export default function VehicleDimensions() {
       "height": 1651,
       "groundClearance": 180,
       "wheelbase": 2230,
-      "turnRadius": "4.5"
+      "turnRadius": 4.5
     },
     {
       "name": "Tata Indica",
@@ -789,7 +789,7 @@ export default function VehicleDimensions() {
       "height": 1535,
       "groundClearance": 165,
       "wheelbase": 2420,
-      "turnRadius": "4.9"
+      "turnRadius": 4.9
     },
     {
       "name": "Tata Indigo",
@@ -803,7 +803,7 @@ export default function VehicleDimensions() {
       "height": 1550,
       "groundClearance": 165,
       "wheelbase": 2520,
-      "turnRadius": "5.0"
+      "turnRadius": 5.0
     },
     {
       "name": "Tata Safari",
@@ -817,7 +817,7 @@ export default function VehicleDimensions() {
       "height": 1925,
       "groundClearance": 200,
       "wheelbase": 2650,
-      "turnRadius": "5.6"
+      "turnRadius": 5.6
     },
     {
       "name": "Tata Tigor",
@@ -831,7 +831,7 @@ export default function VehicleDimensions() {
       "height": 1537,
       "groundClearance": 170,
       "wheelbase": 2450,
-      "turnRadius": "5.2"
+      "turnRadius": 5.2
     },
     {
       "name": "Tata Tiago",
@@ -845,7 +845,7 @@ export default function VehicleDimensions() {
       "height": 1537,
       "groundClearance": 170,
       "wheelbase": 2400,
-      "turnRadius": "4.9"
+      "turnRadius": 4.9
     },
     {
       "name": "Tata Harrier",
@@ -859,7 +859,7 @@ export default function VehicleDimensions() {
       "height": 1706,
       "groundClearance": 205,
       "wheelbase": 2741,
-      "turnRadius": "5.6"
+      "turnRadius": 5.6
     },
     {
       "name": "Tata Nexon",
@@ -873,7 +873,7 @@ export default function VehicleDimensions() {
       "height": 1606,
       "groundClearance": 209,
       "wheelbase": 2498,
-      "turnRadius": "5.1"
+      "turnRadius": 5.1
     },
     {
       "name": "Tata Altroz",
@@ -887,7 +887,7 @@ export default function VehicleDimensions() {
       "height": 1505,
       "groundClearance": 165,
       "wheelbase": 2570,
-      "turnRadius": "5.0"
+      "turnRadius": 5.0
     },
     {
       "name": "Tata Punch",
@@ -901,7 +901,7 @@ export default function VehicleDimensions() {
       "height": 1615,
       "groundClearance": 187,
       "wheelbase": 2445,
-      "turnRadius": "5.0"
+      "turnRadius": 5.0
     }
 
   ];
@@ -1019,8 +1019,8 @@ export default function VehicleDimensions() {
             <Slider
               id="turn-radius-slider"
               min={3}
-              max={8}
-              step={.5}
+              max={15}
+              step={.1}
               value={dimensions.turnRadius}
               onValueChange={(value) => handleSliderChange(value, "turnRadius")}
               className="cursor-grab active:cursor-grabbing"
