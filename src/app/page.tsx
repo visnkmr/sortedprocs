@@ -5,6 +5,7 @@ import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
 import {byd,nissan,renault,skoda,maruti,hyundai,honda,tesla,mg,fiat,tata,toyota,kia,mahindra,volkswagon,bmw,citreon,volvo,jeep} from './carmodels'
+import { Pin, PinIcon, PinOff, Star, StarOff } from "lucide-react"
 // groundClearance
 // :
 // {min: 100, max: 400}
@@ -92,6 +93,7 @@ export default function VehicleDimensions() {
     groundClearence: [0, 500],
   })
   const [pinnedCar, setPinnedCar] = useState<CarData | null>(null)
+  const [starredCars, starcar] = useState<string[] | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price" | "manufacturer"| "groundClearance" | "wheelbase" | "turnRadius" | "weight" | "estimatedCabinSpace" | "sizeToWeightRatio" | "dragCoefficient">("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
@@ -165,6 +167,7 @@ export default function VehicleDimensions() {
     })
     // .map(item=>{console.log(item); return item})
     .filter((item) => {
+      if(starredCars && starredCars?.includes(item.name)) return true
       if (pinnedCar && item.name === pinnedCar.name) return true
       if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
       if (pinnedCar && comparisonFilter !== "none" && comparisonfield !== "None") {
@@ -480,36 +483,20 @@ export default function VehicleDimensions() {
                 title={pinnedCar?.name === item.name ? "Unpin this car" : "Pin this car for comparison"}
               >
                 {pinnedCar?.name === item.name ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-primary"
-                  >
-                    <path d="M12 2a4 4 0 0 0-4 4v8a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"></path>
-                    <path d="M4 16.5V17a7 7 0 0 0 14 0v-.5"></path>
-                  </svg>
+                  <PinIcon/>
                 ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 2a4 4 0 0 0-4 4v8a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"></path>
-                    <path d="M4 16.5V17a7 7 0 0 0 14 0v-.5"></path>
-                  </svg>
+                  <PinOff/>
+                )}
+              </button>
+              <button
+                onClick={() => starcar(starredCars?.includes(item.name) ? starredCars.filter((car) => car !== item.name) : [...(starredCars?starredCars:[]), item.name])}
+                className="p-2 rounded-full hover:bg-muted"
+                title={starredCars?.includes(item.name) ? "Unstar this car"  : "Star this car"}
+              >
+                {starredCars?.includes(item.name) ? (
+                  <Star/>
+                ) : (
+                  <StarOff/>
                 )}
               </button>
             </CardHeader>
