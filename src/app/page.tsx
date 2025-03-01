@@ -5,7 +5,7 @@ import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
 import {byd,nissan,renault,skoda,maruti,hyundai,honda,tesla,mg,fiat,tata,toyota,kia,mahindra,volkswagon,bmw,citreon,volvo,jeep} from './carmodels'
-import {  PinIcon, PinOff, Star, StarOff } from "lucide-react"
+import {  Delete,  PinIcon, PinOff, Star, StarOff } from "lucide-react"
 // groundClearance
 // :
 // {min: 100, max: 400}
@@ -350,7 +350,7 @@ export default function VehicleDimensions() {
        }}
        className="px-2 py-1 bg-red-500 text-white rounded-md"
      >
-       Remove
+       <Delete/>
      </button>
    </div>
           ))}
@@ -676,12 +676,12 @@ export default function VehicleDimensions() {
       <footer className="mt-8 text-center">
         <div className="flex justify-center space-x-4 mb-4">
           <a
-            href="https://github.com/visnkmr/"
+            href="https://github.com/visnkmr/carproj"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:text-blue-700"
           >
-            GitHub
+            Source code availble @ GitHub
           </a>
           {/* <a
             href="https://telegram.org"
@@ -708,7 +708,8 @@ export default function VehicleDimensions() {
             LinkedIn
           </a> */}
         </div>
-        <p>Made by Vishnu</p>
+
+        <p>Submit new Cars as PR on GitHub. Thanks.</p>
       </footer>
     </div>
   )
