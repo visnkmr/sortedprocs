@@ -98,8 +98,9 @@ export default function VehicleDimensions() {
   const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price" | "manufacturer"| "groundClearance" | "wheelbase" | "turnRadius" | "weight" | "estimatedCabinSpace" | "sizeToWeightRatio" | "dragCoefficient">("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
-  const [comparisonfield, setcomparisonfield] = useState<keyof CarData | "None">("None")
-  const [comparisonFilter, setComparisonFilter] = useState<"none" | ">" | "<">("none")
+  const [comparisons, setComparisons] = useState<{ field: keyof CarData, operator: ">" | "<" }[]>([]);
+  // const [comparisonfield, setcomparisonfield] = useState<keyof CarData | "None">("None")
+  // const [comparisonFilter, setComparisonFilter] = useState<"none" | ">" | "<">("none")
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
@@ -170,13 +171,27 @@ export default function VehicleDimensions() {
       if(starredCars && starredCars?.includes(item.name)) return true
       if (pinnedCar && item.name === pinnedCar.name) return true
       if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
-      if (pinnedCar && comparisonFilter !== "none" && comparisonfield !== "None") {
-              // for (const field of comparisonfield) {
-          if (comparisonFilter === ">" && item[comparisonfield] <= pinnedCar[comparisonfield]) return false
-          if (comparisonFilter === "<" && item[comparisonfield] >= pinnedCar[comparisonfield]) return false
-        // }
+      // if (pinnedCar && comparisonFilter !== "none" && comparisonfield !== "None") {
+      //         // for (const field of comparisonfield) {
+      //     if (comparisonFilter === ">" && item[comparisonfield] <= pinnedCar[comparisonfield]) return false
+      //     if (comparisonFilter === "<" && item[comparisonfield] >= pinnedCar[comparisonfield]) return false
+      //   // }
+      // }
+      // Handle multiple comparisons
+    return comparisons.every((comparison) => {
+      if (pinnedCar) {
+        const carValue = item[comparison.field];
+        const pinnedCarValue = pinnedCar[comparison.field];
+
+        if (comparison.operator === ">") {
+          return carValue > pinnedCarValue;
+        } else if (comparison.operator === "<") {
+          return carValue < pinnedCarValue;
+        }
       }
-      return true
+      return true;
+    });
+      // return true
       
     })
     .sort((a, b) => {
@@ -278,39 +293,66 @@ export default function VehicleDimensions() {
         {pinnedCar && (
           <div className="flex gap-2 items-center">
             <span>Compare to pinned car:</span>
-            <select
-              className="px-2 py-1 border rounded-md"
-              value={comparisonFilter}
-              onChange={(e) => setComparisonFilter(e.target.value as "none" | ">" | "<")}
-            >
-              <option value="all">Show All</option>
-              <option value=">">Bigger Than Pinned</option>
-              <option value="<">Smaller Than Pinned</option>
-            </select>
-            <select
-              className="px-2 py-1 border rounded-md"
-              value={comparisonfield}
-              onChange={(e) => setcomparisonfield(e.target.value as keyof CarData | "None")}
-            >
-              <option value="None">None</option>
-              {[
-                "length",
-                "width",
-                "height",
-                "wheelbase",
-                "turnRadius",
-                "groundClearance",
-                "price",
-                "weight",
-                "estimatedCabinSpace",
-                "sizeToWeightRatio",
-                "dragCoefficient",
-              ].map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
+            
+  {/* Add a new comparison filter */}
+  <button
+    onClick={() => setComparisons([...comparisons, { field: "length", operator: ">" }])}
+    className="px-2 py-1 border rounded-md"
+  >
+    Add Comparison
+  </button>
+
+  {/* Display existing comparisons */}
+  {comparisons.map((comparison, index) => (
+     <div key={index} className="flex gap-2 items-center mb-2">
+     <select
+       className="px-2 py-1 border rounded-md"
+       value={comparison.operator}
+       onChange={(e) =>
+         setComparisons((prevComparisons) => {
+           const newComparisons = [...prevComparisons];
+           newComparisons[index].operator = e.target.value  as ">" | "<";
+           return newComparisons;
+         })
+       }
+     >
+       <option value=">">Bigger Than Pinned</option>
+       <option value="<">Smaller Than Pinned</option>
+     </select>
+     <select
+       className="px-2 py-1 border rounded-md"
+       value={comparison.field}
+       onChange={(e) =>
+         setComparisons((prevComparisons) => {
+           const newComparisons = [...prevComparisons];
+           newComparisons[index].field = e.target.value as keyof CarData;
+           return newComparisons;
+         })
+       }
+     >
+       <option value="length">Length</option>
+       <option value="width">Width</option>
+       <option value="height">Height</option>
+       <option value="wheelbase">Wheelbase</option>
+       <option value="turnRadius">Turn Radius</option>
+       <option value="groundClearance">Ground Clearance</option>
+       <option value="price">Price</option>
+       <option value="weight">Weight</option>
+       <option value="estimatedCabinSpace">Estimated Cabin Space</option>
+       <option value="sizeToWeightRatio">Size to Weight Ratio</option>
+       <option value="dragCoefficient">Drag Coefficient</option>
+     </select>
+     {/* Remove Comparison Button */}
+     <button
+       onClick={() => {
+         setComparisons((prevComparisons) => prevComparisons.filter((_, i) => i !== index));
+       }}
+       className="px-2 py-1 bg-red-500 text-white rounded-md"
+     >
+       Remove
+     </button>
+   </div>
+          ))}
           </div>
         )}
 
