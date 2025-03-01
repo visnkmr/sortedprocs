@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
-import {byd,nissan,renault,skoda,maruti,hyundai,honda,tesla,mg,fiat,tata,toyota,kia,mahindra,volkswagon} from './carmodels'
+import {byd,nissan,renault,skoda,maruti,hyundai,honda,tesla,mg,fiat,tata,toyota,kia,mahindra,volkswagon,bmw,citreon,volvo,jeep} from './carmodels'
 // groundClearance
 // :
 // {min: 100, max: 400}
@@ -126,6 +126,10 @@ export default function VehicleDimensions() {
     ...kia,
     ...mahindra,
     ...volkswagon,
+    ...bmw,
+    ...citreon,
+    ...volvo,
+    ...jeep,
   ]
 
   finddataspecs(data)
