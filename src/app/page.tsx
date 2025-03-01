@@ -96,8 +96,8 @@ export default function VehicleDimensions() {
   const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price" | "manufacturer"| "groundClearance" | "wheelbase" | "turnRadius" | "weight" | "estimatedCabinSpace" | "sizeToWeightRatio" | "dragCoefficient">("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
-  const [comparisonfield, setcomparisonfield] = useState<string>("None")
-  const [comparisonFilter, setComparisonFilter] = useState<"all" | ">" | "<">("all")
+  const [comparisonfield, setcomparisonfield] = useState<keyof CarData | "None">("None")
+  const [comparisonFilter, setComparisonFilter] = useState<"none" | ">" | "<">("none")
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
@@ -163,20 +163,11 @@ export default function VehicleDimensions() {
     .filter((item) => {
       if (pinnedCar && item.name === pinnedCar.name) return true
       if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
-      if (pinnedCar && comparisonFilter !== "all") {
-        const compareFields: (keyof CarData)[] = [
-          "length",
-          "width",
-          "height",
-          "wheelbase",
-          "turnRadius",
-          "groundClearance",
-          "price",
-        ]
-        for (const field of compareFields) {
-          if (comparisonFilter === ">" && item[field] <= pinnedCar[field]) return false
-          if (comparisonFilter === "<" && item[field] >= pinnedCar[field]) return false
-        }
+      if (pinnedCar && comparisonFilter !== "none" && comparisonfield !== "None") {
+              // for (const field of comparisonfield) {
+          if (comparisonFilter === ">" && item[comparisonfield] <= pinnedCar[comparisonfield]) return false
+          if (comparisonFilter === "<" && item[comparisonfield] >= pinnedCar[comparisonfield]) return false
+        // }
       }
       return true
       
@@ -283,24 +274,32 @@ export default function VehicleDimensions() {
             <select
               className="px-2 py-1 border rounded-md"
               value={comparisonFilter}
-              onChange={(e) => setComparisonFilter(e.target.value as "all" | ">" | "<")}
+              onChange={(e) => setComparisonFilter(e.target.value as "none" | ">" | "<")}
             >
               <option value="all">Show All</option>
               <option value=">">Bigger Than Pinned</option>
               <option value="<">Smaller Than Pinned</option>
             </select>
-            {/* <select
+            <select
               className="px-2 py-1 border rounded-md"
-              value={manufacturerFilter}
-              onChange={(e) => setManufacturerFilter(e.target.value)}
+              value={comparisonfield}
+              onChange={(e) => setcomparisonfield(e.target.value as keyof CarData | "None")}
             >
-              <option value="All">All Manufacturers</option>
-              {manufacturers.map((m) => (
+              <option value="None">None</option>
+              {[
+                "length",
+                "width",
+                "height",
+                "wheelbase",
+                "turnRadius",
+                "groundClearance",
+                "price",
+              ].map((m) => (
                 <option key={m} value={m}>
                   {m}
                 </option>
               ))}
-            </select> */}
+            </select>
           </div>
         )}
 
