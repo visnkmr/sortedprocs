@@ -93,10 +93,11 @@ export default function VehicleDimensions() {
   })
   const [pinnedCar, setPinnedCar] = useState<CarData | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
-  const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price">("name")
+  const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price" | "manufacturer"| "groundClearance" | "wheelbase" | "turnRadius" | "weight" | "estimatedCabinSpace" | "sizeToWeightRatio" | "dragCoefficient">("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
-  const [comparisonFilter, setComparisonFilter] = useState<"all" | "bigger" | "smaller">("all")
+  const [comparisonfield, setcomparisonfield] = useState<string>("None")
+  const [comparisonFilter, setComparisonFilter] = useState<"all" | ">" | "<">("all")
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
@@ -173,8 +174,8 @@ export default function VehicleDimensions() {
           "price",
         ]
         for (const field of compareFields) {
-          if (comparisonFilter === "bigger" && item[field] <= pinnedCar[field]) return false
-          if (comparisonFilter === "smaller" && item[field] >= pinnedCar[field]) return false
+          if (comparisonFilter === ">" && item[field] <= pinnedCar[field]) return false
+          if (comparisonFilter === "<" && item[field] >= pinnedCar[field]) return false
         }
       }
       return true
@@ -182,9 +183,9 @@ export default function VehicleDimensions() {
     })
     .sort((a, b) => {
       if (sortOrder === "asc") {
-        return sortBy === "name" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
+        return sortBy === "name"||sortBy === "manufacturer" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
       } else {
-        return sortBy === "name" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
+        return sortBy === "name"||sortBy === "manufacturer" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
       }
     })
 
@@ -257,6 +258,14 @@ export default function VehicleDimensions() {
               <option value="width">Sort by Width</option>
               <option value="height">Sort by Height</option>
               <option value="price">Sort by Price</option>
+              <option value="manufacturer">Sort by Manufacturer</option>
+              <option value="groundClearance">Sort by Ground Clearance</option>
+              <option value="wheelbase">Sort by Wheelbase</option>
+              <option value="turnRadius">Sort by Turn Radius</option>
+              <option value="weight">Sort by Weight</option>
+              <option value="estimatedCabinSpace">Sort by Estimated Cabin Space</option>
+              <option value="sizeToWeightRatio">Sort by Size to Weight Ratio</option>
+              <option value="dragCoefficient">Sort by Drag Coefficient</option>
             </select>
             <button
               className="px-3 py-1 border rounded-md flex items-center gap-1"
@@ -274,12 +283,24 @@ export default function VehicleDimensions() {
             <select
               className="px-2 py-1 border rounded-md"
               value={comparisonFilter}
-              onChange={(e) => setComparisonFilter(e.target.value as "all" | "bigger" | "smaller")}
+              onChange={(e) => setComparisonFilter(e.target.value as "all" | ">" | "<")}
             >
               <option value="all">Show All</option>
-              <option value="bigger">Bigger Than Pinned</option>
-              <option value="smaller">Smaller Than Pinned</option>
+              <option value=">">Bigger Than Pinned</option>
+              <option value="<">Smaller Than Pinned</option>
             </select>
+            {/* <select
+              className="px-2 py-1 border rounded-md"
+              value={manufacturerFilter}
+              onChange={(e) => setManufacturerFilter(e.target.value)}
+            >
+              <option value="All">All Manufacturers</option>
+              {manufacturers.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select> */}
           </div>
         )}
 
