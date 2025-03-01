@@ -291,8 +291,8 @@ export default function VehicleDimensions() {
 
         {/* Comparison Filter */}
         {pinnedCar && (
-          <div className="flex gap-2 items-center">
-            <span>Compare to pinned car:</span>
+          <div className="flex flex-col gap-2 items-center">
+            <span>Find cars with:</span>
             
   {/* Add a new comparison filter */}
   <button
@@ -301,25 +301,11 @@ export default function VehicleDimensions() {
   >
     Add Comparison
   </button>
-
+  {/* <div className="flex flex-col gap-2"> */}
   {/* Display existing comparisons */}
   {comparisons.map((comparison, index) => (
      <div key={index} className="flex gap-2 items-center mb-2">
-     <select
-       className="px-2 py-1 border rounded-md"
-       value={comparison.operator}
-       onChange={(e) =>
-         setComparisons((prevComparisons) => {
-           const newComparisons = [...prevComparisons];
-           newComparisons[index].operator = e.target.value  as ">" | "<";
-           return newComparisons;
-         })
-       }
-     >
-       <option value=">">Bigger Than Pinned</option>
-       <option value="<">Smaller Than Pinned</option>
-     </select>
-     <select
+       <select
        className="px-2 py-1 border rounded-md"
        value={comparison.field}
        onChange={(e) =>
@@ -342,6 +328,21 @@ export default function VehicleDimensions() {
        <option value="sizeToWeightRatio">Size to Weight Ratio</option>
        <option value="dragCoefficient">Drag Coefficient</option>
      </select>
+     <select
+       className="px-2 py-1 border rounded-md"
+       value={comparison.operator}
+       onChange={(e) =>
+         setComparisons((prevComparisons) => {
+           const newComparisons = [...prevComparisons];
+           newComparisons[index].operator = e.target.value  as ">" | "<";
+           return newComparisons;
+         })
+       }
+     >
+       <option value=">">&gt; {pinnedCar.name}</option>
+       <option value="<">&lt; {pinnedCar.name}</option>
+     </select>
+    
      {/* Remove Comparison Button */}
      <button
        onClick={() => {
@@ -353,9 +354,10 @@ export default function VehicleDimensions() {
      </button>
    </div>
           ))}
+          {/* </div> */}
           </div>
         )}
-
+        
         {/* Toggle for Dimensions Range */}
         <button className="px-3 py-1 border rounded-md" onClick={() => setShowDimensionsRange(!showDimensionsRange)}>
           {showDimensionsRange ? "Hide" : "Show"} Dimensions Range
