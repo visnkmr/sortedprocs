@@ -5,7 +5,7 @@ import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
 import {byd,nissan,renault,skoda,maruti,hyundai,honda,tesla,mg,fiat,tata,toyota,kia,mahindra,volkswagon,bmw,citreon,volvo,jeep} from './carmodels'
-import { Pin, PinIcon, PinOff, Star, StarOff } from "lucide-react"
+import {  PinIcon, PinOff, Star, StarOff } from "lucide-react"
 // groundClearance
 // :
 // {min: 100, max: 400}
