@@ -179,6 +179,26 @@ export const byd = [
   ]
 export const skoda = [
     {
+        "name": "Skoda Slavia",
+        "yearsProduced": "2022 - Present",
+        "power": "115",
+        "torque": "178",
+        "gears": "6-speed manual / 7-speed DSG",
+        "length": 4541,
+        "width": 1752,
+        "height": 1487,
+        "groundClearance": 179,
+        "wheelbase": 2651,
+        "turnRadius": 5.2,
+        "price": 16000,
+        "capacity": "50 L",
+        "manufacturer": "Skoda",
+        "weight": 1150,
+        "estimatedCabinSpace": ((1487 - 179) * 2651 * 1752),
+        "sizeToWeightRatio": ((1487 - 179) * 2651 * 1752) / 1150,
+        "dragCoefficient": 0.30
+      },
+    {
       name: "Škoda Kylaq",
       yearsProduced: "2025 - Present",
       power: "115",
