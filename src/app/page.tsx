@@ -109,7 +109,6 @@ export default function VehicleDimensions() {
     if (!reference) return 0
     return Math.round(((value - reference) / reference) * 100)
   }
-
   const data = [
     ...renault,
     ...nissan,
@@ -132,9 +131,10 @@ export default function VehicleDimensions() {
 
   const manufacturers = Array.from(new Set(data.map((car) => car.manufacturer))).sort()
   const totalCarModels = data.length
-
+  // console.log(data)
   // Filter and sort data
   const filteredData = data
+  // .map(item=>{console.log(item); return item})
     .filter((item) => {
       // Always include pinned car
       if (pinnedCar && item.name === pinnedCar.name) return true
@@ -158,7 +158,9 @@ export default function VehicleDimensions() {
         item.groundClearance > dimensions.groundClearence[0]
       )
     })
+    // .map(item=>{console.log(item); return item})
     .filter((item) => {
+      if (pinnedCar && item.name === pinnedCar.name) return true
       if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
       if (pinnedCar && comparisonFilter !== "all") {
         const compareFields: (keyof CarData)[] = [
@@ -176,6 +178,7 @@ export default function VehicleDimensions() {
         }
       }
       return true
+      
     })
     .sort((a, b) => {
       if (sortOrder === "asc") {
