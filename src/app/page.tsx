@@ -294,6 +294,10 @@ export default function VehicleDimensions() {
                 "turnRadius",
                 "groundClearance",
                 "price",
+                "weight",
+                "estimatedCabinSpace",
+                "sizeToWeightRatio",
+                "dragCoefficient",
               ].map((m) => (
                 <option key={m} value={m}>
                   {m}
