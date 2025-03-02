@@ -1,7 +1,7 @@
 "use client"
 
   // Add imports for the info button and popups
-  import { Info, X, Github } from 'lucide-react'
+  import { Info, Github } from 'lucide-react'
   import { 
   Popover, 
   PopoverContent, 
@@ -151,7 +151,7 @@ export default function VehicleDimensions() {
   const [comparisons, setComparisons] = useState<{ field: keyof CarData; operator: ">" | "<" }[]>([])
   // const [comparisonfield, setcomparisonfield] = useState<keyof CarData | "None">("None")
   // const [comparisonFilter, setComparisonFilter] = useState<"none" | ">" | "<">("none")
-  const [showTopModal, setShowTopModal] = useState(true)
+  // const [showTopModal, setShowTopModal] = useState(true)
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
