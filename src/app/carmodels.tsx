@@ -2023,27 +2023,6 @@ export const volkswagon = [
     },
   ]
 
-//   type CarData = {
-//     name: string
-//     yearsProduced: string
-//     power: string
-//     torque: string
-//     gears: string
-//     length: number
-//     width: number
-//     height: number
-//     groundClearance: number
-//     wheelbase: number
-//     turnRadius: number
-//     price: number
-//     capacity: string
-//     manufacturer: string
-//     weight:number
-//     estimatedCabinSpace:number
-//     sizeToWeightRatio:number
-//     dragCoefficient:number
-//   }
-
 export const citreon=[
     {
     "name": "Citroën C3",
@@ -2176,3 +2155,25 @@ export const volvo=[
     "dragCoefficient": 0.34
   }
 ]
+
+
+//   type CarData = {
+//     name: string
+//     yearsProduced: string
+//     power: string
+//     torque: string
+//     gears: string
+//     length: number
+//     width: number
+//     height: number
+//     groundClearance: number
+//     wheelbase: number
+//     turnRadius: number
+//     price: number
+//     capacity: string
+//     manufacturer: string
+//     weight:number
+//     estimatedCabinSpace:number
+//     sizeToWeightRatio:number
+//     dragCoefficient:number
+//   }

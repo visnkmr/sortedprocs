@@ -1,11 +1,47 @@
 "use client"
 
+  // Add imports for the info button and popups
+  import { Info, X, Github } from 'lucide-react'
+  import { 
+  Popover, 
+  PopoverContent, 
+  PopoverTrigger 
+} from "../components/ui/popover"
+  import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog"
+
 import { useState } from "react"
 import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "../components/ui/badge"
-import {byd,nissan,renault,skoda,maruti,hyundai,honda,tesla,mg,fiat,tata,toyota,kia,mahindra,volkswagon,bmw,citreon,volvo,jeep} from './carmodels'
-import {  Delete,  PinIcon, PinOff, Star, StarOff } from "lucide-react"
+import {
+  byd,
+  nissan,
+  renault,
+  skoda,
+  maruti,
+  hyundai,
+  honda,
+  tesla,
+  mg,
+  fiat,
+  tata,
+  toyota,
+  kia,
+  mahindra,
+  volkswagon,
+  bmw,
+  citreon,
+  volvo,
+  jeep,
+} from "./carmodels"
+import { Delete, PinIcon, PinOff, Star, StarOff } from "lucide-react"
 // groundClearance
 // :
 // {min: 100, max: 400}
@@ -40,10 +76,10 @@ type CarData = {
   price: number
   capacity: string
   manufacturer: string
-  weight:number
-  estimatedCabinSpace:number
-  sizeToWeightRatio:number
-  dragCoefficient:number
+  weight: number
+  estimatedCabinSpace: number
+  sizeToWeightRatio: number
+  dragCoefficient: number
 }
 function finddataspecs(data: CarData[]) {
   // List of properties for which you want min and max values
@@ -95,12 +131,27 @@ export default function VehicleDimensions() {
   const [pinnedCar, setPinnedCar] = useState<CarData | null>(null)
   const [starredCars, starcar] = useState<string[] | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
-  const [sortBy, setSortBy] = useState<"name" | "length" | "width" | "height" | "price" | "manufacturer"| "groundClearance" | "wheelbase" | "turnRadius" | "weight" | "estimatedCabinSpace" | "sizeToWeightRatio" | "dragCoefficient">("name")
+  const [sortBy, setSortBy] = useState<
+    | "name"
+    | "length"
+    | "width"
+    | "height"
+    | "price"
+    | "manufacturer"
+    | "groundClearance"
+    | "wheelbase"
+    | "turnRadius"
+    | "weight"
+    | "estimatedCabinSpace"
+    | "sizeToWeightRatio"
+    | "dragCoefficient"
+  >("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
-  const [comparisons, setComparisons] = useState<{ field: keyof CarData, operator: ">" | "<" }[]>([]);
+  const [comparisons, setComparisons] = useState<{ field: keyof CarData; operator: ">" | "<" }[]>([])
   // const [comparisonfield, setcomparisonfield] = useState<keyof CarData | "None">("None")
   // const [comparisonFilter, setComparisonFilter] = useState<"none" | ">" | "<">("none")
+  const [showTopModal, setShowTopModal] = useState(true)
 
   const handleSliderChange = (value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev) => ({
@@ -142,9 +193,9 @@ export default function VehicleDimensions() {
   // console.log(data)
   // Filter and sort data
   const filteredData = data
-  // .map(item=>{console.log(item); return item})
+    // .map(item=>{console.log(item); return item})
     .filter((item) => {
-      if(starredCars && starredCars?.includes(item.name)) return true
+      if (starredCars && starredCars?.includes(item.name)) return true
       // Always include pinned car
       if (pinnedCar && item.name === pinnedCar.name) return true
 
@@ -169,7 +220,7 @@ export default function VehicleDimensions() {
     })
     // .map(item=>{console.log(item); return item})
     .filter((item) => {
-      if(starredCars && starredCars?.includes(item.name)) return true
+      if (starredCars && starredCars?.includes(item.name)) return true
       if (pinnedCar && item.name === pinnedCar.name) return true
       if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
       // if (pinnedCar && comparisonFilter !== "none" && comparisonfield !== "None") {
@@ -179,27 +230,30 @@ export default function VehicleDimensions() {
       //   // }
       // }
       // Handle multiple comparisons
-    return comparisons.every((comparison) => {
-      if (pinnedCar) {
-        const carValue = item[comparison.field];
-        const pinnedCarValue = pinnedCar[comparison.field];
+      return comparisons.every((comparison) => {
+        if (pinnedCar) {
+          const carValue = item[comparison.field]
+          const pinnedCarValue = pinnedCar[comparison.field]
 
-        if (comparison.operator === ">") {
-          return carValue > pinnedCarValue;
-        } else if (comparison.operator === "<") {
-          return carValue < pinnedCarValue;
+          if (comparison.operator === ">") {
+            return carValue > pinnedCarValue
+          } else if (comparison.operator === "<") {
+            return carValue < pinnedCarValue
+          }
         }
-      }
-      return true;
-    });
+        return true
+      })
       // return true
-      
     })
     .sort((a, b) => {
       if (sortOrder === "asc") {
-        return sortBy === "name"||sortBy === "manufacturer" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
+        return sortBy === "name" || sortBy === "manufacturer"
+          ? a.name.localeCompare(b.name)
+          : (a[sortBy] as number) - (b[sortBy] as number)
       } else {
-        return sortBy === "name"||sortBy === "manufacturer" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
+        return sortBy === "name" || sortBy === "manufacturer"
+          ? b.name.localeCompare(a.name)
+          : (b[sortBy] as number) - (a[sortBy] as number)
       }
     })
 
@@ -228,11 +282,23 @@ export default function VehicleDimensions() {
   const [showDimensionsRange, setShowDimensionsRange] = useState(true)
 
   return (
+    <>
     <div className="flex flex-col gap-8 w-full mx-auto p-4">
       {/* Header */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">SortedCars</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-bold">SortedCars</h1>
+            <a 
+              href="https://github.com/visnkmr/carproj" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+            >
+              <Github className="h-4 w-4" />
+              <span>Star</span>
+            </a>
+          </div>
           <p>
             {filteredData.length} of {totalCarModels} vehicles found
           </p>
@@ -548,6 +614,47 @@ export default function VehicleDimensions() {
             <CardContent className="space-y-2">
               <p>
                 Price: ${item.price?.toLocaleString() || "9999"}
+                {/* {item.capacity.includes("kWh") && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button className="ml-1 inline-flex">
+                        <Info className="h-4 w-4 text-muted-foreground" />
+                        <span className="sr-only">EV running costs</span>
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>EV Running Cost Calculator</DialogTitle>
+                        <DialogDescription>
+                          The true cost of running an electric vehicle includes electricity costs and battery depreciation
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <h4 className="font-medium">Total Running Cost Formula</h4>
+                          <p className="text-sm">
+                            Total Cost per km = (Electricity Cost per kWh / Range per kWh) + (Battery Replacement Cost / Battery Lifecycle in km)
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <h4 className="font-medium">Example Calculation</h4>
+                          <div className="text-sm space-y-1">
+                            <p>• Electricity Cost: $0.15 per kWh</p>
+                            <p>• Vehicle Efficiency: 6 km per kWh</p>
+                            <p>• Battery Cost: $10,000</p>
+                            <p>• Battery Lifecycle: 200,000 km</p>
+                            <p>• Electricity Cost per km: $0.025</p>
+                            <p>• Battery Depreciation per km: $0.05</p>
+                            <p className="font-medium">• Total Cost per km: $0.075</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Note: Actual costs vary based on local electricity rates, driving conditions, and battery technology.
+                        </p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )} */}
                 {pinnedCar && pinnedCar.name !== item.name && (
                   <Badge
                     className={`ml-2 ${calculatePercentage(item.price, pinnedCar.price) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
@@ -557,8 +664,65 @@ export default function VehicleDimensions() {
                   </Badge>
                 )}
               </p>
-              <p>
+              <p className="flex items-center gap-1">
                 Length: {item.length} mm
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="inline-flex">
+                      <Info className="h-4 w-4 text-muted-foreground" />
+                      <span className="sr-only">Compare car sizes</span>
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Size Comparison</DialogTitle>
+                      <DialogDescription>
+                        Visual comparison of car dimensions (excluding ground clearance)
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="relative h-60 w-full border rounded-md p-4">
+                      {pinnedCar && (
+                        <div 
+                          className="absolute bg-primary/20 border border-primary" 
+                          style={{
+                            width: `${(pinnedCar.width / 2070) * 100}%`,
+                            height: `${(pinnedCar.height - pinnedCar.groundClearance) / 1937 * 100}%`,
+                            bottom: '0',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            zIndex: 10
+                          }}
+                        >
+                          <div className="absolute top-0 left-0 p-1 text-xs bg-primary/20 rounded">
+                            {pinnedCar.name}
+                          </div>
+                        </div>
+                      )}
+                      <div 
+                        className="absolute bg-secondary/20 border border-secondary" 
+                        style={{
+                          width: `${(item.width / 2070) * 100}%`,
+                          height: `${(item.height - item.groundClearance) / 1937 * 100}%`,
+                          bottom: '0',
+                          left: '50%',
+                          transform: 'translateX(-50%)'
+                        }}
+                      >
+                        <div className="absolute top-0 left-0 p-1 text-xs bg-secondary/20 rounded">
+                          {item.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <div>
+                        <p><strong>Current:</strong> {item.length}×{item.width}×{item.height-item.groundClearance} mm</p>
+                        {pinnedCar && (
+                          <p><strong>Pinned:</strong> {pinnedCar.length}×{pinnedCar.width}×{pinnedCar.height-pinnedCar.groundClearance} mm</p>
+                        )}
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 {pinnedCar && pinnedCar.name !== item.name && (
                   <Badge
                     className={`ml-2 ${calculatePercentage(item.length, pinnedCar.length) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
@@ -635,8 +799,26 @@ export default function VehicleDimensions() {
                 )}
               </p>
               <p>Capacity: {item.capacity}</p>
-              <p>
+              <p className="flex items-center gap-1">
                 Estimated Cabin Space: {(item.estimatedCabinSpace/1000000000).toPrecision(2)} m^3
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button className="inline-flex">
+                      <Info className="h-4 w-4 text-muted-foreground" />
+                      <span className="sr-only">What is Estimated Cabin Space?</span>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <div className="space-y-2">
+                      <h4 className="font-medium">Estimated Cabin Space</h4>
+                      <p className="text-sm text-muted-foreground">
+                        This is an approximation of the interior volume available for passengers. 
+                        Its calculated based on the vehicles dimensions and represents the usable 
+                        space inside the cabin in cubic meters (m³).
+                      </p>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 {pinnedCar && pinnedCar.name !== item.name && (
                   <Badge
                     className={`ml-2 ${calculatePercentage(item.estimatedCabinSpace, pinnedCar.estimatedCabinSpace) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
@@ -646,8 +828,26 @@ export default function VehicleDimensions() {
                   </Badge>
                 )}
               </p>
-              <p>
-               Drag Coefficient: {item.dragCoefficient} m
+              <p className="flex items-center gap-1">
+                Drag Coefficient: {item.dragCoefficient}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button className="inline-flex">
+                      <Info className="h-4 w-4 text-muted-foreground" />
+                      <span className="sr-only">What is Drag Coefficient?</span>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <div className="space-y-2">
+                      <h4 className="font-medium">Drag Coefficient</h4>
+                      <p className="text-sm text-muted-foreground">
+                        The drag coefficient is a dimensionless quantity that indicates how aerodynamic a vehicle is. 
+                        A lower value means less air resistance, which typically results in better fuel efficiency 
+                        and higher top speeds. Most modern cars have drag coefficients between 0.25 and 0.35.
+                      </p>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 {pinnedCar && pinnedCar.name !== item.name && (
                   <Badge
                     className={`ml-2 ${calculatePercentage(item.dragCoefficient, pinnedCar.dragCoefficient) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
@@ -657,8 +857,26 @@ export default function VehicleDimensions() {
                   </Badge>
                 )}
               </p>
-              <p>
+              <p className="flex items-center gap-1">
                 Size to Weight Ratio: {((1/item.sizeToWeightRatio)*1000000).toPrecision(2)}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button className="inline-flex">
+                      <Info className="h-4 w-4 text-muted-foreground" />
+                      <span className="sr-only">What is Size to Weight Ratio?</span>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <div className="space-y-2">
+                      <h4 className="font-medium">Size to Weight Ratio</h4>
+                      <p className="text-sm text-muted-foreground">
+                        This metric indicates how efficiently a vehicle uses its weight relative to its size. 
+                        A higher value suggests better material efficiency and potentially better fuel economy. 
+                        Its calculated by dividing the vehicles interior volume by its weight.
+                      </p>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 {pinnedCar && pinnedCar.name !== item.name && (
                   <Badge
                     className={`ml-2 ${calculatePercentage(1/item.sizeToWeightRatio, 1/pinnedCar.sizeToWeightRatio) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
@@ -720,6 +938,7 @@ export default function VehicleDimensions() {
 </p>
       </footer>
     </div>
+  </>
   )
 }
 
