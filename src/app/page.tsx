@@ -426,7 +426,7 @@ export default function VehicleDimensions() {
         )}
         
         {/* Toggle for Dimensions Range */}
-        <button className="px-3 py-1 border rounded-md" onClick={() => setShowDimensionsRange(!showDimensionsRange)}>
+        <button className="px-3 py-1 border rounded-md" onClick={() => {setShowDimensionsRange(!showDimensionsRange)}}>
           {showDimensionsRange ? "Hide" : "Show"} Dimensions Range
         </button>
       </div>
@@ -454,7 +454,7 @@ export default function VehicleDimensions() {
                 max={initialDimensions.height[1]}
                 step={100}
                 value={dimensions.height}
-                onValueChange={(value) => handleSliderChange(value, "height")}
+                onValueChange={(value: number[]) => handleSliderChange(value, "height")}
                 className="cursor-grab active:cursor-grabbing"
               />
             </div>
@@ -475,7 +475,7 @@ export default function VehicleDimensions() {
                 max={initialDimensions.width[1]}
                 step={100}
                 value={dimensions.width}
-                onValueChange={(value) => handleSliderChange(value, "width")}
+                onValueChange={(value:number[]) => handleSliderChange(value, "width")}
                 className="cursor-grab active:cursor-grabbing"
               />
             </div>
@@ -496,7 +496,7 @@ export default function VehicleDimensions() {
                 max={initialDimensions.length[1]}
                 step={100}
                 value={dimensions.length}
-                onValueChange={(value) => handleSliderChange(value, "length")}
+                onValueChange={(value:number[]) => handleSliderChange(value, "length")}
                 className="cursor-grab active:cursor-grabbing"
               />
             </div>
@@ -517,7 +517,7 @@ export default function VehicleDimensions() {
                 max={initialDimensions.wheelbase[1]}
                 step={100}
                 value={dimensions.wheelbase}
-                onValueChange={(value) => handleSliderChange(value, "wheelbase")}
+                onValueChange={(value:number[]) => handleSliderChange(value, "wheelbase")}
                 className="cursor-grab active:cursor-grabbing"
               />
             </div>
@@ -538,7 +538,7 @@ export default function VehicleDimensions() {
                 max={initialDimensions.turnRadius[1]}
                 step={0.1}
                 value={dimensions.turnRadius}
-                onValueChange={(value) => handleSliderChange(value, "turnRadius")}
+                onValueChange={(value:number[]) => handleSliderChange(value, "turnRadius")}
                 className="cursor-grab active:cursor-grabbing"
               />
             </div>
@@ -558,7 +558,7 @@ export default function VehicleDimensions() {
                 max={initialDimensions.groundClearance[1]}
                 step={10}
                 value={dimensions.groundClearence}
-                onValueChange={(value) => handleSliderChange(value, "groundClearence")}
+                onValueChange={(value:number[]) => handleSliderChange(value, "groundClearence")}
                 className="cursor-grab active:cursor-grabbing"
               />
             </div>
