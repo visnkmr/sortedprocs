@@ -144,6 +144,7 @@ export default function VehicleDimensions() {
   const filteredData = data
   // .map(item=>{console.log(item); return item})
     .filter((item) => {
+      if(starredCars && starredCars?.includes(item.name)) return true
       // Always include pinned car
       if (pinnedCar && item.name === pinnedCar.name) return true
 
