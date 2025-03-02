@@ -227,7 +227,7 @@ export default function VehicleDimensions() {
   const [showDimensionsRange, setShowDimensionsRange] = useState(true)
 
   return (
-    <div className="flex flex-col gap-8 w-full max-w-[1600px] mx-auto p-4">
+    <div className="flex flex-col gap-8 w-full mx-auto p-4">
       {/* Header */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
@@ -500,7 +500,7 @@ export default function VehicleDimensions() {
       )}
 
       {/* Car Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-4">
         {filteredData.map((item) => (
           <Card
             key={item.name}
@@ -710,6 +710,13 @@ export default function VehicleDimensions() {
         </div>
 
         <p>Submit new Cars as PR on GitHub. Thanks.</p>
+        <p className="italic text-xs leading-relaxed p-4 text-black">
+  Disclaimer: The information provided on this website regarding car specifications, features, and other related details is for general informational purposes only. While we strive to ensure the accuracy and completeness of the information, the specifications, features, and details listed are subject to change by the manufacturers without notice.
+
+  We do not guarantee the accuracy, reliability, or completeness of the information provided on this site. Car specifications and features may vary by region, model year, and other factors. Always verify any critical vehicle details with the car manufacturer or an authorized dealership before making purchasing decisions.
+
+  We are not liable for any errors, omissions, or discrepancies in the information provided. By using this website, you agree that we are not responsible for any direct, indirect, incidental, or consequential damages arising from the use of the information provided.
+</p>
       </footer>
     </div>
   )
