@@ -15,8 +15,9 @@ import { Info } from "lucide-react"
 import { memo,lazy } from "react"
 const LazyDialog = lazy(() =>
   import("../components/ui/dialog").then((module) => ({
-    default: ({ children, ...props }) => (
+    default: ({ children, ...props }: { children: React.ReactNode, [key: string]: React.ReactNode}) => (
       <module.Dialog {...props}>
+        <module.DialogTrigger>{props.trigger}</module.DialogTrigger>
         <module.DialogContent>{children}</module.DialogContent>
       </module.Dialog>
     ),
@@ -24,8 +25,9 @@ const LazyDialog = lazy(() =>
 )
 const LazyPopOver = lazy(() =>
   import("../components/ui/popover").then((module) => ({
-    default: ({ children, ...props }) => (
+    default: ({ children, ...props }: { children: React.ReactNode, [key: string]: React.ReactNode}) => (
       <module.Popover {...props}>
+        <module.PopoverTrigger>{props.trigger}</module.PopoverTrigger>
         <module.PopoverContent>{children}</module.PopoverContent>
       </module.Popover>
     ),
@@ -43,19 +45,16 @@ export const InfoPopover = memo(
     srText?: string
   }) => {
     return (
-      <LazyPopOver>
-        <module.PopoverTrigger asChild>
-          <button className="inline-flex">
+      <LazyPopOver trigger={
+        <button className="inline-flex">
             <Info className="h-4 w-4 text-muted-foreground" />
             <span className="sr-only">{srText}</span>
           </button>
-        </module.PopoverTrigger>
-        <module.PopoverContent className="w-80">
+      }>
           <div className="space-y-2">
             <h4 className="font-medium">{title}</h4>
             <div className="text-sm text-muted-foreground">{text}</div>
           </div>
-        </module.PopoverContent>
       </LazyPopOver>
     )
   },
@@ -77,20 +76,16 @@ export const InfoDialog = memo(
     srText?: string
   }) => {
     return (
-      <LazyDialog>
-        <module.DialogTrigger asChild>
-          <button className="inline-flex">
+      <LazyDialog trigger={
+        <button className="inline-flex">
             <Info className="h-4 w-4 text-muted-foreground" />
             <span className="sr-only">{srText}</span>
           </button>
-        </module.DialogTrigger>
-        <module.DialogContent className="sm:max-w-md">
-          <module.DialogHeader>
-            <module.DialogTitle>{title}</module.DialogTitle>
-            <module.DialogDescription>{description}</module.DialogDescription>
-          </module.DialogHeader>
+      }
+      title={title}
+      description={description}
+      >
           <div className="space-y-4">{children}</div>
-        </module.DialogContent>
       </LazyDialog>
     )
   },

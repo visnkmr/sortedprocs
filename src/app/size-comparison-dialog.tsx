@@ -14,13 +14,20 @@ import { CarData } from "./page"
 // 2. Lazy load Dialog and Popover components
 const LazyDialog = lazy(() =>
   import("../components/ui/dialog").then((module) => ({
-    default: ({ children, ...props }) => (
+    default: ({ children, ...props }: { children: React.ReactNode, [key: string]: React.ReactNode}) => (
       <module.Dialog {...props}>
-        <module.DialogContent>{children}</module.DialogContent>
+        <module.DialogTrigger>{props.trigger}</module.DialogTrigger>
+        <module.DialogContent>
+          <module.DialogHeader>
+            <module.DialogTitle>{props.title}</module.DialogTitle>
+            <module.DialogDescription>{props.description}</module.DialogDescription>
+          </module.DialogHeader>
+          {children}
+        </module.DialogContent>
       </module.Dialog>
     ),
   })),
-)
+);
 // Memoized component for the size comparison dialog
 const SizeComparisonDialog = memo(
   ({
@@ -31,18 +38,12 @@ const SizeComparisonDialog = memo(
     pinnedCar: CarData | null
   }) => {
     return (
-      <LazyDialog>
-        <module.DialogTrigger asChild>
-          <button className="inline-flex">
-            <Info className="h-4 w-4 text-muted-foreground" />
-            <span className="sr-only">Compare car sizes</span>
-          </button>
-        </module.DialogTrigger>
-        <module.DialogContent className="sm:max-w-md">
-          <module.DialogHeader>
-            <module.DialogTitle>Size Comparison</module.DialogTitle>
-            <module.DialogDescription>Visual comparison of car dimensions (excluding ground clearance)</module.DialogDescription>
-          </module.DialogHeader>
+      <LazyDialog trigger={<button className="inline-flex">
+        <Info className="h-4 w-4 text-muted-foreground" />
+        <span className="sr-only">Compare car sizes</span>
+      </button>}
+      title={"Size Comparison"}
+      description={"Visual comparison of car dimensions (excluding ground clearance)"}>
           <div className="relative h-60 w-full border rounded-md p-4">
             {pinnedCar && (
               <div
@@ -85,7 +86,6 @@ const SizeComparisonDialog = memo(
               )}
             </div>
           </div>
-        </module.DialogContent>
       </LazyDialog>
     )
   },
