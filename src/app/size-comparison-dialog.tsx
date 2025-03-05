@@ -38,10 +38,10 @@ const SizeComparisonDialog = memo(
     pinnedCar: CarData | null
   }) => {
     return (
-      <LazyDialog trigger={<button className="inline-flex">
+      <LazyDialog trigger={<>
         <Info className="h-4 w-4 text-muted-foreground" />
         <span className="sr-only">Compare car sizes</span>
-      </button>}
+      </>}
       title={"Size Comparison"}
       description={"Visual comparison of car dimensions (excluding ground clearance)"}>
           <div className="relative h-60 w-full border rounded-md p-4">

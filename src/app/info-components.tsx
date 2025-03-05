@@ -45,11 +45,10 @@ export const InfoPopover = memo(
     srText?: string
   }) => {
     return (
-      <LazyPopOver trigger={
-        <button className="inline-flex">
+      <LazyPopOver trigger={<>
             <Info className="h-4 w-4 text-muted-foreground" />
             <span className="sr-only">{srText}</span>
-          </button>
+      </>
       }>
           <div className="space-y-2">
             <h4 className="font-medium">{title}</h4>
