@@ -1,7 +1,7 @@
 {
     "name": "Sortedcars",
     "description": "Find your dream car based on metrics",
-    "start_url": "/",
+    "start_url": "/sortedcars/",
     "lang": "en-GB",
     "display": "standalone",
     "icons": [
