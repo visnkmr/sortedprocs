@@ -25,9 +25,9 @@ import {
   toyota,
   kia,
   mahindra,
-  volkswagon,
+  volkswagen,
   bmw,
-  citreon,
+  citroen,
   volvo,
   jeep,
 } from "./carmodels"
