@@ -2195,7 +2195,7 @@ export const bmw=[ // Already corrected, minor review
     weight: 1615, // Petrol Kerb Weight (kg)
     estimatedCabinSpace: 7070388162, // Kept calculation
     sizeToWeightRatio: 4377949.32, // Kept calculation
-    dragCoefficient: null
+    dragCoefficient: 0 //unknown
   },
   {
     name: "BMW 7 Series (740i / 740d)", // Added Diesel variant
