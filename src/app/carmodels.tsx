@@ -2236,7 +2236,7 @@ export const bmw=[ // Already corrected, minor review
     estimatedCabinSpace: 8857413000, // Recalculated: ((1696 - 195) * 3000 * 1967)
     sizeToWeightRatio: 3426465.38, // Recalculated: (8857413000 / 2585)
     dragCoefficient: 0.25
-  }
+  },
   // Added i4
    {
     name: "BMW i4 (eDrive40)", // Common variant in India
