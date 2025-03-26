@@ -1118,7 +1118,7 @@ export const mg = [
       {
         name: "MG Comet EV",
         yearsProduced: "2023 - Present",
-        power": "41.4", // Corrected Power (bhp, was 42)
+        power: "41.4", // Corrected Power (bhp, was 42)
         torque: "110", // Nm
         gears: "Single-speed",
         length: 2974,
@@ -1127,7 +1127,7 @@ export const mg = [
         groundClearance: 165, // Corrected Ground Clearance (was 140)
         wheelbase: 2010, // Corrected Wheelbase (was 2000)
         turnRadius: 4.2, // Corrected Turn Radius (was 4.5)
-        price": 8052, // Corrected: Starting ~6.9 Lakh INR -> USD (was 8k USD)
+        price: 8052, // Corrected: Starting ~6.9 Lakh INR -> USD (was 8k USD)
         capacity: "17.3 kWh",
         manufacturer: "MG Motor",
         weight: 815, // Corrected Kerb Weight (kg, was 600)
@@ -1167,7 +1167,7 @@ export const mg = [
       groundClearance: 177, // Corrected Ground Clearance
       wheelbase: 2585, // Corrected Wheelbase (was 2610)
       turnRadius: 5.6, // Corrected Turn Radius (was 5.3)
-      price": 22173, // Corrected: Starting ~19 Lakh INR -> USD (was 22k USD)
+      price: 22173, // Corrected: Starting ~19 Lakh INR -> USD (was 22k USD)
       capacity: "50.3 kWh", // Corrected Battery Capacity (Usable)
       manufacturer: "MG Motor", // Corrected Manufacturer
       weight: 1610, // Corrected Kerb Weight (kg, current Exclusive)
@@ -1187,7 +1187,7 @@ export const mg = [
       groundClearance: 210, // Corrected Ground Clearance (was 230)
       wheelbase: 2950,
       turnRadius: 6.1, // Corrected Turn Radius (was 5.8)
-      price": 44349, // Corrected: Starting ~38 Lakh INR -> USD (was 35k USD)
+      price: 44349, // Corrected: Starting ~38 Lakh INR -> USD (was 35k USD)
       capacity: "75 L", // Corrected Capacity (was 60L)
       manufacturer: "MG Motor", // Corrected Manufacturer
       weight: 2320, // Corrected Kerb Weight (kg, starting 2WD)
@@ -1198,17 +1198,17 @@ export const mg = [
     // Removed duplicate MG Comet entry
     {
       name: "MG Windsor EV / Yep Plus based", // Corrected: Hypothetical Name
-      yearsProduced": "2024-2025 (Expected)", // Corrected: Hypothetical
+      yearsProduced: "2024-2025 (Expected)", // Corrected: Hypothetical
       power: "100", // Corrected Power (bhp estimate based on Yep Plus, was 134)
-      torque": "N/A", // Torque for Yep Plus not reliably found
+      torque: "N/A", // Torque for Yep Plus not reliably found
       gears: "Single-speed automatic", // Corrected Gears (was 1)
-      length": 4000, // Corrected Length (Approx based on Yep Plus, was 4295)
-      width": 1760, // Corrected Width (Approx based on Yep Plus, was 1850)
-      height": 1715, // Corrected Height (Approx based on Yep Plus, was 1677)
-      groundClearance": 186, // Kept provided GC as estimate
-      wheelbase": 2560, // Corrected Wheelbase (Approx based on Yep Plus, was 2700)
+      length: 4000, // Corrected Length (Approx based on Yep Plus, was 4295)
+      width: 1760, // Corrected Width (Approx based on Yep Plus, was 1850)
+      height: 1715, // Corrected Height (Approx based on Yep Plus, was 1677)
+      groundClearance: 186, // Kept provided GC as estimate
+      wheelbase: 2560, // Corrected Wheelbase (Approx based on Yep Plus, was 2700)
       turnRadius: 5.5, // Kept provided estimate
-      price": 18672, // Kept converted price (16 Lakh INR) as estimate
+      price: 18672, // Kept converted price (16 Lakh INR) as estimate
       capacity: "41 kWh", // Corrected Capacity (based on Yep Plus, was 38)
       manufacturer: "MG Motor", // Corrected Manufacturer
       weight: 1495, // Kept provided weight as estimate
@@ -1230,7 +1230,7 @@ export const fiat = [ // Note: Fiat has ceased new car sales in India. Data refl
       groundClearance: 195, // Corrected Ground Clearance (Punto Evo, was 185)
       wheelbase: 2510,
       turnRadius: 5.0, // Corrected Turn Radius (was 5.2)
-      price": 5602, // Kept converted price (4.8 Lakh INR) as estimate of last value
+      price: 5602, // Kept converted price (4.8 Lakh INR) as estimate of last value
       capacity: "45 L", // Corrected Capacity (was 35L)
       manufacturer: "Fiat",
       weight: 1130, // Corrected Kerb Weight (kg, approx Diesel)
@@ -1250,7 +1250,7 @@ export const fiat = [ // Note: Fiat has ceased new car sales in India. Data refl
       groundClearance: 185, // Facelift 185mm, T-Jet 190mm
       wheelbase: 2603,
       turnRadius: 5.55, // Corrected Turn Radius (was 5.4)
-      price": 7002, // Kept converted price (6 Lakh INR) as estimate of last value
+      price: 7002, // Kept converted price (6 Lakh INR) as estimate of last value
       capacity: "45 L", // Corrected Capacity (was 40L)
       manufacturer: "Fiat",
       weight: 1210, // Corrected Kerb Weight (kg, approx T-Jet)
@@ -1270,7 +1270,7 @@ export const fiat = [ // Note: Fiat has ceased new car sales in India. Data refl
       groundClearance: 140, // Corrected Ground Clearance (was 130)
       wheelbase: 2300,
       turnRadius: 4.6, // Corrected Turn Radius (was 5.6)
-      price": 17505, // Kept estimated price (15 Lakh INR)
+      price: 17505, // Kept estimated price (15 Lakh INR)
       capacity: "35 L", // Corrected Capacity (was 30L)
       manufacturer: "Fiat",
       weight: 980, // Corrected Kerb Weight (kg, approx 1.3 MJD)
@@ -1290,7 +1290,7 @@ export const fiat = [ // Note: Fiat has ceased new car sales in India. Data refl
       groundClearance: 205,
       wheelbase: 2510, // Corrected Wheelbase (based on Punto)
       turnRadius: 5.0, // Corrected Turn Radius (was 5.3)
-      price": 7586, // Kept converted price (6.5 Lakh INR) as estimate of last value
+      price: 7586, // Kept converted price (6.5 Lakh INR) as estimate of last value
       capacity: "45 L", // Corrected Capacity (was 40L)
       manufacturer: "Fiat",
       weight: 1195, // Corrected Kerb Weight (kg, approx Diesel)
@@ -1309,10 +1309,10 @@ export const tata = [
         length: 4308, // Corrected Length (Concept/Estimate)
         width: 1810, // Corrected Width (Concept/Estimate)
         height: 1630, // Corrected Height (Concept/Estimate)
-        groundClearance": 200, // Estimated
+        groundClearance: 200, // Estimated
         wheelbase: 2600, // Estimated (same as Nexon platform likely)
         turnRadius: 5.4, // Estimated
-        price": 17505, // Kept estimated price (15 Lakh INR)
+        price: 17505, // Kept estimated price (15 Lakh INR)
         capacity: "45 L", // Corrected Capacity Estimate (was 50L)
         manufacturer: "Tata Motors",
         weight: 1400, // Kept weight estimate
@@ -1332,7 +1332,7 @@ export const tata = [
       groundClearance: 180,
       wheelbase: 2230,
       turnRadius: 4.0, // Corrected Turn Radius (was 4.5)
-      price": 3501, // Kept converted price (3 Lakh INR)
+      price: 3501, // Kept converted price (3 Lakh INR)
       capacity: "24 L", // Corrected Capacity (GenX Nano, was 15L/20L)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 695, // Corrected Kerb Weight (kg, GenX MT)
@@ -1352,7 +1352,7 @@ export const tata = [
       groundClearance: 165,
       wheelbase: 2470, // Corrected Wheelbase (Bolt)
       turnRadius: 5.1, // Corrected Turn Radius (Bolt)
-      price": 5252, // Kept converted price (4.5 Lakh INR) as estimate
+      price: 5252, // Kept converted price (4.5 Lakh INR) as estimate
       capacity: "44 L", // Corrected Capacity (Bolt, was 30L/37L)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1095, // Corrected Kerb Weight (kg, Bolt Petrol)
@@ -1372,7 +1372,7 @@ export const tata = [
       groundClearance: 175, // Corrected Ground Clearance (Zest)
       wheelbase: 2470, // Corrected Wheelbase (Zest)
       turnRadius: 5.1, // Corrected Turn Radius (Zest)
-      price": 6419, // Kept converted price (5.5 Lakh INR) as estimate
+      price: 6419, // Kept converted price (5.5 Lakh INR) as estimate
       capacity: "44 L", // Corrected Capacity (Zest, was 35L/42L)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1115, // Corrected Kerb Weight (kg, Zest Petrol)
@@ -1389,10 +1389,10 @@ export const tata = [
       length: 4668, // Corrected Length (Current Gen Facelift)
       width: 1922, // Corrected Width (Current Gen Facelift)
       height: 1795, // Corrected Height (Current Gen Facelift)
-      groundClearance": 205, // Corrected Ground Clearance (was 200)
+      groundClearance: 205, // Corrected Ground Clearance (was 200)
       wheelbase: 2741, // Corrected Wheelbase (Current Gen)
       turnRadius: 5.8, // Corrected Turn Radius (was 5.6)
-      price": 18958, // Corrected: Starting ~16.25 Lakh INR -> USD (was 18k USD)
+      price: 18958, // Corrected: Starting ~16.25 Lakh INR -> USD (was 18k USD)
       capacity: "50 L", // Corrected Capacity (was 60L)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1825, // Corrected Kerb Weight (kg, starting MT)
@@ -1412,7 +1412,7 @@ export const tata = [
       groundClearance: 170,
       wheelbase: 2450,
       turnRadius: 5.1, // Corrected Turn Radius (was 5.2)
-      price": 7352, // Corrected: Starting ~6.3 Lakh INR -> USD (was 6k USD)
+      price: 7352, // Corrected: Starting ~6.3 Lakh INR -> USD (was 6k USD)
       capacity: "35 L", // Petrol / 26 kWh Battery (EV)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1000, // Corrected Kerb Weight (kg, starting Petrol MT)
@@ -1432,7 +1432,7 @@ export const tata = [
       groundClearance: 170, // 168mm for EV
       wheelbase: 2400, // 2450mm for EV
       turnRadius: 4.9, // 5.1m for EV
-      price": 6534, // Corrected: Starting ~5.6 Lakh INR -> USD (was 5.5k USD)
+      price: 6534, // Corrected: Starting ~5.6 Lakh INR -> USD (was 5.5k USD)
       capacity: "35 L", // Petrol / 19.2 or 24 kWh Battery (EV)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 935, // Corrected Kerb Weight (kg, starting Petrol MT)
@@ -1449,10 +1449,10 @@ export const tata = [
       length: 4605, // Corrected Length (Facelift)
       width: 1922, // Corrected Width (Facelift)
       height: 1718, // Corrected Height (Facelift)
-      groundClearance": 205,
+      groundClearance: 205,
       wheelbase: 2741,
       turnRadius: 5.75, // Corrected Turn Radius (was 5.6)
-      price": 17738, // Corrected: Starting ~15.2 Lakh INR -> USD (was 19k USD)
+      price: 17738, // Corrected: Starting ~15.2 Lakh INR -> USD (was 19k USD)
       capacity: "50 L", // Corrected Capacity (was 60L)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1655, // Corrected Kerb Weight (kg, starting MT)
@@ -1469,10 +1469,10 @@ export const tata = [
       length: 3995, // Corrected Length (Facelift)
       width: 1804, // Corrected Width (Facelift)
       height: 1620, // Corrected Height (Facelift)
-      groundClearance": 208, // Corrected Ground Clearance (Facelift)
+      groundClearance: 208, // Corrected Ground Clearance (Facelift)
       wheelbase: 2498,
       turnRadius: 5.1,
-      price": 9336, // Corrected: Starting ~8 Lakh INR -> USD
+      price: 9336, // Corrected: Starting ~8 Lakh INR -> USD
       capacity: "44 L", // Petrol/Diesel / 30 or 40.5 kWh Battery (EV)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1230, // Corrected Kerb Weight (kg, starting Petrol MT)
@@ -1492,7 +1492,7 @@ export const tata = [
       groundClearance: 165,
       wheelbase: 2501, // Corrected Wheelbase (was 2570)
       turnRadius: 5.0,
-      price": 7702, // Corrected: Starting ~6.6 Lakh INR -> USD (was 7k USD)
+      price: 7702, // Corrected: Starting ~6.6 Lakh INR -> USD (was 7k USD)
       capacity: "37 L", // Corrected Capacity (was 38L) / 60L water (CNG)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1036, // Corrected Kerb Weight (kg, starting NA Petrol MT)
@@ -1512,7 +1512,7 @@ export const tata = [
       groundClearance: 187,
       wheelbase: 2445,
       turnRadius: 4.9, // Corrected Turn Radius (was 5.0)
-      price": 7002, // Corrected: Starting ~6 Lakh INR -> USD (was 6.5k USD)
+      price: 7002, // Corrected: Starting ~6 Lakh INR -> USD (was 6.5k USD)
       capacity: "37 L", // Corrected Capacity (was 35L) / 60L water (CNG)
       manufacturer: "Tata Motors", // Corrected Manufacturer
       weight: 1000, // Approx Kerb Weight (kg, Petrol MT)
@@ -1531,10 +1531,10 @@ export const toyota = [
         length: 4755,
         width: 1845, // Corrected Width (Body, was 1850 incl mirrors?)
         height: 1790, // Corrected Height (was 1795)
-        groundClearance": 185, // Corrected Ground Clearance (was 190)
+        groundClearance: 185, // Corrected Ground Clearance (was 190)
         wheelbase: 2850,
         turnRadius: 5.9, // Corrected Turn Radius (was 5.6)
-        price": 22769, // Corrected: Starting ~19.5 Lakh INR -> USD (was 34k USD)
+        price: 22769, // Corrected: Starting ~19.5 Lakh INR -> USD (was 34k USD)
         capacity: "52 L", // Corrected Capacity (was 55L)
         manufacturer: "Toyota",
         weight: 1595, // Corrected Kerb Weight (kg, starting Petrol G-FLT)
@@ -1554,7 +1554,7 @@ export const toyota = [
         groundClearance: 175,
         wheelbase: 2550,
         turnRadius: 5.1, // Corrected Turn Radius (was 5.2)
-        price": 10503, // Corrected: Assumed Starting ~9 Lakh INR -> USD (was 15k USD)
+        price: 10503, // Corrected: Assumed Starting ~9 Lakh INR -> USD (was 15k USD)
         capacity: "42 L",
         manufacturer: "Toyota",
         weight: 1090, // Corrected Kerb Weight (kg, starting MT)
@@ -1574,7 +1574,7 @@ export const toyota = [
       groundClearance: 170,
       wheelbase: 2520,
       turnRadius: 4.85, // Corrected Turn Radius (was 4.8)
-      price": 7819, // Corrected: Starting ~6.7 Lakh INR -> USD (was 7k USD)
+      price: 7819, // Corrected: Starting ~6.7 Lakh INR -> USD (was 7k USD)
       capacity: "37 L", // Corrected Capacity (was 38L)
       manufacturer: "Toyota",
       weight: 920, // Corrected Kerb Weight (kg, starting MT)
@@ -1594,7 +1594,7 @@ export const toyota = [
       groundClearance: 198, // Corrected Ground Clearance (was 210)
       wheelbase: 2500,
       turnRadius: 5.2,
-      price": 9919, // Kept converted price (8.5 Lakh INR)
+      price: 9919, // Kept converted price (8.5 Lakh INR)
       capacity: "48 L", // Corrected Capacity (was 42L)
       manufacturer: "Toyota",
       weight: 1110, // Corrected Kerb Weight (kg, starting MT)
@@ -1615,12 +1615,12 @@ export const toyota = [
         groundClearance: 210, // Corrected Ground Clearance
         wheelbase: 2600,
         turnRadius: 5.4, // Corrected Turn Radius
-        price": 12837, // Corrected: Starting ~11 Lakh INR -> USD
+        price: 12837, // Corrected: Starting ~11 Lakh INR -> USD
         capacity: "45 L", // Corrected Capacity
         manufacturer: "Toyota",
         weight: 1155, // Corrected Kerb Weight (kg, starting Mild Hybrid MT)
         estimatedCabinSpace: 6688115000, // Recalculated: ((1645 - 210) * 2600 * 1795) - Same dimensions as Grand Vitara
-        sizeToWeightRatio": 5790575.76, // Recalculated: (6688115000 / 1155)
+        sizeToWeightRatio: 5790575.76, // Recalculated: (6688115000 / 1155)
         dragCoefficient: 0.35 // Estimate
       },
     {
@@ -1632,10 +1632,10 @@ export const toyota = [
       length: 4735,
       width: 1830,
       height: 1795,
-      groundClearance": 178, // Corrected Ground Clearance (was 170)
+      groundClearance: 178, // Corrected Ground Clearance (was 170)
       wheelbase: 2750,
       turnRadius: 5.4, // Corrected Turn Radius (was 5.6)
-      price": 23340, // Corrected: Starting ~20 Lakh INR -> USD
+      price: 23340, // Corrected: Starting ~20 Lakh INR -> USD
       capacity: "55 L", // Corrected Capacity (was 60L)
       manufacturer: "Toyota",
       weight: 1840, // Corrected Kerb Weight (kg, current G MT)
@@ -1655,7 +1655,7 @@ export const toyota = [
       groundClearance: 220, // (Legender GR-S slightly lower ~200mm?) Using standard 220.
       wheelbase: 2745,
       turnRadius: 5.8, // Corrected Turn Radius (was 5.9)
-      price": 38889, // Corrected: Starting ~33.3 Lakh INR -> USD (was 30k USD)
+      price: 38889, // Corrected: Starting ~33.3 Lakh INR -> USD (was 30k USD)
       capacity: "80 L", // Corrected Capacity (was 70L)
       manufacturer: "Toyota",
       weight: 1895, // Corrected Kerb Weight (kg, starting Petrol MT)
@@ -1667,15 +1667,15 @@ export const toyota = [
       name: "Toyota Camry",
       yearsProduced: "2019 - Present", // Hybrid Only in India
       power: "215", // Corrected Power (bhp, Combined Hybrid System)
-      torque": "221 (Engine) + 202 (Motor)", // Corrected Torque (Nm)
+      torque: "221 (Engine) + 202 (Motor)", // Corrected Torque (Nm)
       gears: "e-CVT", // Corrected Gears (was 6AT)
       length: 4885,
       width: 1840,
       height: 1455, // Corrected Height (was 1445)
-      groundClearance": 160,
+      groundClearance: 160,
       wheelbase: 2825,
       turnRadius: 5.8,
-      price": 53682, // Corrected: Approx 46 Lakh INR -> USD (was 25k USD)
+      price: 53682, // Corrected: Approx 46 Lakh INR -> USD (was 25k USD)
       capacity: "50 L", // Corrected Capacity (was 60L)
       manufacturer: "Toyota",
       weight: 1665, // Corrected Kerb Weight (kg)
@@ -1715,10 +1715,10 @@ export const kia = [
         length: 5115,
         width: 1985, // Corrected Width (was 1995)
         height: 1755, // Corrected Height (was 1775)
-        groundClearance": 180, // Corrected Ground Clearance (was 170)
+        groundClearance: 180, // Corrected Ground Clearance (was 170)
         wheelbase: 3060,
         turnRadius: 5.6, // Corrected Turn Radius (was 5.7)
-        price": 39678, // Corrected: Approx last price ~34 Lakh INR -> USD (was 30k USD)
+        price: 39678, // Corrected: Approx last price ~34 Lakh INR -> USD (was 30k USD)
         capacity: "60 L", // Corrected Capacity (was 80L)
         manufacturer: "Kia",
         weight: 2090, // Corrected Kerb Weight (kg, starting Prestige)
@@ -1756,10 +1756,10 @@ export const kia = [
       length: 4365, // Corrected Length (Facelift)
       width: 1800,
       height: 1645,
-      groundClearance": 190,
+      groundClearance: 190,
       wheelbase: 2610,
       turnRadius: 5.3,
-      price": 12254, // Corrected: Starting ~10.5 Lakh INR -> USD (was 13k USD)
+      price: 12254, // Corrected: Starting ~10.5 Lakh INR -> USD (was 13k USD)
       capacity: "50 L",
       manufacturer: "Kia",
       weight: 1221, // Corrected Kerb Weight (kg, starting NA Petrol MT)
@@ -1776,10 +1776,10 @@ export const kia = [
       length: 3995,
       width: 1790,
       height: 1642,
-      groundClearance": 205,
+      groundClearance: 205,
       wheelbase: 2500, // Corrected Wheelbase (was 2610)
       turnRadius: 5.1, // Corrected Turn Radius (was 5.3)
-      price": 9336, // Corrected: Starting ~8 Lakh INR -> USD (was 10k USD)
+      price: 9336, // Corrected: Starting ~8 Lakh INR -> USD (was 10k USD)
       capacity: "45 L",
       manufacturer: "Kia",
       weight: 1055, // Corrected Kerb Weight (kg, starting NA Petrol MT)
@@ -1796,10 +1796,10 @@ export const kia = [
       length: 4540,
       width: 1800,
       height: 1708,
-      groundClearance": 195, // Corrected Ground Clearance (was 190)
+      groundClearance: 195, // Corrected Ground Clearance (was 190)
       wheelbase: 2780,
       turnRadius: 5.5, // Corrected Turn Radius (was 5.3)
-      price": 12140, // Corrected: Starting ~10.4 Lakh INR -> USD (was 15k USD)
+      price: 12140, // Corrected: Starting ~10.4 Lakh INR -> USD (was 15k USD)
       capacity: "45 L", // Corrected Capacity (was 55L)
       manufacturer: "Kia",
       weight: 1280, // Corrected Kerb Weight (kg, starting NA Petrol MT)
@@ -1818,10 +1818,10 @@ export const mahindra = [
         length: 4850,
         width: 1960,
         height: 1845,
-        groundClearance": 244, // Corrected Ground Clearance (was 213)
+        groundClearance: 244, // Corrected Ground Clearance (was 213)
         wheelbase: 2865,
         turnRadius: 5.5, // Corrected Turn Radius (was 5.6)
-        price": 37344, // Corrected: Approx last price ~32 Lakh INR -> USD (was 35k USD)
+        price: 37344, // Corrected: Approx last price ~32 Lakh INR -> USD (was 35k USD)
         capacity: "70 L",
         manufacturer: "Mahindra",
         weight: 2155, // Corrected Kerb Weight (kg, 2WD)
@@ -1838,10 +1838,10 @@ export const mahindra = [
         length: 4247, // Corrected Length (based on Verito)
         width: 1740,
         height: 1540,
-        groundClearance": 172, // Corrected Ground Clearance (based on Verito)
+        groundClearance: 172, // Corrected Ground Clearance (based on Verito)
         wheelbase: 2630,
         turnRadius: 5.25, // Corrected Turn Radius (based on Verito)
-        price": 11670, // Kept estimated price (10 Lakh INR)
+        price: 11670, // Kept estimated price (10 Lakh INR)
         capacity: "21.2 kWh", // Or 28 kWh in later versions
         manufacturer: "Mahindra Electric",
         weight: 1265, // Corrected Kerb Weight (kg, D6 variant)
@@ -1858,10 +1858,10 @@ export const mahindra = [
       length: 4695,
       width: 1890,
       height: 1755,
-      groundClearance": 200, // Unladen estimate
+      groundClearance: 200, // Unladen estimate
       wheelbase: 2750,
       turnRadius: 5.8, // Corrected Turn Radius (was 5.4)
-      price": 16338, // Corrected: Starting ~14 Lakh INR -> USD (was 20k USD)
+      price: 16338, // Corrected: Starting ~14 Lakh INR -> USD (was 20k USD)
       capacity: "60 L",
       manufacturer: "Mahindra",
       weight: 1650, // Approx Kerb Weight (kg, Petrol MT 5-str)
@@ -1878,10 +1878,10 @@ export const mahindra = [
       length: 3985,
       width: 1820, // Corrected Width (was 1855)
       height: 1850, // Corrected Height (Hard Top, was 1844)
-      groundClearance": 226,
+      groundClearance: 226,
       wheelbase: 2450,
       turnRadius: 5.8, // Corrected Turn Radius (was 5.6)
-      price": 12954, // Corrected: Starting ~11.1 Lakh INR (RWD) -> USD (was 15k USD)
+      price: 12954, // Corrected: Starting ~11.1 Lakh INR (RWD) -> USD (was 15k USD)
       capacity: "57 L", // Corrected Capacity (was 50L)
       manufacturer: "Mahindra",
       weight: 1720, // Corrected Kerb Weight (kg, approx 4WD Diesel MT HT)
@@ -1898,10 +1898,10 @@ export const mahindra = [
       length: 4662,
       width: 1917,
       height: 1857,
-      groundClearance": 187,
+      groundClearance: 187,
       wheelbase: 2750,
       turnRadius: 5.65, // Corrected Turn Radius (was 5.4)
-      price": 15900, // Corrected: Starting ~13.6 Lakh INR -> USD (was 18k USD)
+      price: 15900, // Corrected: Starting ~13.6 Lakh INR -> USD (was 18k USD)
       capacity: "57 L", // Corrected Capacity (was 65L)
       manufacturer: "Mahindra",
       weight: 1880, // Corrected Kerb Weight (kg, approx Z2 Diesel MT)
@@ -1918,10 +1918,10 @@ export const mahindra = [
       length: 3990, // Corrected Length (XUV 3XO)
       width: 1821,
       height: 1647, // Corrected Height (XUV 3XO)
-      groundClearance": 201, // Corrected Ground Clearance (XUV 3XO)
+      groundClearance: 201, // Corrected Ground Clearance (XUV 3XO)
       wheelbase: 2600,
       turnRadius: 5.3, // Corrected Turn Radius (was 5.4)
-      price": 8753, // Corrected: Starting ~7.5 Lakh INR (XUV 3XO) -> USD (was 12k USD)
+      price: 8753, // Corrected: Starting ~7.5 Lakh INR (XUV 3XO) -> USD (was 12k USD)
       capacity: "42 L", // Corrected Capacity (was 45L)
       manufacturer: "Mahindra",
       weight: 1250, // Corrected Kerb Weight (kg, approx starting Petrol MT)
@@ -1938,10 +1938,10 @@ export const mahindra = [
       length: 4585,
       width: 1890,
       height: 1785,
-      groundClearance": 200,
+      groundClearance: 200,
       wheelbase: 2700,
       turnRadius: 5.6, // Corrected Turn Radius (was 5.4)
-      price": 18672, // Kept converted price (16 Lakh INR) as estimate of last value
+      price: 18672, // Kept converted price (16 Lakh INR) as estimate of last value
       capacity: "70 L", // Corrected Capacity (was 55L)
       manufacturer: "Mahindra",
       weight: 1785, // Corrected Kerb Weight (kg, approx W5 MT)
@@ -1981,10 +1981,10 @@ export const volkswagen = [
       length: 4561,
       width: 1752, // Corrected Width (was 1759)
       height: 1507,
-      groundClearance": 179,
+      groundClearance: 179,
       wheelbase: 2651,
       turnRadius: 5.25, // Corrected Turn Radius (was 5.4)
-      price": 13420, // Corrected: Starting ~11.5 Lakh INR -> USD (was 14k USD)
+      price: 13420, // Corrected: Starting ~11.5 Lakh INR -> USD (was 14k USD)
       capacity: "45 L", // Corrected Capacity (was 50L)
       manufacturer: "Volkswagen",
       weight: 1185, // Corrected Kerb Weight (kg, starting 1.0 MT)
@@ -2001,10 +2001,10 @@ export const volkswagen = [
       length: 4221,
       width: 1760,
       height: 1612,
-      groundClearance": 188,
+      groundClearance: 188,
       wheelbase: 2651,
       turnRadius: 5.05, // Corrected Turn Radius (was 5.4)
-      price": 13537, // Corrected: Starting ~11.6 Lakh INR -> USD (was 12k USD)
+      price: 13537, // Corrected: Starting ~11.6 Lakh INR -> USD (was 12k USD)
       capacity: "50 L", // Corrected Capacity (was 45L)
       manufacturer: "Volkswagen",
       weight: 1185, // Corrected Kerb Weight (kg, starting 1.0 MT)
@@ -2021,10 +2021,10 @@ export const volkswagen = [
       length: 4509, // Corrected Length
       width: 1839,
       height: 1675, // Corrected Height
-      groundClearance": 190, // Corrected Ground Clearance (unladen)
+      groundClearance: 190, // Corrected Ground Clearance (unladen)
       wheelbase: 2679,
       turnRadius: 5.75, // Corrected Turn Radius (was 5.5)
-      price": 40845, // Kept corrected price (35 Lakh INR)
+      price: 40845, // Kept corrected price (35 Lakh INR)
       capacity: "60 L", // Corrected Capacity (was 55L)
       manufacturer: "Volkswagen",
       weight: 1703, // Corrected Kerb Weight (kg)
@@ -2041,10 +2041,10 @@ export const volkswagen = [
       length: 3971,
       width: 1682,
       height: 1469,
-      groundClearance": 165,
+      groundClearance: 165,
       wheelbase: 2470,
       turnRadius: 4.97,
-      price": 7586, // Corrected: Assumed Starting ~6.5 Lakh INR -> USD (was 10.5k USD)
+      price: 7586, // Corrected: Assumed Starting ~6.5 Lakh INR -> USD (was 10.5k USD)
       capacity: "45 L",
       manufacturer: "Volkswagen",
       weight: 1015, // Corrected Kerb Weight (kg, starting NA MT)
@@ -2061,10 +2061,10 @@ export const volkswagen = [
       length: 4390,
       width: 1699,
       height: 1467,
-      groundClearance": 163,
+      groundClearance: 163,
       wheelbase: 2553,
       turnRadius: 5.4,
-      price": 11670, // Kept converted price (10 Lakh INR)
+      price: 11670, // Kept converted price (10 Lakh INR)
       capacity: "55 L",
       manufacturer: "Volkswagen",
       weight: 1140, // Corrected Kerb Weight (kg, starting NA MT)
@@ -2104,10 +2104,10 @@ export const citroen=[
     length: 3981, // Corrected Length
     width: 1733,
     height: 1604, // Corrected Height
-    groundClearance": 180,
+    groundClearance: 180,
     wheelbase: 2540,
     turnRadius: 4.98, // Corrected Turn Radius (was 5.1)
-    price": 7119, // Corrected: Starting ~6.1 Lakh INR -> USD (was 7k USD)
+    price: 7119, // Corrected: Starting ~6.1 Lakh INR -> USD (was 7k USD)
     capacity: "30 L", // / 19.2 kWh (eC3)
     manufacturer: "Citroën",
     weight: 939, // Corrected Kerb Weight (kg, starting NA MT)
@@ -2145,10 +2145,10 @@ export const citroen=[
     length: 4500,
     width: 1969, // Corrected Width (incl mirrors, was 1840/1859)
     height: 1710, // Height with roof rails
-    groundClearance": 230, // Seems correct
+    groundClearance: 230, // Seems correct
     wheelbase: 2730,
     turnRadius: 5.35, // Corrected Turn Radius (was 5.5)
-    price": 43179, // Kept corrected price (37 Lakh INR)
+    price: 43179, // Kept corrected price (37 Lakh INR)
     capacity: "53 L",
     manufacturer: "Citroën",
     weight: 1570, // Corrected Kerb Weight (kg)
@@ -2166,10 +2166,10 @@ export const bmw=[ // Already corrected, minor review
     length: 4500,
     width: 1845,
     height: 1630,
-    groundClearance": 183, // Unladen
+    groundClearance: 183, // Unladen
     wheelbase: 2692,
     turnRadius: 5.85, // Corrected (based on 11.7m diameter)
-    price": 57767, // Starting Petrol USD
+    price: 57767, // Starting Petrol USD
     capacity: "45 L", // Corrected Capacity (was 51L)
     manufacturer: "BMW",
     weight: 1560, // Petrol Kerb Weight (kg)
@@ -2186,10 +2186,10 @@ export const bmw=[ // Already corrected, minor review
     length: 4823,
     width: 1827,
     height: 1441,
-    groundClearance": 135, // Laden estimate
+    groundClearance: 135, // Laden estimate
     wheelbase: 2961,
     turnRadius: 6.0,
-    price": 70720, // Starting Petrol USD
+    price: 70720, // Starting Petrol USD
     capacity: "59 L",
     manufacturer: "BMW",
     weight: 1615, // Petrol Kerb Weight (kg)
@@ -2206,10 +2206,10 @@ export const bmw=[ // Already corrected, minor review
     length: 5391,
     width: 1950,
     height: 1544,
-    groundClearance": 147, // Corrected Ground Clearance (Unladen)
+    groundClearance: 147, // Corrected Ground Clearance (Unladen)
     wheelbase: 3215,
     turnRadius: 6.15, // (Base, can be lower with Integral Active Steering)
-    price": 207726, // Starting Petrol USD
+    price: 207726, // Starting Petrol USD
     capacity: "74 L",
     manufacturer: "BMW",
     weight: 2090, // Petrol Kerb Weight (kg)
@@ -2226,10 +2226,10 @@ export const bmw=[ // Already corrected, minor review
     length: 4953,
     width: 1967,
     height: 1696,
-    groundClearance": 195, // Corrected Ground Clearance (Approx standard height)
+    groundClearance: 195, // Corrected Ground Clearance (Approx standard height)
     wheelbase: 3000,
     turnRadius: 6.4, // (Base, can be lower with Integral Active Steering)
-    price": 162807, // Starting xDrive50 USD
+    price: 162807, // Starting xDrive50 USD
     capacity: "106.3 kWh", // Corrected Usable Battery Capacity (was 105.2)
     manufacturer: "BMW",
     weight: 2585, // Corrected Kerb Weight (kg)
@@ -2269,10 +2269,10 @@ export const jeep=[
     length: 4769, // Corrected Length
     width: 1859, // Corrected Width
     height: 1698, // Corrected Height
-    groundClearance": 214, // Corrected Ground Clearance
+    groundClearance: 214, // Corrected Ground Clearance
     wheelbase: 2782,
     turnRadius: 5.8,
-    price": 38889, // Corrected: Starting ~33.3 Lakh INR -> USD (was 33k USD)
+    price: 38889, // Corrected: Starting ~33.3 Lakh INR -> USD (was 33k USD)
     capacity: "60 L",
     manufacturer: "Jeep",
     weight: 1813, // Corrected Kerb Weight (kg, starting Limited MT FWD)
@@ -2289,10 +2289,10 @@ export const jeep=[
     length: 4405, // Corrected Length (was 4395)
     width: 1818,
     height: 1640,
-    groundClearance": 198, // Corrected Ground Clearance
+    groundClearance: 198, // Corrected Ground Clearance
     wheelbase: 2636,
     turnRadius: 5.7, // Corrected Turn Radius (was 5.5)
-    price": 23926, // Corrected: Starting ~20.5 Lakh INR -> USD (was 25k USD)
+    price: 23926, // Corrected: Starting ~20.5 Lakh INR -> USD (was 25k USD)
     capacity: "60 L",
     manufacturer: "Jeep",
     weight: 1590, // Corrected Kerb Weight (kg, starting Sport MT Diesel)
@@ -2332,10 +2332,10 @@ export const volvo=[
     length: 4440, // Corrected Length (Recharge)
     width: 1863,
     height: 1651, // Corrected Height (Recharge)
-    groundClearance": 175, // Corrected Ground Clearance (Recharge)
+    groundClearance: 175, // Corrected Ground Clearance (Recharge)
     wheelbase: 2702,
     turnRadius: 5.7, // Corrected Turn Radius (was 5.8)
-    price": 65340, // Corrected: Starting ~56 Lakh INR -> USD (was 34k USD)
+    price: 65340, // Corrected: Starting ~56 Lakh INR -> USD (was 34k USD)
     capacity: "67 - 75 kWh", // Corrected: Usable Battery Capacity (Single/Twin)
     manufacturer: "Volvo",
     weight: 2030, // Corrected Kerb Weight (kg, Single Motor)
