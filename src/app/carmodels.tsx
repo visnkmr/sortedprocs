@@ -2071,26 +2071,87 @@ export const citreon=[
   
   
 export const bmw=[
-  {
-    "name": "BMW X1",
-    "yearsProduced": "2022 - Present",
-    "power": "150",
-    "torque": "330",
-    "gears": "7-speed automatic",
-    "length": 4447,
-    "width": 1821,
-    "height": 1620,
-    "groundClearance": 175,
-    "wheelbase": 2670,
-    "turnRadius": 5.4,
-    "price": 35000,
+ {
+    "name": "BMW X1 (sDrive18i)",
+    "yearsProduced": "2023-Present",
+    "power": "134",
+    "torque": "230",
+    "gears": "7-Speed Automatic DCT",
+    "length": 4500,
+    "width": 1845,
+    "height": 1630,
+    "groundClearance": 183,
+    "wheelbase": 2692,
+    "turnRadius": 5.8,
+    "price": 57767, // 4,950,000 INR * 0.01167 USD/INR
     "capacity": "51 L",
     "manufacturer": "BMW",
-    "weight": 1700,
-    "estimatedCabinSpace": ((1620 - 175) * 2670 * 1821),
-    "sizeToWeightRatio": ((1620 - 175) * 2670 * 1821) / 1700,
-    "dragCoefficient": 0.31
-  }]
+    "weight": 1560,
+    "estimatedCabinSpace": 7187504940,
+    "sizeToWeightRatio": 4607374.96,
+    "dragCoefficient": 0.29
+  },
+  {
+    "name": "BMW 3 Series Gran Limousine (330Li M Sport)",
+    "yearsProduced": "2021-Present",
+    "power": "255",
+    "torque": "400",
+    "gears": "8-Speed Automatic",
+    "length": 4823,
+    "width": 1827,
+    "height": 1441,
+    "groundClearance": 135,
+    "wheelbase": 2961,
+    "turnRadius": 6.0,
+    "price": 70720, // 6,060,000 INR * 0.01167 USD/INR
+    "capacity": "59 L",
+    "manufacturer": "BMW",
+    "weight": 1615,
+    "estimatedCabinSpace": 7070388162,
+    "sizeToWeightRatio": 4377949.32,
+    "dragCoefficient": null
+  },
+  {
+    "name": "BMW 7 Series (740i M Sport)",
+    "yearsProduced": "2022-Present",
+    "power": "381",
+    "torque": "540",
+    "gears": "8-Speed Automatic",
+    "length": 5391,
+    "width": 1950,
+    "height": 1544,
+    "groundClearance": 136,
+    "wheelbase": 3215,
+    "turnRadius": 6.15,
+    "price": 207726, // 17,800,000 INR * 0.01167 USD/INR
+    "capacity": "74 L",
+    "manufacturer": "BMW",
+    "weight": 2090,
+    "estimatedCabinSpace": 8829216000,
+    "sizeToWeightRatio": 4224505.26,
+    "dragCoefficient": null
+  },
+  {
+    "name": "BMW iX (xDrive50)",
+    "yearsProduced": "2024-Present (India Launch)",
+    "power": "516",
+    "torque": "765",
+    "gears": "1-Speed Automatic",
+    "length": 4953,
+    "width": 1967,
+    "height": 1696,
+    "groundClearance": 202,
+    "wheelbase": 3000,
+    "turnRadius": 6.4,
+    "price": 162807, // 13,950,000 INR * 0.01167 USD/INR
+    "capacity": "105.2 kWh",
+    "manufacturer": "BMW",
+    "weight": 2510,
+    "estimatedCabinSpace": 8851500000,
+    "sizeToWeightRatio": 3526494.02,
+    "dragCoefficient": 0.25
+  }
+]
 export const jeep=[
 {
     "name": "Jeep Meridian",
