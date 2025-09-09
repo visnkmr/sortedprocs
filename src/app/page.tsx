@@ -30,6 +30,7 @@ import {
   citroen,
   volvo,
   jeep,
+  vinfast,
 } from "./carmodels"
 import { Delete, PinIcon, PinOff, Star, StarOff } from "lucide-react"
 import SizeComparisonDialog from "./size-comparison-dialog"
@@ -366,6 +367,7 @@ export default function VehicleDimensions() {
       ...citroen,
       ...volvo,
       ...jeep,
+      ...vinfast,
     ],
     [],
   )
