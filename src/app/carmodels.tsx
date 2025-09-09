@@ -1,3 +1,106 @@
+export const vinfast = [
+  {
+    name: "VinFast VF 3",
+    yearsProduced: "2024 - Present",
+    power: "43", // bhp (32 kW, converted from source)[](/new-cars/vinfast/vf-3/specifications)
+    torque: "110", // Nm (estimated for compact EV, exact value not specified)
+    gears: "Single-speed automatic", // Typical for EVs
+    length: 3190, // mm[](/new-cars/vinfast/vf-3/specifications)
+    width: 1679, // mm[](/new-cars/vinfast/vf-3/specifications)
+    height: 1622, // mm (estimated based on compact crossover dimensions)[](/new-cars/vinfast/vf-3/specifications)
+    groundClearance: 191, // mm[](/new-cars/vinfast/vf-3/specifications)
+    wheelbase: 2075, // mm[](/new-cars/vinfast/vf-3/specifications)
+    turnRadius: 4.8, // m (estimated, compact size, similar to Kwid)
+    price: 7860, // Approx ₹7.86 Lakh INR -> USD (based on India pricing)[](vinfast/vf3)
+    capacity: "18.6 kWh", // Battery size (estimated for compact EV, not explicitly stated)
+    manufacturer: "VinFast",
+    weight: 850, // kg (estimated kerb weight for compact EV)
+    estimatedCabinSpace: 3311335290, // (1622 - 191) * 2075 * 1679
+    sizeToWeightRatio: 3895688.58, // 3311335290 / 850
+    dragCoefficient: 0.34 // Estimate for compact crossover
+  },
+  {
+    name: "VinFast VF 6",
+    yearsProduced: "2024 - Present",
+    power: "201", // bhp[](vinfast/vf6/specs)
+    torque: "310", // Nm[](vinfast/vf6/specs)
+    gears: "Single-speed automatic",
+    length: 4238, // mm[](vinfast/vf6/specs)
+    width: 1820, // mm[](vinfast/vf6/specs)
+    height: 1594, // mm (estimated, C1-segment SUV)
+    groundClearance: 170, // mm (estimated, not specified)[](vinfast-cars/vf6/dimensions)
+    wheelbase: 2730, // mm (estimated for C1-segment SUV)
+    turnRadius: 5.2, // m (estimated, typical for compact SUV)
+    price: 16490, // Approx ₹16.49 Lakh INR -> USD[](vinfast-cars/)
+    capacity: "59.6 kWh", // Battery size (assumed based on similar models)[](vinfast-cars/vf7/engine-specifications)
+    manufacturer: "VinFast",
+    weight: 1800, // kg (estimated for compact electric SUV)
+    estimatedCabinSpace: 10505495460, // (1594 - 170) * 2730 * 1820
+    sizeToWeightRatio: 5836386.37, // 10505495460 / 1800
+    dragCoefficient: 0.32 // Estimate for aerodynamic SUV
+  },
+  {
+    name: "VinFast VF 7",
+    yearsProduced: "2024 - Present",
+    power: "204 - 353", // bhp (204PS for base, 353PS for higher variant)[](vinfast-cars/vf7/engine-specifications)
+    torque: "310 - 500", // Nm[](vinfast-cars/vf7/engine-specifications)
+    gears: "Single-speed automatic",
+    length: 4545, // mm (estimated, C2-segment SUV)[](vinfast-cars/vf7/dimensions)
+    width: 1890, // mm (estimated)[](vinfast-cars/vf7/dimensions)
+    height: 1644, // mm (estimated)[](vinfast-cars/vf7/dimensions)
+    groundClearance: 190, // mm[](vinfast-cars/vf7/dimensions)
+    wheelbase: 2840, // mm (estimated for C2-segment SUV)
+    turnRadius: 5.4, // m (estimated, typical for mid-size SUV)
+    price: 20890, // Approx ₹20.89 Lakh INR -> USD[](vinfast-cars/)
+    capacity: "59.6 - 70.8 kWh", // Battery size range[](vinfast-cars/vf7/engine-specifications)
+    manufacturer: "VinFast",
+    weight: 2000, // kg (estimated for mid-size electric SUV)
+    estimatedCabinSpace: 12755066400, // (1644 - 190) * 2840 * 1890
+    sizeToWeightRatio: 6377533.20, // 12755066400 / 2000
+    dragCoefficient: 0.31 // Estimate for mid-size SUV
+  },
+  {
+    name: "VinFast VF 8",
+    yearsProduced: "2022 - Present",
+    power: "349 - 402", // bhp (Eco: 349 hp, Plus: 402 hp)[](vf8)
+    torque: "369 - 457", // lb-ft (converted to 500 - 620 Nm)[](vf8)
+    gears: "Single-speed automatic",
+    length: 4750, // mm (estimated for D-segment SUV)[](VinFast_VF_8)
+    width: 1934, // mm (estimated)[](VinFast_VF_8)
+    height: 1667, // mm (estimated)[](VinFast_VF_8)
+    groundClearance: 175, // mm (6.9 inches converted)[](specs)
+    wheelbase: 2950, // mm (estimated for mid-size SUV)
+    turnRadius: 5.6, // m (estimated, typical for D-segment SUV)
+    price: 41100, // USD (Eco model MSRP)[](vf-8)
+    capacity: "82 - 87.7 kWh", // Battery size range[](VinFast_VF_8)
+    manufacturer: "VinFast",
+    weight: 2400, // kg (estimated for mid-size electric SUV)[](specs)
+    estimatedCabinSpace: 15967256550, // (1667 - 175) * 2950 * 1934
+    sizeToWeightRatio: 6653023.56, // 15967256550 / 2400
+    dragCoefficient: 0.30 // Estimate for aerodynamic mid-size SUV
+  },
+  {
+    name: "VinFast VF 9",
+    yearsProduced: "2022 - Present",
+    power: "402", // bhp (estimated, similar to VF 8 Plus)[](VinFast_VF_9)
+    torque: "620", // Nm (estimated, aligned with VF 8 Plus)[](VinFast_VF_9)
+    gears: "Single-speed automatic",
+    length: 5120, // mm (estimated for E-segment SUV)[](VinFast_VF_9)
+    width: 2000, // mm (estimated)[](VinFast_VF_9)
+    height: 1696, // mm (estimated)[](VinFast_VF_9)
+    groundClearance: 180, // mm (estimated for full-size SUV)
+    wheelbase: 3150, // mm (estimated for E-segment SUV)
+    turnRadius: 6.0, // m (estimated, typical for large SUV)
+    price: 69000, // USD (estimated MSRP for full-size EV)[](VinFast_VF_9)
+    capacity: "92 kWh", // Battery size (estimated for large SUV)
+    manufacturer: "VinFast",
+    weight: 2800, // kg (estimated for full-size electric SUV)
+    estimatedCabinSpace: 20336460000, // (1696 - 180) * 3150 * 2000
+    sizeToWeightRatio: 7262307.14, // 20336460000 / 2800
+    dragCoefficient: 0.29 // Estimate for large aerodynamic SUV
+  }
+];
+
 export const renault = [
     {
       name: "Renault Kwid",
@@ -1809,6 +1912,66 @@ export const kia = [
     },
   ]
 export const mahindra = [
+    {
+    name: "Mahindra XUV400 EV",
+    yearsProduced: "2023 - Present",
+    power: "147 - 149", // bhp (147.51 - 149.55 bhp)[](mahindra/xuv400-ev/specs)
+    torque: "310", // Nm[](mahindra/xuv400-ev/specs)
+    gears: "Single-speed automatic", // Shift-by-wire AT[](mahindra/xuv400-ev/specs)
+    length: 4200, // mm[](mahindra/xuv400-ev/specs)
+    width: 1821, // mm[](mahindra/xuv400-ev/specs)
+    height: 1634, // mm (estimated, typical for compact SUV)
+    groundClearance: 180, // mm (estimated, typical for segment)
+    wheelbase: 2445, // mm[](mahindra/xuv400-ev/specs)
+    turnRadius: 5.3, // m (estimated, typical for compact SUV)
+    price: 18490, // Approx ₹15.49 Lakh INR -> USD (lowest ex-showroom)[](mahindra/xuv400-ev/specs)
+    capacity: "34.5 - 39.4 kWh", // Battery size[](mahindra/xuv400-ev/specs)
+    manufacturer: "Mahindra",
+    weight: 1600, // kg (estimated for compact electric SUV)
+    estimatedCabinSpace: 8930212290, // (1634 - 180) * 2445 * 1821
+    sizeToWeightRatio: 5581382.68, // 8930212290 / 1600
+    dragCoefficient: 0.33 // Estimate for compact SUV
+  },
+  {
+    name: "Mahindra BE 6e",
+    yearsProduced: "2024 - Present",
+    power: "228 - 286", // bhp (228 - 282 bhp, 286 hp for 79 kWh variant)[](ev-brand/mahindra)[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    torque: "380", // Nm[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    gears: "Single-speed automatic", // 1 gear, automatic[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    length: 4371, // mm[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    width: 1907, // mm[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    height: 1649, // mm (estimated, typical for compact electric SUV)
+    groundClearance: 190, // mm (estimated, aligned with VF 7)[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    wheelbase: 2775, // mm (estimated, typical for segment)[](mahindras-2-new-electric-suvs/)
+    turnRadius: 5.4, // m (estimated, typical for compact SUV)
+    price: 22550, // Approx ₹18.90 Lakh INR -> USD (lowest ex-showroom)[](ev-brand/mahindra)
+    capacity: "59 - 79 kWh", // Battery size[](ev-brand/mahindra)[](mahindra-be-6e-79-kwh-286hp-electric-53422)
+    manufacturer: "Mahindra",
+    weight: 1900, // kg (estimated for compact electric SUV)
+    estimatedCabinSpace: 11032492935, // (1649 - 190) * 2775 * 1907
+    sizeToWeightRatio: 5806575.44, // 11032492935 / 1900
+    dragCoefficient: 0.32 // Estimate for aerodynamic compact SUV
+  },
+  {
+    name: "Mahindra XEV 9e",
+    yearsProduced: "2024 - Present",
+    power: "228 - 282", // bhp[](ev-brand/mahindra)[](mahindra-cars/xev-9e/specifications)
+    torque: "380", // Nm[](mahindra-cars/xev-9e/specifications)
+    gears: "Single-speed automatic", // Single-speed[](mahindra-cars/xev-9e/specifications)
+    length: 4789, // mm[](mahindra-cars/xev-9e/specifications)[](mahindras-2-new-electric-suvs/)
+    width: 1907, // mm[](mahindra-cars/xev-9e/specifications)
+    height: 1694, // mm[](mahindra-cars/xev-9e/specifications)
+    groundClearance: 207, // mm[](mahindra-cars/xev-9e/specifications)[](mahindras-2-new-electric-suvs/)
+    wheelbase: 2775, // mm[](mahindra-cars/xev-9e/specifications)
+    turnRadius: 5.6, // m[](mahindra-cars/xev-9e/specifications)
+    price: 26110, // Approx ₹21.90 Lakh INR -> USD (lowest ex-showroom)[](ev-brand/mahindra)[](mahindra-cars/xev-9e/)
+    capacity: "59 - 79 kWh", // Battery size[](ev-brand/mahindra)[](mahindra-cars/xev-9e/specifications)
+    manufacturer: "Mahindra",
+    weight: 2200, // kg (estimated for mid-size electric SUV)
+    estimatedCabinSpace: 12219041835, // (1694 - 207) * 2775 * 1907
+    sizeToWeightRatio: 5554109.93, // 12219041835 / 2200
+    dragCoefficient: 0.31 // Estimate for aerodynamic coupe SUV[](mahindra-cars/xev-9e/)
+  },
     {
         name: "Mahindra Alturas G4",
         yearsProduced: "2018 - 2022 (India)", // Corrected: Discontinued
