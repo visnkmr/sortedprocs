@@ -19,6 +19,7 @@
 -   **Dynamic Performance Ranges:** The slider ranges dynamically adjust based on the minimum and maximum values for each performance metric across all included processor models.
 - **Calculated Fields:** Shows calculated performance metrics and core configurations.
 - **Responsive Design:** Features a responsive design that works on most devices.
+-   **Customizable Layout:** Choose from 2, 3, 4, 5, 6, or 8 items per row to customize your viewing experience.
 -   **Toggle Specification Range Visibility:** Hide or show the specification range sliders for a cleaner view.
 -   **Performance:** Optimized to load fast.
 - **Informative Tooltips:** Has tooltips for easy usage of the site.

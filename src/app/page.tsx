@@ -1,7 +1,7 @@
 "use client"
 
 // 1. Import necessary hooks for optimization
-import { useState, useMemo, useCallback, memo} from "react"
+import { useState, useMemo, useCallback, memo, useEffect} from "react"
 
 // Add imports for the info button and popups
 import { Github } from "lucide-react"
@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import { Badge } from "../components/ui/badge"
 import {
   processors,
-} from "./carmodels"
+} from "./processormodels"
 import { Delete, PinIcon, PinOff, Star, StarOff } from "lucide-react"
 import SizeComparisonDialog from "./size-comparison-dialog"
 import { InfoPopover } from "./info-components"
@@ -47,6 +47,37 @@ export type ProcessorData = {
   coreConfig: string
   clockSpeed: number
   gpu: string
+}
+
+// localStorage helper functions
+const STORAGE_KEYS = {
+  ITEMS_PER_ROW: 'sortedproc_itemsPerRow',
+  STARRED_PROCESSORS: 'sortedproc_starredProcessors',
+  PINNED_PROCESSOR: 'sortedproc_pinnedProcessor',
+  DIMENSIONS: 'sortedproc_dimensions',
+  SEARCH_QUERY: 'sortedproc_searchQuery',
+  SORT_BY: 'sortedproc_sortBy',
+  SORT_ORDER: 'sortedproc_sortOrder',
+  MANUFACTURER_FILTER: 'sortedproc_manufacturerFilter',
+  SHOW_DIMENSIONS: 'sortedproc_showDimensionsRange',
+} as const
+
+const saveToStorage = (key: string, value: any) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value))
+  } catch (error) {
+    console.warn('Failed to save to localStorage:', error)
+  }
+}
+
+const loadFromStorage = (key: string, defaultValue: any) => {
+  try {
+    const item = localStorage.getItem(key)
+    return item ? JSON.parse(item) : defaultValue
+  } catch (error) {
+    console.warn('Failed to load from localStorage:', error)
+    return defaultValue
+  }
 }
 
 // 17. Move the finddataspecs function outside the component
@@ -97,10 +128,10 @@ type processorcardprops = {
   pinnedProcessor: ProcessorData | null,
   setPinnedProcessor: React.Dispatch<React.SetStateAction<ProcessorData | null>>,
   starredProcessors: string[]|null,
-  starprocessor: React.Dispatch<React.SetStateAction<string[]|null>>,
+  setStarredProcessors: React.Dispatch<React.SetStateAction<string[]|null>>,
 }
 // eslint-disable-next-line react/display-name
-const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, starprocessor }:processorcardprops) => {
+const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, setStarredProcessors }:processorcardprops) => {
   // Move the percentage calculation inside the memoized component
   const calculatePercentage = useCallback((value: number, reference: number) => {
     if (!reference) return 0
@@ -135,7 +166,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         </button>
         <button
           onClick={() =>
-            starprocessor(
+            setStarredProcessors(
               starredProcessors?.includes(item.name)
                 ? starredProcessors.filter((processor) => processor !== item.name)
                 : [...(starredProcessors ? starredProcessors : []), item.name],
@@ -227,17 +258,28 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
 // 4. Replace the main component with optimized version
 export default function ProcessorComparison() {
   // 5. Move finddataspecs outside the component to prevent recalculation on every render
-  const [dimensions, setDimensions] = useState({
-    cores: [1, 16],
-    clockSpeed: [1000, 5000],
-    antutuScore: [100000, 3000000],
-    geekbenchSingle: [500, 4000],
-    geekbenchMulti: [1000, 11000],
-    performanceScore: [20, 100],
-  })
-  const [pinnedProcessor, setPinnedProcessor] = useState<ProcessorData | null>(null)
-  const [starredProcessors, starprocessor] = useState<string[] | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [dimensions, setDimensions] = useState(() =>
+    loadFromStorage(STORAGE_KEYS.DIMENSIONS, {
+      cores: [1, 16],
+      clockSpeed: [1000, 5000],
+      antutuScore: [100000, 3000000],
+      geekbenchSingle: [500, 4000],
+      geekbenchMulti: [1000, 11000],
+      performanceScore: [20, 100],
+    })
+  )
+  const [pinnedProcessor, setPinnedProcessor] = useState<ProcessorData | null>(() =>
+    loadFromStorage(STORAGE_KEYS.PINNED_PROCESSOR, null)
+  )
+  const [starredProcessors, setStarredProcessors] = useState<string[] | null>(() =>
+    loadFromStorage(STORAGE_KEYS.STARRED_PROCESSORS, null)
+  )
+  const [comparisons, setComparisons] = useState<{ field: keyof ProcessorData; operator: ">" | "<" }[]>(() =>
+    loadFromStorage('sortedproc_comparisons', [])
+  )
+  const [searchQuery, setSearchQuery] = useState(() =>
+    loadFromStorage(STORAGE_KEYS.SEARCH_QUERY, "")
+  )
   const [sortBy, setSortBy] = useState<
     | "name"
     | "cores"
@@ -247,11 +289,105 @@ export default function ProcessorComparison() {
     | "geekbenchMulti"
     | "performanceScore"
     | "manufacturer"
-  >("name")
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
-  const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
-  const [comparisons, setComparisons] = useState<{ field: keyof ProcessorData; operator: ">" | "<" }[]>([])
-  const [showDimensionsRange, setShowDimensionsRange] = useState(true)
+  >(() => loadFromStorage(STORAGE_KEYS.SORT_BY, "name"))
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(() =>
+    loadFromStorage(STORAGE_KEYS.SORT_ORDER, "asc")
+  )
+  const [manufacturerFilter, setManufacturerFilter] = useState<string>(() =>
+    loadFromStorage(STORAGE_KEYS.MANUFACTURER_FILTER, "All")
+  )
+  const [showDimensionsRange, setShowDimensionsRange] = useState(() =>
+    loadFromStorage(STORAGE_KEYS.SHOW_DIMENSIONS, true)
+  )
+  const [itemsPerRow, setItemsPerRow] = useState(() =>
+    loadFromStorage(STORAGE_KEYS.ITEMS_PER_ROW, 4)
+  )
+  const [starredPinnedFilter, setStarredPinnedFilter] = useState<'all' | 'only' | 'hide'>(() =>
+    loadFromStorage('sortedproc_starredPinnedFilter', 'all')
+  )
+
+  // Add useEffect hooks to save state changes to localStorage
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions)
+  }, [dimensions])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor)
+  }, [pinnedProcessor])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.STARRED_PROCESSORS, starredProcessors)
+  }, [starredProcessors])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.SEARCH_QUERY, searchQuery)
+  }, [searchQuery])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.SORT_BY, sortBy)
+  }, [sortBy])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.SORT_ORDER, sortOrder)
+  }, [sortOrder])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.MANUFACTURER_FILTER, manufacturerFilter)
+  }, [manufacturerFilter])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.SHOW_DIMENSIONS, showDimensionsRange)
+  }, [showDimensionsRange])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.ITEMS_PER_ROW, itemsPerRow)
+  }, [itemsPerRow])
+
+  useEffect(() => {
+    saveToStorage('sortedproc_comparisons', comparisons)
+  }, [comparisons])
+
+  useEffect(() => {
+    saveToStorage('sortedproc_starredPinnedFilter', starredPinnedFilter)
+  }, [starredPinnedFilter])
+
+  // Helper function to generate grid classes based on items per row
+  const getGridClasses = useCallback((itemsPerRow: number) => {
+    const baseClasses = "grid gap-4"
+    const responsiveClasses = []
+
+    // Mobile: always 1 column
+    responsiveClasses.push("grid-cols-1")
+
+    // Small screens: 2 columns minimum
+    responsiveClasses.push("sm:grid-cols-2")
+
+    // Medium screens and up: based on selected items per row
+    switch (itemsPerRow) {
+      case 2:
+        responsiveClasses.push("md:grid-cols-2")
+        break
+      case 3:
+        responsiveClasses.push("md:grid-cols-2 lg:grid-cols-3")
+        break
+      case 4:
+        responsiveClasses.push("md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4")
+        break
+      case 5:
+        responsiveClasses.push("md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5")
+        break
+      case 6:
+        responsiveClasses.push("md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6")
+        break
+      case 8:
+        responsiveClasses.push("md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8")
+        break
+      default:
+        responsiveClasses.push("md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4")
+    }
+
+    return `${baseClasses} ${responsiveClasses.join(" ")}`
+  }, [])
 
   // 6. Memoize the combined data array to prevent recreation on every render
   const data = useMemo(
@@ -280,8 +416,24 @@ export default function ProcessorComparison() {
 
   // 10. Memoize the filtered data to prevent recalculation on every render
   const filteredData = useMemo(() => {
-    return data
-      .filter((item) => {
+    let filtered = data
+
+    // Apply starred/pinned filter based on the selected option
+    if (starredPinnedFilter === 'only') {
+      // Show only starred and pinned processors
+      filtered = data.filter((item) => {
+        return (starredProcessors && starredProcessors.includes(item.name)) ||
+               (pinnedProcessor && item.name === pinnedProcessor.name)
+      })
+    } else if (starredPinnedFilter === 'hide') {
+      // Hide starred and pinned processors
+      filtered = data.filter((item) => {
+        return !(starredProcessors && starredProcessors.includes(item.name)) &&
+               !(pinnedProcessor && item.name === pinnedProcessor.name)
+      })
+    } else {
+      // Show all processors (default behavior)
+      filtered = data.filter((item) => {
         if (starredProcessors && starredProcessors?.includes(item.name)) return true
         if (pinnedProcessor && item.name === pinnedProcessor.name) return true
         if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
@@ -301,6 +453,10 @@ export default function ProcessorComparison() {
           item.performanceScore <= dimensions.performanceScore[1]
         )
       })
+    }
+
+    // Apply manufacturer and comparison filters (these work regardless of showOnlyStarredAndPinned setting)
+    return filtered
       .filter((item) => {
         if (starredProcessors && starredProcessors?.includes(item.name)) return true
         if (pinnedProcessor && item.name === pinnedProcessor.name) return true
@@ -331,11 +487,11 @@ export default function ProcessorComparison() {
             : (b[sortBy] as number) - (a[sortBy] as number)
         }
       })
-  }, [data, dimensions, searchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder])
+  }, [data, dimensions, searchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder, starredPinnedFilter])
 
   // 11. Use useCallback for event handlers to prevent recreation on every render
   const handleSliderChange = useCallback((value: number[], dimension: keyof typeof dimensions) => {
-    setDimensions((prev) => ({
+    setDimensions((prev: typeof dimensions) => ({
       ...prev,
       [dimension]: value,
     }))
@@ -437,6 +593,26 @@ export default function ProcessorComparison() {
             </div>
           </div>
 
+          {/* Layout Controls */}
+          <div className="flex gap-2 items-center">
+            <label htmlFor="itemsPerRow" className="text-sm font-medium">
+              Items per row:
+            </label>
+            <select
+              id="itemsPerRow"
+              className="px-2 py-1 border rounded-md"
+              value={itemsPerRow}
+              onChange={(e) => setItemsPerRow(Number(e.target.value))}
+            >
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={8}>8</option>
+            </select>
+          </div>
+
           {/* Comparison Filter */}
           {pinnedProcessor && (
             <div className="flex flex-col gap-2 items-center">
@@ -482,6 +658,23 @@ export default function ProcessorComparison() {
               ))}
             </div>
           )}
+
+          {/* Filter for Starred and Pinned Processors */}
+          <div className="flex items-center gap-2">
+            <label htmlFor="starredPinnedFilter" className="text-sm font-medium">
+              Processor display:
+            </label>
+            <select
+              id="starredPinnedFilter"
+              className="px-2 py-1 border rounded-md"
+              value={starredPinnedFilter}
+              onChange={(e) => setStarredPinnedFilter(e.target.value as 'all' | 'only' | 'hide')}
+            >
+              <option value="all">Show all processors</option>
+              <option value="only">Show only starred & pinned</option>
+              <option value="hide">Hide starred & pinned</option>
+            </select>
+          </div>
 
           {/* Toggle for Dimensions Range */}
           <button className="px-3 py-1 border rounded-md" onClick={toggleDimensionsRange}>
@@ -624,9 +817,9 @@ export default function ProcessorComparison() {
           </Card>
         )}
 
-        {/* Car Grid - Use windowing for better performance with large lists */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-4">
-          {/* 16. Use the memoized ProcessorCard component for each processor */}
+        {/* Processor Grid - Responsive layout with customizable items per row */}
+        <div className={getGridClasses(itemsPerRow)}>
+          {/* Use the memoized ProcessorCard component for each processor */}
           {filteredData.slice(0, 100).map((item) => (
             <ProcessorCard
               key={item.name}
@@ -634,7 +827,7 @@ export default function ProcessorComparison() {
               pinnedProcessor={pinnedProcessor}
               setPinnedProcessor={setPinnedProcessor}
               starredProcessors={starredProcessors}
-              starprocessor={starprocessor}
+              setStarredProcessors={setStarredProcessors}
             />
           ))}
         </div>
