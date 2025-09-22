@@ -215,6 +215,10 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
           Performance Grade: {item.performanceGrade}
           <InfoPopover title="Performance Grade" srText="What is Performance Grade?" text="A letter grade (A+, A, B, C, D) that categorizes the processor's overall performance level."/>
         </p>
+        {/* Performance Comparison Dialog */}
+        <div className="pt-2">
+          <SizeComparisonDialog item={item} pinnedProcessor={pinnedProcessor} />
+        </div>
       </CardContent>
     </Card>
   )
@@ -370,7 +374,7 @@ export default function ProcessorComparison() {
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-bold">ProcessorCompare</h1>
+              <h1 className="text-3xl font-bold">SortedProc</h1>
               <a
                 href="https://github.com/visnkmr/processorcompare"
                 target="_blank"
@@ -639,7 +643,7 @@ export default function ProcessorComparison() {
         <footer className="mt-8 text-center">
           <div className="flex justify-center space-x-4 mb-4">
             <a
-              href="https://github.com/visnkmr/carproj"
+              href="https://github.com/visnkmr/procproj"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:text-blue-700"
