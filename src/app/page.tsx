@@ -2,6 +2,7 @@
 
 // 1. Import necessary hooks for optimization
 import { useState, useMemo, useCallback, memo, useEffect} from "react"
+import { useTheme } from "next-themes"
 
 // Add imports for the info button and popups
 import { Github } from "lucide-react"
@@ -13,7 +14,7 @@ import { Badge } from "../components/ui/badge"
 import {
   processors,
 } from "./processormodels"
-import { Delete, PinIcon, PinOff, Star, StarOff } from "lucide-react"
+import { Delete, PinIcon, PinOff, Star, StarOff, Sun, Moon } from "lucide-react"
 import SizeComparisonDialog from "./size-comparison-dialog"
 import { InfoPopover } from "./info-components"
 // groundClearance
@@ -257,6 +258,8 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
 
 // 4. Replace the main component with optimized version
 export default function ProcessorComparison() {
+  const { theme, setTheme } = useTheme()
+
   // 5. Move finddataspecs outside the component to prevent recalculation on every render
   const [dimensions, setDimensions] = useState(() =>
     loadFromStorage(STORAGE_KEYS.DIMENSIONS, {
@@ -418,48 +421,53 @@ export default function ProcessorComparison() {
   const filteredData = useMemo(() => {
     let filtered = data
 
+    // First apply search query filter (works on all processors)
+    if (searchQuery) {
+      filtered = filtered.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }
+
+    // Apply specification range filters (works on all processors)
+    filtered = filtered.filter((item) => {
+      if (starredProcessors && starredProcessors?.includes(item.name)) return true
+      if (pinnedProcessor && item.name === pinnedProcessor.name) return true
+
+      return (
+        item.cores >= dimensions.cores[0] &&
+        item.cores <= dimensions.cores[1] &&
+        item.clockSpeed >= dimensions.clockSpeed[0] &&
+        item.clockSpeed <= dimensions.clockSpeed[1] &&
+        item.antutuScore >= dimensions.antutuScore[0] &&
+        item.antutuScore <= dimensions.antutuScore[1] &&
+        item.geekbenchSingle >= dimensions.geekbenchSingle[0] &&
+        item.geekbenchSingle <= dimensions.geekbenchSingle[1] &&
+        item.geekbenchMulti >= dimensions.geekbenchMulti[0] &&
+        item.geekbenchMulti <= dimensions.geekbenchMulti[1] &&
+        item.performanceScore >= dimensions.performanceScore[0] &&
+        item.performanceScore <= dimensions.performanceScore[1]
+      )
+    })
+
     // Apply starred/pinned filter based on the selected option
     if (starredPinnedFilter === 'only') {
       // Show only starred and pinned processors
-      filtered = data.filter((item) => {
+      filtered = filtered.filter((item) => {
         return (starredProcessors && starredProcessors.includes(item.name)) ||
                (pinnedProcessor && item.name === pinnedProcessor.name)
       })
     } else if (starredPinnedFilter === 'hide') {
       // Hide starred and pinned processors
-      filtered = data.filter((item) => {
+      filtered = filtered.filter((item) => {
         return !(starredProcessors && starredProcessors.includes(item.name)) &&
                !(pinnedProcessor && item.name === pinnedProcessor.name)
       })
-    } else {
-      // Show all processors (default behavior)
-      filtered = data.filter((item) => {
-        if (starredProcessors && starredProcessors?.includes(item.name)) return true
-        if (pinnedProcessor && item.name === pinnedProcessor.name) return true
-        if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
-
-        return (
-          item.cores >= dimensions.cores[0] &&
-          item.cores <= dimensions.cores[1] &&
-          item.clockSpeed >= dimensions.clockSpeed[0] &&
-          item.clockSpeed <= dimensions.clockSpeed[1] &&
-          item.antutuScore >= dimensions.antutuScore[0] &&
-          item.antutuScore <= dimensions.antutuScore[1] &&
-          item.geekbenchSingle >= dimensions.geekbenchSingle[0] &&
-          item.geekbenchSingle <= dimensions.geekbenchSingle[1] &&
-          item.geekbenchMulti >= dimensions.geekbenchMulti[0] &&
-          item.geekbenchMulti <= dimensions.geekbenchMulti[1] &&
-          item.performanceScore >= dimensions.performanceScore[0] &&
-          item.performanceScore <= dimensions.performanceScore[1]
-        )
-      })
     }
+    // If 'all', keep all filtered processors
 
-    // Apply manufacturer and comparison filters (these work regardless of showOnlyStarredAndPinned setting)
+    // Apply manufacturer and comparison filters
     return filtered
       .filter((item) => {
-        if (starredProcessors && starredProcessors?.includes(item.name)) return true
-        if (pinnedProcessor && item.name === pinnedProcessor.name) return true
         if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
 
         return comparisons.every((comparison) => {
@@ -535,15 +543,24 @@ export default function ProcessorComparison() {
                 href="https://github.com/visnkmr/processorcompare"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full transition-colors"
               >
                 <Github className="h-4 w-4" />
                 <span>Star</span>
               </a>
             </div>
-            <p>
-              {filteredData.length} of {totalProcessorModels} processors found
-            </p>
+            <div className="flex items-center gap-4">
+              <p>
+                {filteredData.length} of {totalProcessorModels} processors found
+              </p>
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                title={theme === 'dark' ? "Switch to light theme" : "Switch to dark theme"}
+              >
+                {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
 
           {/* Search, Sort, and Filter Controls */}
@@ -846,7 +863,7 @@ export default function ProcessorComparison() {
           </div>
 
           <p>Submit new Processors as PR on GitHub. Thanks.</p>
-          <p className="italic text-xs leading-relaxed p-4 text-black">
+          <p className="italic text-xs leading-relaxed p-4 text-foreground">
             Disclaimer: The information provided on this website regarding processor specifications, performance benchmarks, and other
             related details is for general informational purposes only. While we strive to ensure the accuracy and
             completeness of the information, the specifications, benchmarks, and details listed are subject to change by
