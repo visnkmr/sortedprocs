@@ -11,26 +11,7 @@ import { Slider } from "../components/ui/slider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
 import { Badge } from "../components/ui/badge"
 import {
-  byd,
-  nissan,
-  renault,
-  skoda,
-  maruti,
-  hyundai,
-  honda,
-  tesla,
-  mg,
-  fiat,
-  tata,
-  toyota,
-  kia,
-  mahindra,
-  volkswagen,
-  bmw,
-  citroen,
-  volvo,
-  jeep,
-  vinfast,
+  processors,
 } from "./carmodels"
 import { Delete, PinIcon, PinOff, Star, StarOff } from "lucide-react"
 import SizeComparisonDialog from "./size-comparison-dialog"
@@ -54,33 +35,26 @@ import { InfoPopover } from "./info-components"
 // :
 // {min: 1800, max: 2070}
 
-export type CarData = {
+export type ProcessorData = {
   name: string
-  yearsProduced: string
-  power: string
-  torque: string
-  gears: string
-  length: number
-  width: number
-  height: number
-  groundClearance: number
-  wheelbase: number
-  turnRadius: number
-  price: number
-  capacity: string
   manufacturer: string
-  weight: number
-  estimatedCabinSpace: number
-  sizeToWeightRatio: number
-  dragCoefficient: number
+  performanceScore: number
+  performanceGrade: string
+  antutuScore: number
+  geekbenchSingle: number
+  geekbenchMulti: number
+  cores: number
+  coreConfig: string
+  clockSpeed: number
+  gpu: string
 }
 
 // 17. Move the finddataspecs function outside the component
-function finddataspecs(data: CarData[]) {
+function finddataspecs(data: ProcessorData[]) {
   // Only run this in development mode
   if (process.env.NODE_ENV !== "production") {
     // List of properties for which you want min and max values
-    const properties: (keyof CarData)[] = ["length", "width", "height", "turnRadius", "groundClearance", "wheelbase"]
+    const properties: (keyof ProcessorData)[] = ["cores", "clockSpeed", "antutuScore", "geekbenchSingle", "geekbenchMulti", "performanceScore"]
     // Initialize an object to store the results
     type MinMax = { min: number; max: number }
 
@@ -117,16 +91,16 @@ function finddataspecs(data: CarData[]) {
   }
 }
 
-// 3. Create a memoized CarCard component to prevent unnecessary re-renders
-type carcardprops = {
-  item: CarData,
-  pinnedCar: CarData | null,
-  setPinnedCar: React.Dispatch<React.SetStateAction<CarData | null>>,
-  starredCars: string[]|null,
-  starcar: React.Dispatch<React.SetStateAction<string[]|null>>,
+// 3. Create a memoized ProcessorCard component to prevent unnecessary re-renders
+type processorcardprops = {
+  item: ProcessorData,
+  pinnedProcessor: ProcessorData | null,
+  setPinnedProcessor: React.Dispatch<React.SetStateAction<ProcessorData | null>>,
+  starredProcessors: string[]|null,
+  starprocessor: React.Dispatch<React.SetStateAction<string[]|null>>,
 }
 // eslint-disable-next-line react/display-name
-const CarCard = memo(({ item, pinnedCar, setPinnedCar, starredCars, starcar }:carcardprops) => {
+const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, starprocessor }:processorcardprops) => {
   // Move the percentage calculation inside the memoized component
   const calculatePercentage = useCallback((value: number, reference: number) => {
     if (!reference) return 0
@@ -135,176 +109,111 @@ const CarCard = memo(({ item, pinnedCar, setPinnedCar, starredCars, starcar }:ca
 
   return (
     <Card
-      className={`${pinnedCar?.name === item.name ? "border-2 border-primary" : ""} ${
-        pinnedCar?.name === item.name ? "bg-primary/5" : ""
+      className={`${pinnedProcessor?.name === item.name ? "border-2 border-primary" : ""} ${
+        pinnedProcessor?.name === item.name ? "bg-primary/5" : ""
       }`}
     >
       <CardHeader className="flex flex-row items-start justify-between">
         <div>
           <CardTitle>{item.name}</CardTitle>
           <CardDescription>
-            {item.yearsProduced}
+            {item.manufacturer}
             <br />
-            Power: {item.power}
+            Performance Score: {item.performanceScore}
             <br />
-            Torque: {item.torque}
+            Performance Grade: {item.performanceGrade}
             <br />
-            Gears: {item.gears}
+            Cores: {item.cores} ({item.coreConfig})
           </CardDescription>
         </div>
         <button
-          onClick={() => setPinnedCar(pinnedCar?.name === item.name ? null : item)}
+          onClick={() => setPinnedProcessor(pinnedProcessor?.name === item.name ? null : item)}
           className="p-2 rounded-full hover:bg-muted"
-          title={pinnedCar?.name === item.name ? "Unpin this car" : "Pin this car for comparison"}
+          title={pinnedProcessor?.name === item.name ? "Unpin this processor" : "Pin this processor for comparison"}
         >
-          {pinnedCar?.name === item.name ? <PinIcon /> : <PinOff />}
+          {pinnedProcessor?.name === item.name ? <PinIcon /> : <PinOff />}
         </button>
         <button
           onClick={() =>
-            starcar(
-              starredCars?.includes(item.name)
-                ? starredCars.filter((car) => car !== item.name)
-                : [...(starredCars ? starredCars : []), item.name],
+            starprocessor(
+              starredProcessors?.includes(item.name)
+                ? starredProcessors.filter((processor) => processor !== item.name)
+                : [...(starredProcessors ? starredProcessors : []), item.name],
             )
           }
           className="p-2 rounded-full hover:bg-muted"
-          title={starredCars?.includes(item.name) ? "Unstar this car" : "Star this car"}
+          title={starredProcessors?.includes(item.name) ? "Unstar this processor" : "Star this processor"}
         >
-          {starredCars?.includes(item.name) ? <Star /> : <StarOff />}
+          {starredProcessors?.includes(item.name) ? <Star /> : <StarOff />}
         </button>
       </CardHeader>
       <CardContent className="space-y-2">
         <p>
-          Price: ${item.price?.toLocaleString() || "9999"}
-          {pinnedCar && pinnedCar.name !== item.name && (
+          AnTuTu Score: {item.antutuScore?.toLocaleString() || "N/A"}
+          {pinnedProcessor && pinnedProcessor.name !== item.name && (
             <Badge
-              className={`ml-2 ${calculatePercentage(item.price, pinnedCar.price) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
+              className={`ml-2 ${calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
             >
-              {calculatePercentage(item.price, pinnedCar.price) > 0 ? "+" : ""}
-              {calculatePercentage(item.price, pinnedCar.price)}%
+              {calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore) > 0 ? "+" : ""}
+              {calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore)}%
             </Badge>
           )}
         </p>
         <p className="flex items-center gap-1">
-          Length: {item.length} mm
-          <SizeComparisonDialog item={item} pinnedCar={pinnedCar}/>
-          {pinnedCar && pinnedCar.name !== item.name && (
+          Geekbench Single: {item.geekbenchSingle}
+          {pinnedProcessor && pinnedProcessor.name !== item.name && (
             <Badge
-              className={`ml-2 ${calculatePercentage(item.length, pinnedCar.length) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+              className={`ml-2 ${calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
             >
-              {calculatePercentage(item.length, pinnedCar.length) > 0 ? "+" : ""}
-              {calculatePercentage(item.length, pinnedCar.length)}%
+              {calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle) > 0 ? "+" : ""}
+              {calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle)}%
             </Badge>
           )}
         </p>
         <p>
-          Width: {item.width} mm
-          {pinnedCar && pinnedCar.name !== item.name && (
+          Geekbench Multi: {item.geekbenchMulti}
+          {pinnedProcessor && pinnedProcessor.name !== item.name && (
             <Badge
-              className={`ml-2 ${calculatePercentage(item.width, pinnedCar.width) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+              className={`ml-2 ${calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
             >
-              {calculatePercentage(item.width, pinnedCar.width) > 0 ? "+" : ""}
-              {calculatePercentage(item.width, pinnedCar.width)}%
+              {calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti) > 0 ? "+" : ""}
+              {calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti)}%
             </Badge>
           )}
         </p>
         <p>
-          Height: {item.height} mm
-          {pinnedCar && pinnedCar.name !== item.name && (
+          Clock Speed: {item.clockSpeed} MHz
+          {pinnedProcessor && pinnedProcessor.name !== item.name && (
             <Badge
-              className={`ml-2 ${calculatePercentage(item.height, pinnedCar.height) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+              className={`ml-2 ${calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
             >
-              {calculatePercentage(item.height, pinnedCar.height) > 0 ? "+" : ""}
-              {calculatePercentage(item.height, pinnedCar.height)}%
+              {calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed) > 0 ? "+" : ""}
+              {calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed)}%
             </Badge>
           )}
         </p>
         <p>
-          Wheelbase: {item.wheelbase} mm
-          {pinnedCar && pinnedCar.name !== item.name && (
-            <Badge
-              className={`ml-2 ${calculatePercentage(item.wheelbase, pinnedCar.wheelbase) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
-            >
-              {calculatePercentage(item.wheelbase, pinnedCar.wheelbase) > 0 ? "+" : ""}
-              {calculatePercentage(item.wheelbase, pinnedCar.wheelbase)}%
-            </Badge>
-          )}
+          GPU: {item.gpu}
         </p>
-        <p>
-          Turn Radius: {item.turnRadius} m
-          {pinnedCar && pinnedCar.name !== item.name && (
-            <Badge
-              className={`ml-2 ${calculatePercentage(item.turnRadius, pinnedCar.turnRadius) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
-            >
-              {calculatePercentage(item.turnRadius, pinnedCar.turnRadius) > 0 ? "+" : ""}
-              {calculatePercentage(item.turnRadius, pinnedCar.turnRadius)}%
-            </Badge>
-          )}
-        </p>
-        <p>
-          Ground Clearance: {item.groundClearance} mm
-          {pinnedCar && pinnedCar.name !== item.name && (
-            <Badge
-              className={`ml-2 ${calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
-            >
-              {calculatePercentage(item.groundClearance, pinnedCar.groundClearance) > 0 ? "+" : ""}
-              {calculatePercentage(item.groundClearance, pinnedCar.groundClearance)}%
-            </Badge>
-          )}
-        </p>
-        <p>
-          Weight: {item.weight} kg
-          {pinnedCar && pinnedCar.name !== item.name && (
-            <Badge
-              className={`ml-2 ${calculatePercentage(item.weight, pinnedCar.weight) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
-            >
-              {calculatePercentage(item.weight, pinnedCar.weight) > 0 ? "+" : ""}
-              {calculatePercentage(item.weight, pinnedCar.weight)}%
-            </Badge>
-          )}
-        </p>
-        <p>Capacity: {item.capacity}</p>
         <p className="flex items-center gap-1">
-          Estimated Cabin Space: {(item.estimatedCabinSpace / 1000000000).toPrecision(2)} m^3
-          <InfoPopover title="Estimated Cabin Space" srText="What is Estimated Cabin Space?" text={` This is an approximation of the interior volume available for passengers. 
-                        Its calculated based on the vehicles dimensions and represents the usable 
-                        space inside the cabin in cubic meters (m³).`}/>
-          {pinnedCar && pinnedCar.name !== item.name && (
+          Performance Score: {item.performanceScore}
+          <InfoPopover title="Performance Score" srText="What is Performance Score?" text="This is a composite score that represents the overall performance capability of the processor based on various benchmarks and specifications."/>
+          {pinnedProcessor && pinnedProcessor.name !== item.name && (
             <Badge
-              className={`ml-2 ${calculatePercentage(item.estimatedCabinSpace, pinnedCar.estimatedCabinSpace) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+              className={`ml-2 ${calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
             >
-              {calculatePercentage(item.estimatedCabinSpace, pinnedCar.estimatedCabinSpace) > 0 ? "+" : ""}
-              {calculatePercentage(item.estimatedCabinSpace, pinnedCar.estimatedCabinSpace)}%
+              {calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore) > 0 ? "+" : ""}
+              {calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore)}%
             </Badge>
           )}
         </p>
         <p className="flex items-center gap-1">
-          Drag Coefficient: {item.dragCoefficient}
-          <InfoPopover title="Drag Coefficient" srText="What is Drag Coefficient?" text={`The drag coefficient is a dimensionless quantity that indicates how aerodynamic a vehicle is. 
-                        A lower value means less air resistance, which typically results in better fuel efficiency 
-                        and higher top speeds. Most modern cars have drag coefficients between 0.25 and 0.35.`}/>
-          {pinnedCar && pinnedCar.name !== item.name && (
-            <Badge
-              className={`ml-2 ${calculatePercentage(item.dragCoefficient, pinnedCar.dragCoefficient) > 0 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}
-            >
-              {calculatePercentage(item.dragCoefficient, pinnedCar.dragCoefficient) > 0 ? "+" : ""}
-              {calculatePercentage(item.dragCoefficient, pinnedCar.dragCoefficient)}%
-            </Badge>
-          )}
+          Core Configuration: {item.coreConfig}
+          <InfoPopover title="Core Configuration" srText="What is Core Configuration?" text="This describes how the processor cores are arranged. For example, '2+4' means 2 high-performance cores and 4 efficiency cores."/>
         </p>
         <p className="flex items-center gap-1">
-          Size to Weight Ratio: {((1 / item.sizeToWeightRatio) * 1000000).toPrecision(2)} 
-          <InfoPopover title="Size to weight Ratio" srText="What is Size to Weight Ratio?" text="This metric indicates how efficiently a vehicle uses its weight relative to its size. 
-                        A higher value suggests more metal per cubic meter. 
-                        Its calculated by dividing the vehicles interior volume by its weight."/>
-          {pinnedCar && pinnedCar.name !== item.name && (
-            <Badge
-              className={`ml-2 ${calculatePercentage(1 / item.sizeToWeightRatio, 1 / pinnedCar.sizeToWeightRatio) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
-            >
-              {calculatePercentage(1 / item.sizeToWeightRatio, 1 / pinnedCar.sizeToWeightRatio) > 0 ? "+" : ""}
-              {calculatePercentage(1 / item.sizeToWeightRatio, 1 / pinnedCar.sizeToWeightRatio)}%
-            </Badge>
-          )}
+          Performance Grade: {item.performanceGrade}
+          <InfoPopover title="Performance Grade" srText="What is Performance Grade?" text="A letter grade (A+, A, B, C, D) that categorizes the processor's overall performance level."/>
         </p>
       </CardContent>
     </Card>
@@ -312,84 +221,55 @@ const CarCard = memo(({ item, pinnedCar, setPinnedCar, starredCars, starcar }:ca
 })
 
 // 4. Replace the main component with optimized version
-export default function VehicleDimensions() {
+export default function ProcessorComparison() {
   // 5. Move finddataspecs outside the component to prevent recalculation on every render
   const [dimensions, setDimensions] = useState({
-    height: [1000, 2000],
-    width: [1300, 3000],
-    length: [2800, 6000],
-    wheelbase: [2100, 5500],
-    turnRadius: [3, 15],
-    groundClearence: [0, 500],
+    cores: [1, 16],
+    clockSpeed: [1000, 5000],
+    antutuScore: [100000, 3000000],
+    geekbenchSingle: [500, 4000],
+    geekbenchMulti: [1000, 11000],
+    performanceScore: [20, 100],
   })
-  const [pinnedCar, setPinnedCar] = useState<CarData | null>(null)
-  const [starredCars, starcar] = useState<string[] | null>(null)
+  const [pinnedProcessor, setPinnedProcessor] = useState<ProcessorData | null>(null)
+  const [starredProcessors, starprocessor] = useState<string[] | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState<
     | "name"
-    | "length"
-    | "width"
-    | "height"
-    | "price"
+    | "cores"
+    | "clockSpeed"
+    | "antutuScore"
+    | "geekbenchSingle"
+    | "geekbenchMulti"
+    | "performanceScore"
     | "manufacturer"
-    | "groundClearance"
-    | "wheelbase"
-    | "turnRadius"
-    | "weight"
-    | "estimatedCabinSpace"
-    | "sizeToWeightRatio"
-    | "dragCoefficient"
   >("name")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [manufacturerFilter, setManufacturerFilter] = useState<string>("All")
-  const [comparisons, setComparisons] = useState<{ field: keyof CarData; operator: ">" | "<" }[]>([])
+  const [comparisons, setComparisons] = useState<{ field: keyof ProcessorData; operator: ">" | "<" }[]>([])
   const [showDimensionsRange, setShowDimensionsRange] = useState(true)
 
   // 6. Memoize the combined data array to prevent recreation on every render
   const data = useMemo(
-    () => [
-      ...renault,
-      ...nissan,
-      ...byd,
-      ...skoda,
-      ...maruti,
-      ...hyundai,
-      ...honda,
-      ...tesla,
-      ...mg,
-      ...fiat,
-      ...tata,
-      ...toyota,
-      ...kia,
-      ...mahindra,
-      ...volkswagen,
-      ...bmw,
-      ...citroen,
-      ...volvo,
-      ...jeep,
-      ...vinfast,
-    ],
+    () => processors,
     [],
   )
 
   // 7. Memoize manufacturers list
-  const manufacturers = useMemo(() => Array.from(new Set(data.map((car) => car.manufacturer))).sort(), [data])
+  const manufacturers = useMemo(() => Array.from(new Set(data.map((processor) => processor.manufacturer))).sort(), [data])
 
-  // 8. Memoize total car models count
-  const totalCarModels = useMemo(() => data.length, [data])
+  // 8. Memoize total processor models count
+  const totalProcessorModels = useMemo(() => data.length, [data])
 
   // 9. Memoize initial dimensions to prevent recalculation
   const initialDimensions = useMemo(
     () => ({
-      height: [Math.min(...data.map((car) => car.height)), Math.max(...data.map((car) => car.height))],
-      width: [Math.min(...data.map((car) => car.width)), Math.max(...data.map((car) => car.width))],
-      length: [Math.min(...data.map((car) => car.length)), Math.max(...data.map((car) => car.length))],
-      wheelbase: [Math.min(...data.map((car) => car.wheelbase)), Math.max(...data.map((car) => car.wheelbase))],
-      turnRadius: [Math.min(...data.map((car) => car.turnRadius)), Math.max(...data.map((car) => car.turnRadius))],
-      groundClearance: [
-        Math.min(...data.map((car) => car.groundClearance)),
-        Math.max(...data.map((car) => car.groundClearance)),
-      ],
+      cores: [Math.min(...data.map((processor) => processor.cores)), Math.max(...data.map((processor) => processor.cores))],
+      clockSpeed: [Math.min(...data.map((processor) => processor.clockSpeed)), Math.max(...data.map((processor) => processor.clockSpeed))],
+      antutuScore: [Math.min(...data.map((processor) => processor.antutuScore)), Math.max(...data.map((processor) => processor.antutuScore))],
+      geekbenchSingle: [Math.min(...data.map((processor) => processor.geekbenchSingle)), Math.max(...data.map((processor) => processor.geekbenchSingle))],
+      geekbenchMulti: [Math.min(...data.map((processor) => processor.geekbenchMulti)), Math.max(...data.map((processor) => processor.geekbenchMulti))],
+      performanceScore: [Math.min(...data.map((processor) => processor.performanceScore)), Math.max(...data.map((processor) => processor.performanceScore))],
     }),
     [data],
   )
@@ -398,39 +278,39 @@ export default function VehicleDimensions() {
   const filteredData = useMemo(() => {
     return data
       .filter((item) => {
-        if (starredCars && starredCars?.includes(item.name)) return true
-        if (pinnedCar && item.name === pinnedCar.name) return true
+        if (starredProcessors && starredProcessors?.includes(item.name)) return true
+        if (pinnedProcessor && item.name === pinnedProcessor.name) return true
         if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
 
         return (
-          item.height < dimensions.height[1] &&
-          item.height > dimensions.height[0] &&
-          item.width < dimensions.width[1] &&
-          item.width > dimensions.width[0] &&
-          item.length < dimensions.length[1] &&
-          item.length > dimensions.length[0] &&
-          item.wheelbase < dimensions.wheelbase[1] &&
-          item.wheelbase > dimensions.wheelbase[0] &&
-          item.turnRadius < dimensions.turnRadius[1] &&
-          item.turnRadius > dimensions.turnRadius[0] &&
-          item.groundClearance < dimensions.groundClearence[1] &&
-          item.groundClearance > dimensions.groundClearence[0]
+          item.cores >= dimensions.cores[0] &&
+          item.cores <= dimensions.cores[1] &&
+          item.clockSpeed >= dimensions.clockSpeed[0] &&
+          item.clockSpeed <= dimensions.clockSpeed[1] &&
+          item.antutuScore >= dimensions.antutuScore[0] &&
+          item.antutuScore <= dimensions.antutuScore[1] &&
+          item.geekbenchSingle >= dimensions.geekbenchSingle[0] &&
+          item.geekbenchSingle <= dimensions.geekbenchSingle[1] &&
+          item.geekbenchMulti >= dimensions.geekbenchMulti[0] &&
+          item.geekbenchMulti <= dimensions.geekbenchMulti[1] &&
+          item.performanceScore >= dimensions.performanceScore[0] &&
+          item.performanceScore <= dimensions.performanceScore[1]
         )
       })
       .filter((item) => {
-        if (starredCars && starredCars?.includes(item.name)) return true
-        if (pinnedCar && item.name === pinnedCar.name) return true
+        if (starredProcessors && starredProcessors?.includes(item.name)) return true
+        if (pinnedProcessor && item.name === pinnedProcessor.name) return true
         if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
 
         return comparisons.every((comparison) => {
-          if (pinnedCar) {
-            const carValue = item[comparison.field]
-            const pinnedCarValue = pinnedCar[comparison.field]
+          if (pinnedProcessor) {
+            const processorValue = item[comparison.field]
+            const pinnedProcessorValue = pinnedProcessor[comparison.field]
 
             if (comparison.operator === ">") {
-              return carValue > pinnedCarValue
+              return processorValue > pinnedProcessorValue
             } else if (comparison.operator === "<") {
-              return carValue < pinnedCarValue
+              return processorValue < pinnedProcessorValue
             }
           }
           return true
@@ -447,7 +327,7 @@ export default function VehicleDimensions() {
             : (b[sortBy] as number) - (a[sortBy] as number)
         }
       })
-  }, [data, dimensions, searchQuery, manufacturerFilter, comparisons, pinnedCar, starredCars, sortBy, sortOrder])
+  }, [data, dimensions, searchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder])
 
   // 11. Use useCallback for event handlers to prevent recreation on every render
   const handleSliderChange = useCallback((value: number[], dimension: keyof typeof dimensions) => {
@@ -464,7 +344,7 @@ export default function VehicleDimensions() {
 
   // 13. Use useCallback for the add comparison function
   const addComparison = useCallback(() => {
-    setComparisons([...comparisons, { field: "length", operator: ">" }])
+    setComparisons([...comparisons, { field: "cores", operator: ">" }])
   }, [comparisons])
 
   // 14. Use useCallback for the remove comparison function
@@ -473,7 +353,7 @@ export default function VehicleDimensions() {
   }, [])
 
   // 15. Use useCallback for the update comparison function
-  const updateComparison = useCallback((index: number, field: keyof CarData, operator: ">" | "<") => {
+  const updateComparison = useCallback((index: number, field: keyof ProcessorData, operator: ">" | "<") => {
     setComparisons((prevComparisons) => {
       const newComparisons = [...prevComparisons]
       newComparisons[index] = { field, operator }
@@ -490,9 +370,9 @@ export default function VehicleDimensions() {
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-bold">SortedCars</h1>
+              <h1 className="text-3xl font-bold">ProcessorCompare</h1>
               <a
-                href="https://github.com/visnkmr/carproj"
+                href="https://github.com/visnkmr/processorcompare"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
@@ -502,7 +382,7 @@ export default function VehicleDimensions() {
               </a>
             </div>
             <p>
-              {filteredData.length} of {totalCarModels} vehicles found
+              {filteredData.length} of {totalProcessorModels} processors found
             </p>
           </div>
 
@@ -511,7 +391,7 @@ export default function VehicleDimensions() {
             <div className="flex-1">
               <input
                 type="text"
-                placeholder="Search cars by name..."
+                placeholder="Search processors by name..."
                 className="w-full px-4 py-2 border rounded-md"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -536,18 +416,13 @@ export default function VehicleDimensions() {
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
               >
                 <option value="name">Sort by Name</option>
-                <option value="length">Sort by Length</option>
-                <option value="width">Sort by Width</option>
-                <option value="height">Sort by Height</option>
-                <option value="price">Sort by Price</option>
+                <option value="cores">Sort by Cores</option>
+                <option value="clockSpeed">Sort by Clock Speed</option>
+                <option value="antutuScore">Sort by AnTuTu Score</option>
+                <option value="geekbenchSingle">Sort by Geekbench Single</option>
+                <option value="geekbenchMulti">Sort by Geekbench Multi</option>
+                <option value="performanceScore">Sort by Performance Score</option>
                 <option value="manufacturer">Sort by Manufacturer</option>
-                <option value="groundClearance">Sort by Ground Clearance</option>
-                <option value="wheelbase">Sort by Wheelbase</option>
-                <option value="turnRadius">Sort by Turn Radius</option>
-                <option value="weight">Sort by Weight</option>
-                <option value="estimatedCabinSpace">Sort by Estimated Cabin Space</option>
-                <option value="sizeToWeightRatio">Sort by Size to Weight Ratio</option>
-                <option value="dragCoefficient">Sort by Drag Coefficient</option>
               </select>
               <button
                 className="px-3 py-1 border rounded-md flex items-center gap-1"
@@ -559,9 +434,9 @@ export default function VehicleDimensions() {
           </div>
 
           {/* Comparison Filter */}
-          {pinnedCar && (
+          {pinnedProcessor && (
             <div className="flex flex-col gap-2 items-center">
-              <span>Find cars with:</span>
+              <span>Find processors with:</span>
 
               {/* Add a new comparison filter */}
               <button onClick={addComparison} className="px-2 py-1 border rounded-md">
@@ -574,27 +449,22 @@ export default function VehicleDimensions() {
                   <select
                     className="px-2 py-1 border rounded-md"
                     value={comparison.field}
-                    onChange={(e) => updateComparison(index, e.target.value as keyof CarData, comparison.operator)}
+                    onChange={(e) => updateComparison(index, e.target.value as keyof ProcessorData, comparison.operator)}
                   >
-                    <option value="length">Length</option>
-                    <option value="width">Width</option>
-                    <option value="height">Height</option>
-                    <option value="wheelbase">Wheelbase</option>
-                    <option value="turnRadius">Turn Radius</option>
-                    <option value="groundClearance">Ground Clearance</option>
-                    <option value="price">Price</option>
-                    <option value="weight">Weight</option>
-                    <option value="estimatedCabinSpace">Estimated Cabin Space</option>
-                    <option value="sizeToWeightRatio">Size to Weight Ratio</option>
-                    <option value="dragCoefficient">Drag Coefficient</option>
+                    <option value="cores">Cores</option>
+                    <option value="clockSpeed">Clock Speed</option>
+                    <option value="antutuScore">AnTuTu Score</option>
+                    <option value="geekbenchSingle">Geekbench Single</option>
+                    <option value="geekbenchMulti">Geekbench Multi</option>
+                    <option value="performanceScore">Performance Score</option>
                   </select>
                   <select
                     className="px-2 py-1 border rounded-md"
                     value={comparison.operator}
                     onChange={(e) => updateComparison(index, comparison.field, e.target.value as ">" | "<")}
                   >
-                    <option value=">">&gt; {pinnedCar.name}</option>
-                    <option value="<">&lt; {pinnedCar.name}</option>
+                    <option value=">">&gt; {pinnedProcessor.name}</option>
+                    <option value="<">&lt; {pinnedProcessor.name}</option>
                   </select>
 
                   {/* Remove Comparison Button */}
@@ -611,7 +481,7 @@ export default function VehicleDimensions() {
 
           {/* Toggle for Dimensions Range */}
           <button className="px-3 py-1 border rounded-md" onClick={toggleDimensionsRange}>
-            {showDimensionsRange ? "Hide" : "Show"} Dimensions Range
+            {showDimensionsRange ? "Hide" : "Show"} Specifications Range
           </button>
         </div>
 
@@ -619,130 +489,130 @@ export default function VehicleDimensions() {
         {showDimensionsRange && (
           <Card className="w-full">
             <CardHeader>
-              <CardTitle>Vehicle Dimensions Range</CardTitle>
+              <CardTitle>Processor Specifications Range</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <label htmlFor="height-slider" className="text-sm font-medium">
-                    Height
+                  <label htmlFor="cores-slider" className="text-sm font-medium">
+                    Cores
                   </label>
                   <div className="flex gap-2">
-                    <Badge variant="outline">Min: {dimensions.height[0]}</Badge>
-                    <Badge variant="outline">Max: {dimensions.height[1]}</Badge>
+                    <Badge variant="outline">Min: {dimensions.cores[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.cores[1]}</Badge>
                   </div>
                 </div>
                 <Slider
-                  id="height-slider"
-                  min={initialDimensions.height[0]}
-                  max={initialDimensions.height[1]}
-                  step={100}
-                  value={dimensions.height}
-                  onValueChange={(value: number[]) => handleSliderChange(value, "height")}
+                  id="cores-slider"
+                  min={initialDimensions.cores[0]}
+                  max={initialDimensions.cores[1]}
+                  step={1}
+                  value={dimensions.cores}
+                  onValueChange={(value: number[]) => handleSliderChange(value, "cores")}
                   className="cursor-grab active:cursor-grabbing"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <label htmlFor="width-slider" className="text-sm font-medium">
-                    Width
+                  <label htmlFor="clockSpeed-slider" className="text-sm font-medium">
+                    Clock Speed (MHz)
                   </label>
                   <div className="flex gap-2">
-                    <Badge variant="outline">Min: {dimensions.width[0]}</Badge>
-                    <Badge variant="outline">Max: {dimensions.width[1]}</Badge>
+                    <Badge variant="outline">Min: {dimensions.clockSpeed[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.clockSpeed[1]}</Badge>
                   </div>
                 </div>
                 <Slider
-                  id="width-slider"
-                  min={initialDimensions.width[0]}
-                  max={initialDimensions.width[1]}
-                  step={100}
-                  value={dimensions.width}
-                  onValueChange={(value: number[]) => handleSliderChange(value, "width")}
+                  id="clockSpeed-slider"
+                  min={initialDimensions.clockSpeed[0]}
+                  max={initialDimensions.clockSpeed[1]}
+                  step={50}
+                  value={dimensions.clockSpeed}
+                  onValueChange={(value: number[]) => handleSliderChange(value, "clockSpeed")}
                   className="cursor-grab active:cursor-grabbing"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <label htmlFor="length-slider" className="text-sm font-medium">
-                    Length
+                  <label htmlFor="antutuScore-slider" className="text-sm font-medium">
+                    AnTuTu Score
                   </label>
                   <div className="flex gap-2">
-                    <Badge variant="outline">Min: {dimensions.length[0]}</Badge>
-                    <Badge variant="outline">Max: {dimensions.length[1]}</Badge>
+                    <Badge variant="outline">Min: {dimensions.antutuScore[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.antutuScore[1]}</Badge>
                   </div>
                 </div>
                 <Slider
-                  id="length-slider"
-                  min={initialDimensions.length[0]}
-                  max={initialDimensions.length[1]}
-                  step={100}
-                  value={dimensions.length}
-                  onValueChange={(value: number[]) => handleSliderChange(value, "length")}
+                  id="antutuScore-slider"
+                  min={initialDimensions.antutuScore[0]}
+                  max={initialDimensions.antutuScore[1]}
+                  step={10000}
+                  value={dimensions.antutuScore}
+                  onValueChange={(value: number[]) => handleSliderChange(value, "antutuScore")}
                   className="cursor-grab active:cursor-grabbing"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <label htmlFor="wheelbase-slider" className="text-sm font-medium">
-                    Wheelbase
+                  <label htmlFor="geekbenchSingle-slider" className="text-sm font-medium">
+                    Geekbench Single
                   </label>
                   <div className="flex gap-2">
-                    <Badge variant="outline">Min: {dimensions.wheelbase[0]}</Badge>
-                    <Badge variant="outline">Max: {dimensions.wheelbase[1]}</Badge>
+                    <Badge variant="outline">Min: {dimensions.geekbenchSingle[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.geekbenchSingle[1]}</Badge>
                   </div>
                 </div>
                 <Slider
-                  id="wheelbase-slider"
-                  min={initialDimensions.wheelbase[0]}
-                  max={initialDimensions.wheelbase[1]}
-                  step={100}
-                  value={dimensions.wheelbase}
-                  onValueChange={(value: number[]) => handleSliderChange(value, "wheelbase")}
+                  id="geekbenchSingle-slider"
+                  min={initialDimensions.geekbenchSingle[0]}
+                  max={initialDimensions.geekbenchSingle[1]}
+                  step={50}
+                  value={dimensions.geekbenchSingle}
+                  onValueChange={(value: number[]) => handleSliderChange(value, "geekbenchSingle")}
                   className="cursor-grab active:cursor-grabbing"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <label htmlFor="turn-radius-slider" className="text-sm font-medium">
-                    Turn Radius
+                  <label htmlFor="geekbenchMulti-slider" className="text-sm font-medium">
+                    Geekbench Multi
                   </label>
                   <div className="flex gap-2">
-                    <Badge variant="outline">Min: {dimensions.turnRadius[0]}</Badge>
-                    <Badge variant="outline">Max: {dimensions.turnRadius[1]}</Badge>
+                    <Badge variant="outline">Min: {dimensions.geekbenchMulti[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.geekbenchMulti[1]}</Badge>
                   </div>
                 </div>
                 <Slider
-                  id="turn-radius-slider"
-                  min={initialDimensions.turnRadius[0]}
-                  max={initialDimensions.turnRadius[1]}
-                  step={0.1}
-                  value={dimensions.turnRadius}
-                  onValueChange={(value: number[]) => handleSliderChange(value, "turnRadius")}
+                  id="geekbenchMulti-slider"
+                  min={initialDimensions.geekbenchMulti[0]}
+                  max={initialDimensions.geekbenchMulti[1]}
+                  step={100}
+                  value={dimensions.geekbenchMulti}
+                  onValueChange={(value: number[]) => handleSliderChange(value, "geekbenchMulti")}
                   className="cursor-grab active:cursor-grabbing"
                 />
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <label htmlFor="gc-slider" className="text-sm font-medium">
-                    Ground clearance
+                  <label htmlFor="performanceScore-slider" className="text-sm font-medium">
+                    Performance Score
                   </label>
                   <div className="flex gap-2">
-                    <Badge variant="outline">Min: {dimensions.groundClearence[0]}</Badge>
-                    <Badge variant="outline">Max: {dimensions.groundClearence[1]}</Badge>
+                    <Badge variant="outline">Min: {dimensions.performanceScore[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.performanceScore[1]}</Badge>
                   </div>
                 </div>
                 <Slider
-                  id="gc-slider"
-                  min={initialDimensions.groundClearance[0]}
-                  max={initialDimensions.groundClearance[1]}
-                  step={10}
-                  value={dimensions.groundClearence}
-                  onValueChange={(value: number[]) => handleSliderChange(value, "groundClearence")}
+                  id="performanceScore-slider"
+                  min={initialDimensions.performanceScore[0]}
+                  max={initialDimensions.performanceScore[1]}
+                  step={1}
+                  value={dimensions.performanceScore}
+                  onValueChange={(value: number[]) => handleSliderChange(value, "performanceScore")}
                   className="cursor-grab active:cursor-grabbing"
                 />
               </div>
@@ -752,15 +622,15 @@ export default function VehicleDimensions() {
 
         {/* Car Grid - Use windowing for better performance with large lists */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-4">
-          {/* 16. Use the memoized CarCard component for each car */}
+          {/* 16. Use the memoized ProcessorCard component for each processor */}
           {filteredData.slice(0, 100).map((item) => (
-            <CarCard
+            <ProcessorCard
               key={item.name}
               item={item}
-              pinnedCar={pinnedCar}
-              setPinnedCar={setPinnedCar}
-              starredCars={starredCars}
-              starcar={starcar}
+              pinnedProcessor={pinnedProcessor}
+              setPinnedProcessor={setPinnedProcessor}
+              starredProcessors={starredProcessors}
+              starprocessor={starprocessor}
             />
           ))}
         </div>
@@ -778,14 +648,14 @@ export default function VehicleDimensions() {
             </a>
           </div>
 
-          <p>Submit new Cars as PR on GitHub. Thanks.</p>
+          <p>Submit new Processors as PR on GitHub. Thanks.</p>
           <p className="italic text-xs leading-relaxed p-4 text-black">
-            Disclaimer: The information provided on this website regarding car specifications, features, and other
+            Disclaimer: The information provided on this website regarding processor specifications, performance benchmarks, and other
             related details is for general informational purposes only. While we strive to ensure the accuracy and
-            completeness of the information, the specifications, features, and details listed are subject to change by
+            completeness of the information, the specifications, benchmarks, and details listed are subject to change by
             the manufacturers without notice. We do not guarantee the accuracy, reliability, or completeness of the
-            information provided on this site. Car specifications and features may vary by region, model year, and other
-            factors. Always verify any critical vehicle details with the car manufacturer or an authorized dealership
+            information provided on this site. Processor specifications and performance may vary by region, manufacturing process, and other
+            factors. Always verify any critical processor details with the manufacturer or authorized sources
             before making purchasing decisions. We are not liable for any errors, omissions, or discrepancies in the
             information provided. By using this website, you agree that we are not responsible for any direct, indirect,
             incidental, or consequential damages arising from the use of the information provided.

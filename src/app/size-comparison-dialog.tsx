@@ -10,7 +10,7 @@ import { memo,lazy } from "react"
 //   DialogTrigger,
 // } from "../components/ui/dialog"
 import { Info } from "lucide-react"
-import { CarData } from "./page"
+import { ProcessorData } from "./page"
 // 2. Lazy load Dialog and Popover components
 const LazyDialog = lazy(() =>
   import("../components/ui/dialog").then((module) => ({
@@ -32,59 +32,66 @@ const LazyDialog = lazy(() =>
 const SizeComparisonDialog = memo(
   ({
     item,
-    pinnedCar,
+    pinnedProcessor,
   }: {
-    item: CarData
-    pinnedCar: CarData | null
+    item: ProcessorData
+    pinnedProcessor: ProcessorData | null
   }) => {
     return (
       <LazyDialog trigger={<>
         <Info className="h-4 w-4 text-muted-foreground" />
-        <span className="sr-only">Compare car sizes</span>
+        <span className="sr-only">Compare processor performance</span>
       </>}
-      title={"Size Comparison"}
-      description={"Visual comparison of car dimensions (excluding ground clearance)"}>
-          <div className="relative h-60 w-full border rounded-md p-4">
-            {pinnedCar && (
+      title={"Performance Comparison"}
+      description={"Visual comparison of processor performance metrics"}>
+          <div className="relative h-60 w-full border rounded-md p-4 bg-gradient-to-r from-blue-50 to-green-50">
+            {pinnedProcessor && (
               <div
-                className="absolute bg-primary/20 border border-primary"
+                className="absolute bg-primary/20 border border-primary rounded p-2"
                 style={{
-                  width: `${(pinnedCar.width / 2070) * 100}%`,
-                  height: `${((pinnedCar.height - pinnedCar.groundClearance) / 1937) * 100}%`,
-                  bottom: "0",
-                  left: "50%",
-                  transform: "translateX(-50%)",
+                  width: `${Math.min((pinnedProcessor.antutuScore / 3000000) * 80 + 20, 90)}%`,
+                  height: "40%",
+                  bottom: "50%",
+                  left: "5%",
                   zIndex: 10,
                 }}
               >
-                <div className="absolute top-0 left-0 p-1 text-xs bg-primary/20 rounded">{pinnedCar.name}</div>
+                <div className="text-xs font-bold">{pinnedProcessor.name}</div>
+                <div className="text-xs">AnTuTu: {pinnedProcessor.antutuScore.toLocaleString()}</div>
+                <div className="text-xs">Cores: {pinnedProcessor.cores}</div>
               </div>
             )}
             <div
-              className="absolute bg-secondary/20 border border-secondary"
+              className="absolute bg-secondary/20 border border-secondary rounded p-2"
               style={{
-                width: `${(item.width / 2070) * 100}%`,
-                height: `${((item.height - item.groundClearance) / 1937) * 100}%`,
-                bottom: "0",
-                left: "50%",
-                transform: "translateX(-50%)",
+                width: `${Math.min((item.antutuScore / 3000000) * 80 + 20, 90)}%`,
+                height: "40%",
+                bottom: "5%",
+                left: "5%",
               }}
             >
-              <div className="absolute top-0 left-0 p-1 text-xs bg-secondary/20 rounded">{item.name}</div>
+              <div className="text-xs font-bold">{item.name}</div>
+              <div className="text-xs">AnTuTu: {item.antutuScore.toLocaleString()}</div>
+              <div className="text-xs">Cores: {item.cores}</div>
             </div>
           </div>
-          <div className="flex justify-between text-sm text-muted-foreground">
+          <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <p>
-                <strong>Current:</strong> {item.length}×{item.width}×{item.height - item.groundClearance} mm
-              </p>
-              {pinnedCar && (
-                <p>
-                  <strong>Pinned:</strong> {pinnedCar.length}×{pinnedCar.width}×
-                  {pinnedCar.height - pinnedCar.groundClearance} mm
-                </p>
-              )}
+              <p><strong>Current:</strong> {item.name}</p>
+              <p>AnTuTu: {item.antutuScore.toLocaleString()}</p>
+              <p>Geekbench: {item.geekbenchSingle}/{item.geekbenchMulti}</p>
+              <p>Cores: {item.cores} ({item.coreConfig})</p>
+              <p>Clock: {item.clockSpeed} MHz</p>
             </div>
+            {pinnedProcessor && (
+              <div>
+                <p><strong>Pinned:</strong> {pinnedProcessor.name}</p>
+                <p>AnTuTu: {pinnedProcessor.antutuScore.toLocaleString()}</p>
+                <p>Geekbench: {pinnedProcessor.geekbenchSingle}/{pinnedProcessor.geekbenchMulti}</p>
+                <p>Cores: {pinnedProcessor.cores} ({pinnedProcessor.coreConfig})</p>
+                <p>Clock: {pinnedProcessor.clockSpeed} MHz</p>
+              </div>
+            )}
           </div>
       </LazyDialog>
     )
