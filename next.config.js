@@ -13,7 +13,8 @@ import withPWA from 'next-pwa'
 //   }
 // }
 // @ts-expect-error "ignore the error"
-import {runtimeCaching} from 'next-pwa/cache'
+import pkg from 'next-pwa/cache.js'
+const {runtimeCaching} = pkg
 
 // setup()
 const nextConfig = {
