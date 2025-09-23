@@ -20,16 +20,19 @@ const {runtimeCaching} = pkg
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  basePath: '/sortedproc',
+  assetPrefix: '/sortedproc',
   images: {
     unoptimized: true
   }
 };
 
-export default withPWA({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  runtimeCaching,
-  // disable: process.env.NODE_ENV === 'development',
-})(nextConfig);
+export default process.env.NODE_ENV === 'development'
+  ? nextConfig
+  : withPWA({
+      dest: 'public',
+      register: true,
+      skipWaiting: true,
+      runtimeCaching,
+    })(nextConfig);
 
