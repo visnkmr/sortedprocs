@@ -60,8 +60,6 @@ jobs:
         run: bun install
       - name: Build with Next.js
         run: bun run build
-        env:
-          REPOSITORY_NAME: ${{ github.event.repository.name }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
