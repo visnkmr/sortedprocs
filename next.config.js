@@ -17,7 +17,7 @@ import {runtimeCaching} from 'next-pwa/cache'
 
 // setup()
 const nextConfig = {
-  output: 'export' as const,
+  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true
