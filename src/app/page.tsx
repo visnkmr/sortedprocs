@@ -23,6 +23,22 @@ export type ProcessorData = {
   coreConfig: string
   clockSpeed: number
   gpu: string
+  Year?: number
+  Lib?: string
+  "CPU Cores": string
+  "AI Accelerator": string
+  "CPU-Q Score": number
+  "CPU-F Score": number
+  "INT8 CNNs": number
+  "INT8 Transformer": number
+  "INT8 Accuracy": number
+  "FP16 CNNs": number
+  "FP16 Transformer": number
+  "FP16 Accuracy": number
+  "INT16 CNNs": number
+  "INT8 Parallel": number
+  "FP16 Parallel": number
+  "AI Score": number
 }
 
 const STORAGE_KEYS = {
@@ -158,6 +174,172 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
           )}
         </p>
         <p>GPU: {item.gpu}</p>
+        {item["CPU Cores"] && <p>CPU Details: {item["CPU Cores"]}</p>}
+        {item["AI Accelerator"] && <p>AI Hardware: {item["AI Accelerator"]}</p>}
+        {item.Year && <p>Release Year: {item.Year}</p>}
+
+        {/* AI Performance Metrics */}
+        {item["AI Score"] && (
+          <p className="flex items-center gap-1">
+            AI Score: {item["AI Score"]?.toLocaleString()}
+            <InfoPopover title="AI Score" srText="What is AI Score?" text="Overall AI performance benchmark score based on neural network inference tests."/>
+            {pinnedProcessor && pinnedProcessor.name !== item.name && (
+              <Badge className={`ml-2 ${calculatePercentage(item["AI Score"] || 0, pinnedProcessor["AI Score"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                {calculatePercentage(item["AI Score"] || 0, pinnedProcessor["AI Score"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["AI Score"] || 0, pinnedProcessor["AI Score"] || 0)}%
+              </Badge>
+            )}
+          </p>
+        )}
+
+        {/* CPU Benchmark Scores */}
+        {(item["CPU-Q Score"] || item["CPU-F Score"]) && (
+          <div className="space-y-1">
+            {item["CPU-Q Score"] && (
+              <p className="flex items-center gap-1">
+                CPU-Q Score: {item["CPU-Q Score"]}
+                <InfoPopover title="CPU-Q Score" srText="What is CPU-Q Score?" text="CPU quantization performance score measuring efficiency with quantized models."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["CPU-Q Score"] || 0, pinnedProcessor["CPU-Q Score"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["CPU-Q Score"] || 0, pinnedProcessor["CPU-Q Score"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["CPU-Q Score"] || 0, pinnedProcessor["CPU-Q Score"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+            {item["CPU-F Score"] && (
+              <p className="flex items-center gap-1">
+                CPU-F Score: {item["CPU-F Score"]}
+                <InfoPopover title="CPU-F Score" srText="What is CPU-F Score?" text="CPU floating-point performance score measuring precision computing capabilities."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["CPU-F Score"] || 0, pinnedProcessor["CPU-F Score"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["CPU-F Score"] || 0, pinnedProcessor["CPU-F Score"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["CPU-F Score"] || 0, pinnedProcessor["CPU-F Score"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Neural Network Performance */}
+        {(item["INT8 CNNs"] || item["INT8 Transformer"] || item["FP16 CNNs"] || item["FP16 Transformer"]) && (
+          <div className="space-y-1">
+            <p className="text-sm font-semibold">Neural Network Performance:</p>
+            {item["INT8 CNNs"] && (
+              <p className="flex items-center gap-1 text-sm">
+                INT8 CNNs: {item["INT8 CNNs"]?.toLocaleString()} TOPS
+                <InfoPopover title="INT8 CNNs" srText="What is INT8 CNNs?" text="8-bit integer convolutional neural network performance in trillions of operations per second."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 CNNs"] || 0, pinnedProcessor["INT8 CNNs"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["INT8 CNNs"] || 0, pinnedProcessor["INT8 CNNs"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 CNNs"] || 0, pinnedProcessor["INT8 CNNs"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+            {item["INT8 Transformer"] && (
+              <p className="flex items-center gap-1 text-sm">
+                INT8 Transformer: {item["INT8 Transformer"]?.toLocaleString()} TOPS
+                <InfoPopover title="INT8 Transformer" srText="What is INT8 Transformer?" text="8-bit integer transformer model performance in trillions of operations per second."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 Transformer"] || 0, pinnedProcessor["INT8 Transformer"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["INT8 Transformer"] || 0, pinnedProcessor["INT8 Transformer"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 Transformer"] || 0, pinnedProcessor["INT8 Transformer"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+            {item["FP16 CNNs"] && (
+              <p className="flex items-center gap-1 text-sm">
+                FP16 CNNs: {item["FP16 CNNs"]?.toLocaleString()} TOPS
+                <InfoPopover title="FP16 CNNs" srText="What is FP16 CNNs?" text="16-bit floating-point convolutional neural network performance in trillions of operations per second."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 CNNs"] || 0, pinnedProcessor["FP16 CNNs"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["FP16 CNNs"] || 0, pinnedProcessor["FP16 CNNs"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 CNNs"] || 0, pinnedProcessor["FP16 CNNs"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+            {item["FP16 Transformer"] && (
+              <p className="flex items-center gap-1 text-sm">
+                FP16 Transformer: {item["FP16 Transformer"]?.toLocaleString()} TOPS
+                <InfoPopover title="FP16 Transformer" srText="What is FP16 Transformer?" text="16-bit floating-point transformer model performance in trillions of operations per second."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 Transformer"] || 0, pinnedProcessor["FP16 Transformer"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["FP16 Transformer"] || 0, pinnedProcessor["FP16 Transformer"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 Transformer"] || 0, pinnedProcessor["FP16 Transformer"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Accuracy Metrics */}
+        {(item["INT8 Accuracy"] || item["FP16 Accuracy"]) && (
+          <div className="space-y-1">
+            <p className="text-sm font-semibold">Model Accuracy:</p>
+            {item["INT8 Accuracy"] && (
+              <p className="flex items-center gap-1 text-sm">
+                INT8 Accuracy: {item["INT8 Accuracy"]}%
+                <InfoPopover title="INT8 Accuracy" srText="What is INT8 Accuracy?" text="Accuracy percentage for 8-bit integer neural network inference."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 Accuracy"] || 0, pinnedProcessor["INT8 Accuracy"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["INT8 Accuracy"] || 0, pinnedProcessor["INT8 Accuracy"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 Accuracy"] || 0, pinnedProcessor["INT8 Accuracy"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+            {item["FP16 Accuracy"] && (
+              <p className="flex items-center gap-1 text-sm">
+                FP16 Accuracy: {item["FP16 Accuracy"]}%
+                <InfoPopover title="FP16 Accuracy" srText="What is FP16 Accuracy?" text="Accuracy percentage for 16-bit floating-point neural network inference."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 Accuracy"] || 0, pinnedProcessor["FP16 Accuracy"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["FP16 Accuracy"] || 0, pinnedProcessor["FP16 Accuracy"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 Accuracy"] || 0, pinnedProcessor["FP16 Accuracy"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Parallel Processing */}
+        {(item["INT8 Parallel"] || item["FP16 Parallel"]) && (
+          <div className="space-y-1">
+            <p className="text-sm font-semibold">Parallel Processing:</p>
+            {item["INT8 Parallel"] && (
+              <p className="flex items-center gap-1 text-sm">
+                INT8 Parallel: {item["INT8 Parallel"]?.toLocaleString()} TOPS
+                <InfoPopover title="INT8 Parallel" srText="What is INT8 Parallel?" text="8-bit integer parallel processing performance in trillions of operations per second."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 Parallel"] || 0, pinnedProcessor["INT8 Parallel"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["INT8 Parallel"] || 0, pinnedProcessor["INT8 Parallel"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 Parallel"] || 0, pinnedProcessor["INT8 Parallel"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+            {item["FP16 Parallel"] && (
+              <p className="flex items-center gap-1 text-sm">
+                FP16 Parallel: {item["FP16 Parallel"]?.toLocaleString()} TOPS
+                <InfoPopover title="FP16 Parallel" srText="What is FP16 Parallel?" text="16-bit floating-point parallel processing performance in trillions of operations per second."/>
+                {pinnedProcessor && pinnedProcessor.name !== item.name && (
+                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 Parallel"] || 0, pinnedProcessor["FP16 Parallel"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {calculatePercentage(item["FP16 Parallel"] || 0, pinnedProcessor["FP16 Parallel"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 Parallel"] || 0, pinnedProcessor["FP16 Parallel"] || 0)}%
+                  </Badge>
+                )}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* INT16 CNNs */}
+        {item["INT16 CNNs"] && (
+          <p className="flex items-center gap-1 text-sm">
+            INT16 CNNs: {item["INT16 CNNs"]?.toLocaleString()} TOPS
+            <InfoPopover title="INT16 CNNs" srText="What is INT16 CNNs?" text="16-bit integer convolutional neural network performance in trillions of operations per second."/>
+            {pinnedProcessor && pinnedProcessor.name !== item.name && (
+              <Badge className={`ml-2 ${calculatePercentage(item["INT16 CNNs"] || 0, pinnedProcessor["INT16 CNNs"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                {calculatePercentage(item["INT16 CNNs"] || 0, pinnedProcessor["INT16 CNNs"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT16 CNNs"] || 0, pinnedProcessor["INT16 CNNs"] || 0)}%
+              </Badge>
+            )}
+          </p>
+        )}
         <p className="flex items-center gap-1">
           Performance Score: {item.performanceScore}
           <InfoPopover title="Performance Score" srText="What is Performance Score?" text="This is a composite score that represents the overall performance capability of the processor based on various benchmarks and specifications."/>
@@ -188,16 +370,63 @@ ProcessorCard.displayName = 'ProcessorCard'
 export default function ProcessorComparison() {
   const { theme, setTheme } = useTheme()
 
-  const [dimensions, setDimensions] = useState(() =>
-    loadFromStorage(STORAGE_KEYS.DIMENSIONS, {
+  type DimensionsType = {
+    cores: number[]
+    clockSpeed: number[]
+    antutuScore: number[]
+    geekbenchSingle: number[]
+    geekbenchMulti: number[]
+    performanceScore: number[]
+    aiScore: number[]
+    cpuQScore: number[]
+    cpuFScore: number[]
+    int8CNNs: number[]
+    int8Transformer: number[]
+    fp16CNNs: number[]
+    fp16Transformer: number[]
+    year: number[]
+  }
+
+  const [dimensions, setDimensions] = useState<DimensionsType>(() => {
+    const savedDimensions = loadFromStorage(STORAGE_KEYS.DIMENSIONS, undefined) as DimensionsType | undefined
+    const defaultDimensions: DimensionsType = {
       cores: [1, 16],
       clockSpeed: [1000, 5000],
       antutuScore: [100000, 3000000],
       geekbenchSingle: [500, 4000],
       geekbenchMulti: [1000, 11000],
       performanceScore: [20, 100],
-    })
-  )
+      aiScore: [0, 10000],
+      cpuQScore: [0, 200],
+      cpuFScore: [0, 200],
+      int8CNNs: [0, 1500],
+      int8Transformer: [0, 5000],
+      fp16CNNs: [0, 1200],
+      fp16Transformer: [0, 2500],
+      year: [2018, 2025],
+    }
+
+    // Merge saved dimensions with defaults to ensure all properties exist
+    if (savedDimensions) {
+      return {
+        cores: savedDimensions.cores || defaultDimensions.cores,
+        clockSpeed: savedDimensions.clockSpeed || defaultDimensions.clockSpeed,
+        antutuScore: savedDimensions.antutuScore || defaultDimensions.antutuScore,
+        geekbenchSingle: savedDimensions.geekbenchSingle || defaultDimensions.geekbenchSingle,
+        geekbenchMulti: savedDimensions.geekbenchMulti || defaultDimensions.geekbenchMulti,
+        performanceScore: savedDimensions.performanceScore || defaultDimensions.performanceScore,
+        aiScore: savedDimensions.aiScore || defaultDimensions.aiScore,
+        cpuQScore: savedDimensions.cpuQScore || defaultDimensions.cpuQScore,
+        cpuFScore: savedDimensions.cpuFScore || defaultDimensions.cpuFScore,
+        int8CNNs: savedDimensions.int8CNNs || defaultDimensions.int8CNNs,
+        int8Transformer: savedDimensions.int8Transformer || defaultDimensions.int8Transformer,
+        fp16CNNs: savedDimensions.fp16CNNs || defaultDimensions.fp16CNNs,
+        fp16Transformer: savedDimensions.fp16Transformer || defaultDimensions.fp16Transformer,
+        year: savedDimensions.year || defaultDimensions.year,
+      }
+    }
+    return defaultDimensions
+  })
   const [pinnedProcessor, setPinnedProcessor] = useState<ProcessorData | null>(() =>
     loadFromStorage(STORAGE_KEYS.PINNED_PROCESSOR, null)
   )
@@ -210,7 +439,7 @@ export default function ProcessorComparison() {
   const [searchQuery, setSearchQuery] = useState(() =>
     loadFromStorage(STORAGE_KEYS.SEARCH_QUERY, "")
   )
-  const [sortBy, setSortBy] = useState<"name" | "cores" | "clockSpeed" | "antutuScore" | "geekbenchSingle" | "geekbenchMulti" | "performanceScore" | "manufacturer">(() =>
+  const [sortBy, setSortBy] = useState<"name" | "cores" | "clockSpeed" | "antutuScore" | "geekbenchSingle" | "geekbenchMulti" | "performanceScore" | "manufacturer" | "AI Score" | "CPU-Q Score" | "CPU-F Score" | "Year">(() =>
     loadFromStorage(STORAGE_KEYS.SORT_BY, "name")
   )
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(() =>
@@ -230,6 +459,12 @@ export default function ProcessorComparison() {
   )
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
+
+  // Debug logging for dimensions
+  useEffect(() => {
+    console.log('Current dimensions:', dimensions)
+    console.log('AI Score range:', dimensions.aiScore)
+  }, [dimensions])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
   useEffect(() => { saveToStorage(STORAGE_KEYS.STARRED_PROCESSORS, starredProcessors) }, [starredProcessors])
   useEffect(() => { saveToStorage(STORAGE_KEYS.SEARCH_QUERY, searchQuery) }, [searchQuery])
@@ -262,14 +497,30 @@ export default function ProcessorComparison() {
   const manufacturers = useMemo(() => Array.from(new Set(data.map((processor) => processor.manufacturer))).sort(), [data])
   const totalProcessorModels = useMemo(() => data.length, [data])
 
-  const initialDimensions = useMemo(() => ({
-    cores: [Math.min(...data.map((processor) => processor.cores)), Math.max(...data.map((processor) => processor.cores))],
-    clockSpeed: [Math.min(...data.map((processor) => processor.clockSpeed)), Math.max(...data.map((processor) => processor.clockSpeed))],
-    antutuScore: [Math.min(...data.map((processor) => processor.antutuScore)), Math.max(...data.map((processor) => processor.antutuScore))],
-    geekbenchSingle: [Math.min(...data.map((processor) => processor.geekbenchSingle)), Math.max(...data.map((processor) => processor.geekbenchSingle))],
-    geekbenchMulti: [Math.min(...data.map((processor) => processor.geekbenchMulti)), Math.max(...data.map((processor) => processor.geekbenchMulti))],
-    performanceScore: [Math.min(...data.map((processor) => processor.performanceScore)), Math.max(...data.map((processor) => processor.performanceScore))],
-  }), [data])
+  const initialDimensions = useMemo(() => {
+    // Helper function to get min/max safely
+    const getMinMax = (values: number[], defaultMin: number, defaultMax: number) => {
+      if (values.length === 0) return [defaultMin, defaultMax]
+      return [Math.min(...values), Math.max(...values)]
+    }
+
+    return {
+      cores: getMinMax(data.map((processor) => processor.cores), 1, 16),
+      clockSpeed: getMinMax(data.map((processor) => processor.clockSpeed), 1000, 5000),
+      antutuScore: getMinMax(data.map((processor) => processor.antutuScore), 100000, 3000000),
+      geekbenchSingle: getMinMax(data.map((processor) => processor.geekbenchSingle), 500, 4000),
+      geekbenchMulti: getMinMax(data.map((processor) => processor.geekbenchMulti), 1000, 11000),
+      performanceScore: getMinMax(data.map((processor) => processor.performanceScore), 20, 100),
+      aiScore: getMinMax(data.map((processor) => processor["AI Score"] || 0), 0, 10000),
+      cpuQScore: getMinMax(data.map((processor) => processor["CPU-Q Score"] || 0), 0, 200),
+      cpuFScore: getMinMax(data.map((processor) => processor["CPU-F Score"] || 0), 0, 200),
+      int8CNNs: getMinMax(data.map((processor) => processor["INT8 CNNs"] || 0), 0, 1500),
+      int8Transformer: getMinMax(data.map((processor) => processor["INT8 Transformer"] || 0), 0, 5000),
+      fp16CNNs: getMinMax(data.map((processor) => processor["FP16 CNNs"] || 0), 0, 1200),
+      fp16Transformer: getMinMax(data.map((processor) => processor["FP16 Transformer"] || 0), 0, 2500),
+      year: getMinMax(data.map((processor) => processor.Year || 2018), 2018, 2025),
+    }
+  }, [data])
 
   const filteredData = useMemo(() => {
     let filtered = data
@@ -285,7 +536,15 @@ export default function ProcessorComparison() {
         item.antutuScore >= dimensions.antutuScore[0] && item.antutuScore <= dimensions.antutuScore[1] &&
         item.geekbenchSingle >= dimensions.geekbenchSingle[0] && item.geekbenchSingle <= dimensions.geekbenchSingle[1] &&
         item.geekbenchMulti >= dimensions.geekbenchMulti[0] && item.geekbenchMulti <= dimensions.geekbenchMulti[1] &&
-        item.performanceScore >= dimensions.performanceScore[0] && item.performanceScore <= dimensions.performanceScore[1]
+        item.performanceScore >= dimensions.performanceScore[0] && item.performanceScore <= dimensions.performanceScore[1] &&
+        (item["AI Score"] || 0) >= dimensions.aiScore[0] && (item["AI Score"] || 0) <= dimensions.aiScore[1] &&
+        (item["CPU-Q Score"] || 0) >= dimensions.cpuQScore[0] && (item["CPU-Q Score"] || 0) <= dimensions.cpuQScore[1] &&
+        (item["CPU-F Score"] || 0) >= dimensions.cpuFScore[0] && (item["CPU-F Score"] || 0) <= dimensions.cpuFScore[1] &&
+        (item["INT8 CNNs"] || 0) >= dimensions.int8CNNs[0] && (item["INT8 CNNs"] || 0) <= dimensions.int8CNNs[1] &&
+        (item["INT8 Transformer"] || 0) >= dimensions.int8Transformer[0] && (item["INT8 Transformer"] || 0) <= dimensions.int8Transformer[1] &&
+        (item["FP16 CNNs"] || 0) >= dimensions.fp16CNNs[0] && (item["FP16 CNNs"] || 0) <= dimensions.fp16CNNs[1] &&
+        (item["FP16 Transformer"] || 0) >= dimensions.fp16Transformer[0] && (item["FP16 Transformer"] || 0) <= dimensions.fp16Transformer[1] &&
+        (item.Year || 2018) >= dimensions.year[0] && (item.Year || 2025) <= dimensions.year[1]
       )
     })
     if (starredPinnedFilter === 'only') {
@@ -304,6 +563,10 @@ export default function ProcessorComparison() {
           if (pinnedProcessor) {
             const processorValue = item[comparison.field]
             const pinnedProcessorValue = pinnedProcessor[comparison.field]
+            // Handle undefined values for optional fields
+            if (processorValue == null || pinnedProcessorValue == null) {
+              return false
+            }
             if (comparison.operator === ">") return processorValue > pinnedProcessorValue
             else if (comparison.operator === "<") return processorValue < pinnedProcessorValue
           }
@@ -383,6 +646,10 @@ export default function ProcessorComparison() {
                 <option value="geekbenchMulti">Sort by Geekbench Multi</option>
                 <option value="performanceScore">Sort by Performance Score</option>
                 <option value="manufacturer">Sort by Manufacturer</option>
+                <option value="AI Score">Sort by AI Score</option>
+                <option value="CPU-Q Score">Sort by CPU-Q Score</option>
+                <option value="CPU-F Score">Sort by CPU-F Score</option>
+                <option value="Year">Sort by Release Year</option>
               </select>
               <button className="px-3 py-1 border rounded-md flex items-center gap-1" onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
                 {sortOrder === "asc" ? "↑ Asc" : "↓ Desc"}
@@ -405,6 +672,8 @@ export default function ProcessorComparison() {
                 <div key={index} className="flex gap-2 items-center mb-2">
                   <select className="px-2 py-1 border rounded-md" value={comparison.field} onChange={(e) => updateComparison(index, e.target.value as keyof ProcessorData, comparison.operator)}>
                     <option value="cores">Cores</option><option value="clockSpeed">Clock Speed</option><option value="antutuScore">AnTuTu Score</option><option value="geekbenchSingle">Geekbench Single</option><option value="geekbenchMulti">Geekbench Multi</option><option value="performanceScore">Performance Score</option>
+                    <option value="AI Score">AI Score</option><option value="CPU-Q Score">CPU-Q Score</option><option value="CPU-F Score">CPU-F Score</option><option value="Year">Release Year</option>
+                    <option value="INT8 CNNs">INT8 CNNs</option><option value="INT8 Transformer">INT8 Transformer</option><option value="INT8 Accuracy">INT8 Accuracy</option><option value="FP16 CNNs">FP16 CNNs</option><option value="FP16 Transformer">FP16 Transformer</option><option value="FP16 Accuracy">FP16 Accuracy</option><option value="INT16 CNNs">INT16 CNNs</option><option value="INT8 Parallel">INT8 Parallel</option><option value="FP16 Parallel">FP16 Parallel</option>
                   </select>
                   <select className="px-2 py-1 border rounded-md" value={comparison.operator} onChange={(e) => updateComparison(index, comparison.field, e.target.value as ">" | "<")}>
                     <option value=">">Greater than {pinnedProcessor.name}</option>
@@ -498,6 +767,94 @@ export default function ProcessorComparison() {
                   </div>
                 </div>
                 <Slider id="performanceScore-slider" min={initialDimensions.performanceScore[0]} max={initialDimensions.performanceScore[1]} step={1} value={dimensions.performanceScore} onValueChange={(value: number[]) => handleSliderChange(value, "performanceScore")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="aiScore-slider" className="text-sm font-medium">AI Score</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.aiScore[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.aiScore[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="aiScore-slider" min={initialDimensions.aiScore[0]} max={initialDimensions.aiScore[1]} step={50} value={dimensions.aiScore} onValueChange={(value: number[]) => handleSliderChange(value, "aiScore")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="cpuQScore-slider" className="text-sm font-medium">CPU-Q Score</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.cpuQScore[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.cpuQScore[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="cpuQScore-slider" min={initialDimensions.cpuQScore[0]} max={initialDimensions.cpuQScore[1]} step={5} value={dimensions.cpuQScore} onValueChange={(value: number[]) => handleSliderChange(value, "cpuQScore")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="cpuFScore-slider" className="text-sm font-medium">CPU-F Score</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.cpuFScore[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.cpuFScore[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="cpuFScore-slider" min={initialDimensions.cpuFScore[0]} max={initialDimensions.cpuFScore[1]} step={5} value={dimensions.cpuFScore} onValueChange={(value: number[]) => handleSliderChange(value, "cpuFScore")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="int8CNNs-slider" className="text-sm font-medium">INT8 CNNs (TOPS)</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.int8CNNs[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.int8CNNs[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="int8CNNs-slider" min={initialDimensions.int8CNNs[0]} max={initialDimensions.int8CNNs[1]} step={10} value={dimensions.int8CNNs} onValueChange={(value: number[]) => handleSliderChange(value, "int8CNNs")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="int8Transformer-slider" className="text-sm font-medium">INT8 Transformer (TOPS)</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.int8Transformer[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.int8Transformer[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="int8Transformer-slider" min={initialDimensions.int8Transformer[0]} max={initialDimensions.int8Transformer[1]} step={50} value={dimensions.int8Transformer} onValueChange={(value: number[]) => handleSliderChange(value, "int8Transformer")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="fp16CNNs-slider" className="text-sm font-medium">FP16 CNNs (TOPS)</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.fp16CNNs[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.fp16CNNs[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="fp16CNNs-slider" min={initialDimensions.fp16CNNs[0]} max={initialDimensions.fp16CNNs[1]} step={10} value={dimensions.fp16CNNs} onValueChange={(value: number[]) => handleSliderChange(value, "fp16CNNs")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="fp16Transformer-slider" className="text-sm font-medium">FP16 Transformer (TOPS)</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.fp16Transformer[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.fp16Transformer[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="fp16Transformer-slider" min={initialDimensions.fp16Transformer[0]} max={initialDimensions.fp16Transformer[1]} step={20} value={dimensions.fp16Transformer} onValueChange={(value: number[]) => handleSliderChange(value, "fp16Transformer")} className="cursor-grab active:cursor-grabbing" />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <label htmlFor="year-slider" className="text-sm font-medium">Release Year</label>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">Min: {dimensions.year[0]}</Badge>
+                    <Badge variant="outline">Max: {dimensions.year[1]}</Badge>
+                  </div>
+                </div>
+                <Slider id="year-slider" min={initialDimensions.year[0]} max={initialDimensions.year[1]} step={1} value={dimensions.year} onValueChange={(value: number[]) => handleSliderChange(value, "year")} className="cursor-grab active:cursor-grabbing" />
               </div>
             </CardContent>
           </Card>
