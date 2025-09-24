@@ -20,8 +20,8 @@ const {runtimeCaching} = pkg
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: '/sortedproc',
-  assetPrefix: '/sortedproc',
+  basePath: '/sortedprocs',
+  assetPrefix: '/sortedprocs',
   images: {
     unoptimized: true
   }
