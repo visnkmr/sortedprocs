@@ -75,18 +75,24 @@ const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
 
 function finddataspecs(data: ProcessorData[]) {
   if (process.env.NODE_ENV !== "production") {
-    const properties: (keyof ProcessorData)[] = ["cores", "clockSpeed", "antutuScore", "geekbenchSingle", "geekbenchMulti", "performanceScore"]
+    const properties: (keyof ProcessorData)[] = [
+      "cores", "clockSpeed", "antutuScore", "geekbenchSingle", "geekbenchMulti", "performanceScore",
+      "CPU-Q Score", "CPU-F Score", "INT8 CNNs", "INT8 Transformer", "INT8 Accuracy",
+      "FP16 CNNs", "FP16 Transformer", "FP16 Accuracy", "INT16 CNNs", "INT8 Parallel",
+      "FP16 Parallel", "AI Score"
+    ]
     type MinMax = { min: number; max: number }
     interface Stats { [key: string]: MinMax }
     const stats: Stats = {}
     if (data.length > 0) {
       properties.forEach((prop) => {
-        stats[prop] = { min: data[0][prop] as number, max: data[0][prop] as number }
+        const firstValue = prop.includes(" ") ? (data[0] as unknown as Record<string, number>)[prop] || 0 : data[0][prop] as number
+        stats[prop] = { min: firstValue, max: firstValue }
       })
     }
     data.forEach((item) => {
       properties.forEach((prop) => {
-        const value = item[prop] as number
+        const value = prop.includes(" ") ? (item as unknown as Record<string, number>)[prop] || 0 : item[prop] as number
         if (value < stats[prop].min) stats[prop].min = value
         if (value > stats[prop].max) stats[prop].max = value
       })
@@ -108,6 +114,70 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
     if (!reference) return 0
     return Math.round(((value - reference) / reference) * 100)
   }, [])
+
+  // Memoize percentage calculations for this specific processor
+  const percentageCache = useMemo(() => {
+    if (!pinnedProcessor || pinnedProcessor.name === item.name) return {}
+
+    const cache: Record<string, number> = {}
+
+    // Core metrics
+    cache.antutu = calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore)
+    cache.geekbenchSingle = calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle)
+    cache.geekbenchMulti = calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti)
+    cache.clockSpeed = calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed)
+    cache.performanceScore = calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore)
+
+    // AI metrics
+    if (item["AI Score"] && pinnedProcessor["AI Score"]) {
+      cache.aiScore = calculatePercentage(item["AI Score"], pinnedProcessor["AI Score"])
+    }
+
+    // CPU scores
+    if (item["CPU-Q Score"] && pinnedProcessor["CPU-Q Score"]) {
+      cache.cpuQScore = calculatePercentage(item["CPU-Q Score"], pinnedProcessor["CPU-Q Score"])
+    }
+    if (item["CPU-F Score"] && pinnedProcessor["CPU-F Score"]) {
+      cache.cpuFScore = calculatePercentage(item["CPU-F Score"], pinnedProcessor["CPU-F Score"])
+    }
+
+    // Neural network performance
+    if (item["INT8 CNNs"] && pinnedProcessor["INT8 CNNs"]) {
+      cache.int8CNNs = calculatePercentage(item["INT8 CNNs"], pinnedProcessor["INT8 CNNs"])
+    }
+    if (item["INT8 Transformer"] && pinnedProcessor["INT8 Transformer"]) {
+      cache.int8Transformer = calculatePercentage(item["INT8 Transformer"], pinnedProcessor["INT8 Transformer"])
+    }
+    if (item["FP16 CNNs"] && pinnedProcessor["FP16 CNNs"]) {
+      cache.fp16CNNs = calculatePercentage(item["FP16 CNNs"], pinnedProcessor["FP16 CNNs"])
+    }
+    if (item["FP16 Transformer"] && pinnedProcessor["FP16 Transformer"]) {
+      cache.fp16Transformer = calculatePercentage(item["FP16 Transformer"], pinnedProcessor["FP16 Transformer"])
+    }
+
+    // Accuracy metrics
+    if (item["INT8 Accuracy"] && pinnedProcessor["INT8 Accuracy"]) {
+      cache.int8Accuracy = calculatePercentage(item["INT8 Accuracy"], pinnedProcessor["INT8 Accuracy"])
+    }
+    if (item["FP16 Accuracy"] && pinnedProcessor["FP16 Accuracy"]) {
+      cache.fp16Accuracy = calculatePercentage(item["FP16 Accuracy"], pinnedProcessor["FP16 Accuracy"])
+    }
+
+    // Parallel processing
+    if (item["INT8 Parallel"] && pinnedProcessor["INT8 Parallel"]) {
+      cache.int8Parallel = calculatePercentage(item["INT8 Parallel"], pinnedProcessor["INT8 Parallel"])
+    }
+    if (item["FP16 Parallel"] && pinnedProcessor["FP16 Parallel"]) {
+      cache.fp16Parallel = calculatePercentage(item["FP16 Parallel"], pinnedProcessor["FP16 Parallel"])
+    }
+
+    // INT16 CNNs
+    if (item["INT16 CNNs"] && pinnedProcessor["INT16 CNNs"]) {
+      cache.int16CNNs = calculatePercentage(item["INT16 CNNs"], pinnedProcessor["INT16 CNNs"])
+    }
+
+    return cache
+  }, [item, pinnedProcessor, calculatePercentage])
 
   return (
     <Card className={`${pinnedProcessor?.name === item.name ? "border-2 border-primary" : ""} ${pinnedProcessor?.name === item.name ? "bg-primary/5" : ""}`}>
@@ -145,31 +215,31 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
       </CardHeader>
       <CardContent className="space-y-2">
         <p>AnTuTu Score: {item.antutuScore?.toLocaleString() || "N/A"}
-          {pinnedProcessor && pinnedProcessor.name !== item.name && (
-            <Badge className={`ml-2 ${calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore) > 0 ? "+" : ""}{calculatePercentage(item.antutuScore, pinnedProcessor.antutuScore)}%
+          {percentageCache.antutu !== undefined && (
+            <Badge className={`ml-2 ${percentageCache.antutu > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+              {percentageCache.antutu > 0 ? "+" : ""}{percentageCache.antutu}%
             </Badge>
           )}
         </p>
         <p className="flex items-center gap-1">
           Geekbench Single: {item.geekbenchSingle}
-          {pinnedProcessor && pinnedProcessor.name !== item.name && (
-            <Badge className={`ml-2 ${calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle) > 0 ? "+" : ""}{calculatePercentage(item.geekbenchSingle, pinnedProcessor.geekbenchSingle)}%
+          {percentageCache.geekbenchSingle !== undefined && (
+            <Badge className={`ml-2 ${percentageCache.geekbenchSingle > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+              {percentageCache.geekbenchSingle > 0 ? "+" : ""}{percentageCache.geekbenchSingle}%
             </Badge>
           )}
         </p>
         <p>Geekbench Multi: {item.geekbenchMulti}
-          {pinnedProcessor && pinnedProcessor.name !== item.name && (
-            <Badge className={`ml-2 ${calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti) > 0 ? "+" : ""}{calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti)}%
+          {percentageCache.geekbenchMulti !== undefined && (
+            <Badge className={`ml-2 ${percentageCache.geekbenchMulti > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+              {percentageCache.geekbenchMulti > 0 ? "+" : ""}{percentageCache.geekbenchMulti}%
             </Badge>
           )}
         </p>
         <p>Clock Speed: {item.clockSpeed} MHz
-          {pinnedProcessor && pinnedProcessor.name !== item.name && (
-            <Badge className={`ml-2 ${calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed) > 0 ? "+" : ""}{calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed)}%
+          {percentageCache.clockSpeed !== undefined && (
+            <Badge className={`ml-2 ${percentageCache.clockSpeed > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+              {percentageCache.clockSpeed > 0 ? "+" : ""}{percentageCache.clockSpeed}%
             </Badge>
           )}
         </p>
@@ -183,9 +253,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
           <p className="flex items-center gap-1">
             AI Score: {item["AI Score"]?.toLocaleString()}
             <InfoPopover title="AI Score" srText="What is AI Score?" text="Overall AI performance benchmark score based on neural network inference tests."/>
-            {pinnedProcessor && pinnedProcessor.name !== item.name && (
-              <Badge className={`ml-2 ${calculatePercentage(item["AI Score"] || 0, pinnedProcessor["AI Score"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                {calculatePercentage(item["AI Score"] || 0, pinnedProcessor["AI Score"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["AI Score"] || 0, pinnedProcessor["AI Score"] || 0)}%
+            {percentageCache.aiScore !== undefined && (
+              <Badge className={`ml-2 ${percentageCache.aiScore > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                {percentageCache.aiScore > 0 ? "+" : ""}{percentageCache.aiScore}%
               </Badge>
             )}
           </p>
@@ -198,9 +268,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1">
                 CPU-Q Score: {item["CPU-Q Score"]}
                 <InfoPopover title="CPU-Q Score" srText="What is CPU-Q Score?" text="CPU quantization performance score measuring efficiency with quantized models."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["CPU-Q Score"] || 0, pinnedProcessor["CPU-Q Score"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["CPU-Q Score"] || 0, pinnedProcessor["CPU-Q Score"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["CPU-Q Score"] || 0, pinnedProcessor["CPU-Q Score"] || 0)}%
+                {percentageCache.cpuQScore !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.cpuQScore > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.cpuQScore > 0 ? "+" : ""}{percentageCache.cpuQScore}%
                   </Badge>
                 )}
               </p>
@@ -209,9 +279,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1">
                 CPU-F Score: {item["CPU-F Score"]}
                 <InfoPopover title="CPU-F Score" srText="What is CPU-F Score?" text="CPU floating-point performance score measuring precision computing capabilities."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["CPU-F Score"] || 0, pinnedProcessor["CPU-F Score"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["CPU-F Score"] || 0, pinnedProcessor["CPU-F Score"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["CPU-F Score"] || 0, pinnedProcessor["CPU-F Score"] || 0)}%
+                {percentageCache.cpuFScore !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.cpuFScore > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.cpuFScore > 0 ? "+" : ""}{percentageCache.cpuFScore}%
                   </Badge>
                 )}
               </p>
@@ -227,9 +297,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 INT8 CNNs: {item["INT8 CNNs"]?.toLocaleString()} TOPS
                 <InfoPopover title="INT8 CNNs" srText="What is INT8 CNNs?" text="8-bit integer convolutional neural network performance in trillions of operations per second."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 CNNs"] || 0, pinnedProcessor["INT8 CNNs"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["INT8 CNNs"] || 0, pinnedProcessor["INT8 CNNs"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 CNNs"] || 0, pinnedProcessor["INT8 CNNs"] || 0)}%
+                {percentageCache.int8CNNs !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.int8CNNs > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.int8CNNs > 0 ? "+" : ""}{percentageCache.int8CNNs}%
                   </Badge>
                 )}
               </p>
@@ -238,9 +308,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 INT8 Transformer: {item["INT8 Transformer"]?.toLocaleString()} TOPS
                 <InfoPopover title="INT8 Transformer" srText="What is INT8 Transformer?" text="8-bit integer transformer model performance in trillions of operations per second."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 Transformer"] || 0, pinnedProcessor["INT8 Transformer"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["INT8 Transformer"] || 0, pinnedProcessor["INT8 Transformer"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 Transformer"] || 0, pinnedProcessor["INT8 Transformer"] || 0)}%
+                {percentageCache.int8Transformer !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.int8Transformer > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.int8Transformer > 0 ? "+" : ""}{percentageCache.int8Transformer}%
                   </Badge>
                 )}
               </p>
@@ -249,9 +319,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 FP16 CNNs: {item["FP16 CNNs"]?.toLocaleString()} TOPS
                 <InfoPopover title="FP16 CNNs" srText="What is FP16 CNNs?" text="16-bit floating-point convolutional neural network performance in trillions of operations per second."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 CNNs"] || 0, pinnedProcessor["FP16 CNNs"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["FP16 CNNs"] || 0, pinnedProcessor["FP16 CNNs"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 CNNs"] || 0, pinnedProcessor["FP16 CNNs"] || 0)}%
+                {percentageCache.fp16CNNs !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.fp16CNNs > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.fp16CNNs > 0 ? "+" : ""}{percentageCache.fp16CNNs}%
                   </Badge>
                 )}
               </p>
@@ -260,9 +330,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 FP16 Transformer: {item["FP16 Transformer"]?.toLocaleString()} TOPS
                 <InfoPopover title="FP16 Transformer" srText="What is FP16 Transformer?" text="16-bit floating-point transformer model performance in trillions of operations per second."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 Transformer"] || 0, pinnedProcessor["FP16 Transformer"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["FP16 Transformer"] || 0, pinnedProcessor["FP16 Transformer"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 Transformer"] || 0, pinnedProcessor["FP16 Transformer"] || 0)}%
+                {percentageCache.fp16Transformer !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.fp16Transformer > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.fp16Transformer > 0 ? "+" : ""}{percentageCache.fp16Transformer}%
                   </Badge>
                 )}
               </p>
@@ -278,9 +348,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 INT8 Accuracy: {item["INT8 Accuracy"]}%
                 <InfoPopover title="INT8 Accuracy" srText="What is INT8 Accuracy?" text="Accuracy percentage for 8-bit integer neural network inference."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 Accuracy"] || 0, pinnedProcessor["INT8 Accuracy"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["INT8 Accuracy"] || 0, pinnedProcessor["INT8 Accuracy"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 Accuracy"] || 0, pinnedProcessor["INT8 Accuracy"] || 0)}%
+                {percentageCache.int8Accuracy !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.int8Accuracy > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.int8Accuracy > 0 ? "+" : ""}{percentageCache.int8Accuracy}%
                   </Badge>
                 )}
               </p>
@@ -289,9 +359,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 FP16 Accuracy: {item["FP16 Accuracy"]}%
                 <InfoPopover title="FP16 Accuracy" srText="What is FP16 Accuracy?" text="Accuracy percentage for 16-bit floating-point neural network inference."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 Accuracy"] || 0, pinnedProcessor["FP16 Accuracy"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["FP16 Accuracy"] || 0, pinnedProcessor["FP16 Accuracy"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 Accuracy"] || 0, pinnedProcessor["FP16 Accuracy"] || 0)}%
+                {percentageCache.fp16Accuracy !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.fp16Accuracy > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.fp16Accuracy > 0 ? "+" : ""}{percentageCache.fp16Accuracy}%
                   </Badge>
                 )}
               </p>
@@ -307,9 +377,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 INT8 Parallel: {item["INT8 Parallel"]?.toLocaleString()} TOPS
                 <InfoPopover title="INT8 Parallel" srText="What is INT8 Parallel?" text="8-bit integer parallel processing performance in trillions of operations per second."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["INT8 Parallel"] || 0, pinnedProcessor["INT8 Parallel"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["INT8 Parallel"] || 0, pinnedProcessor["INT8 Parallel"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT8 Parallel"] || 0, pinnedProcessor["INT8 Parallel"] || 0)}%
+                {percentageCache.int8Parallel !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.int8Parallel > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.int8Parallel > 0 ? "+" : ""}{percentageCache.int8Parallel}%
                   </Badge>
                 )}
               </p>
@@ -318,9 +388,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
               <p className="flex items-center gap-1 text-sm">
                 FP16 Parallel: {item["FP16 Parallel"]?.toLocaleString()} TOPS
                 <InfoPopover title="FP16 Parallel" srText="What is FP16 Parallel?" text="16-bit floating-point parallel processing performance in trillions of operations per second."/>
-                {pinnedProcessor && pinnedProcessor.name !== item.name && (
-                  <Badge className={`ml-2 ${calculatePercentage(item["FP16 Parallel"] || 0, pinnedProcessor["FP16 Parallel"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                    {calculatePercentage(item["FP16 Parallel"] || 0, pinnedProcessor["FP16 Parallel"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["FP16 Parallel"] || 0, pinnedProcessor["FP16 Parallel"] || 0)}%
+                {percentageCache.fp16Parallel !== undefined && (
+                  <Badge className={`ml-2 ${percentageCache.fp16Parallel > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                    {percentageCache.fp16Parallel > 0 ? "+" : ""}{percentageCache.fp16Parallel}%
                   </Badge>
                 )}
               </p>
@@ -333,9 +403,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
           <p className="flex items-center gap-1 text-sm">
             INT16 CNNs: {item["INT16 CNNs"]?.toLocaleString()} TOPS
             <InfoPopover title="INT16 CNNs" srText="What is INT16 CNNs?" text="16-bit integer convolutional neural network performance in trillions of operations per second."/>
-            {pinnedProcessor && pinnedProcessor.name !== item.name && (
-              <Badge className={`ml-2 ${calculatePercentage(item["INT16 CNNs"] || 0, pinnedProcessor["INT16 CNNs"] || 0) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                {calculatePercentage(item["INT16 CNNs"] || 0, pinnedProcessor["INT16 CNNs"] || 0) > 0 ? "+" : ""}{calculatePercentage(item["INT16 CNNs"] || 0, pinnedProcessor["INT16 CNNs"] || 0)}%
+            {percentageCache.int16CNNs !== undefined && (
+              <Badge className={`ml-2 ${percentageCache.int16CNNs > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                {percentageCache.int16CNNs > 0 ? "+" : ""}{percentageCache.int16CNNs}%
               </Badge>
             )}
           </p>
@@ -343,9 +413,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         <p className="flex items-center gap-1">
           Performance Score: {item.performanceScore}
           <InfoPopover title="Performance Score" srText="What is Performance Score?" text="This is a composite score that represents the overall performance capability of the processor based on various benchmarks and specifications."/>
-          {pinnedProcessor && pinnedProcessor.name !== item.name && (
-            <Badge className={`ml-2 ${calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore) > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore) > 0 ? "+" : ""}{calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore)}%
+          {percentageCache.performanceScore !== undefined && (
+            <Badge className={`ml-2 ${percentageCache.performanceScore > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+              {percentageCache.performanceScore > 0 ? "+" : ""}{percentageCache.performanceScore}%
             </Badge>
           )}
         </p>
@@ -459,12 +529,6 @@ export default function ProcessorComparison() {
   )
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
-
-  // Debug logging for dimensions
-  useEffect(() => {
-    console.log('Current dimensions:', dimensions)
-    console.log('AI Score range:', dimensions.aiScore)
-  }, [dimensions])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
   useEffect(() => { saveToStorage(STORAGE_KEYS.STARRED_PROCESSORS, starredProcessors) }, [starredProcessors])
   useEffect(() => { saveToStorage(STORAGE_KEYS.SEARCH_QUERY, searchQuery) }, [searchQuery])
