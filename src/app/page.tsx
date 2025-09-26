@@ -244,15 +244,17 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
       <CardHeader className="flex flex-row items-start justify-between">
         <div>
           <CardTitle>{item.name}</CardTitle>
-          <CardDescription>
-            {item.manufacturer}
-            <br />
-            Performance Score: {item.performanceScore}
-            <br />
-            Performance Grade: {item.performanceGrade}
-            <br />
-            Cores: {item.cores} ({item.coreConfig})
-          </CardDescription>
+          {visibleMetrics.has('basic') && (
+            <CardDescription>
+              {item.manufacturer}
+              <br />
+              Performance Score: {item.performanceScore}
+              <br />
+              Performance Grade: {item.performanceGrade}
+              <br />
+              Cores: {item.cores} ({item.coreConfig})
+            </CardDescription>
+          )}
         </div>
         <button
           onClick={() => setPinnedProcessor(pinnedProcessor?.name === item.name ? null : item)}
