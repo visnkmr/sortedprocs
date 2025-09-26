@@ -666,6 +666,7 @@ export default function ProcessorComparison() {
   const [searchQuery, setSearchQuery] = useState(() =>
     loadFromStorage(STORAGE_KEYS.SEARCH_QUERY, "")
   )
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery)
   const [sortBy, setSortBy] = useState<"name" | "cores" | "clockSpeed" | "antutuScore" | "geekbenchSingle" | "geekbenchMulti" | "performanceScore" | "manufacturer" | "AI Score" | "CPU-Q Score" | "CPU-F Score" | "Year">(() =>
     loadFromStorage(STORAGE_KEYS.SORT_BY, "name")
   )
@@ -703,6 +704,15 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
   useEffect(() => { saveToStorage(STORAGE_KEYS.STARRED_PROCESSORS, starredProcessors) }, [starredProcessors])
   useEffect(() => { saveToStorage(STORAGE_KEYS.SEARCH_QUERY, searchQuery) }, [searchQuery])
+
+  // Debounce search query to improve performance
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery)
+    }, 300) // 300ms delay
+
+    return () => clearTimeout(timer)
+  }, [searchQuery])
   useEffect(() => { saveToStorage(STORAGE_KEYS.SORT_BY, sortBy) }, [sortBy])
   useEffect(() => { saveToStorage(STORAGE_KEYS.SORT_ORDER, sortOrder) }, [sortOrder])
   useEffect(() => { saveToStorage(STORAGE_KEYS.MANUFACTURER_FILTER, manufacturerFilter) }, [manufacturerFilter])
@@ -762,8 +772,8 @@ export default function ProcessorComparison() {
 
   const filteredData = useMemo(() => {
     let filtered = data
-    if (searchQuery) {
-      filtered = filtered.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    if (debouncedSearchQuery) {
+      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
     }
     filtered = filtered.filter((item) => {
       if (starredProcessors && starredProcessors?.includes(item.name)) return true
@@ -818,7 +828,7 @@ export default function ProcessorComparison() {
           return sortBy === "name" || sortBy === "manufacturer" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
         }
       })
-  }, [data, dimensions, searchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder, starredPinnedFilter])
+  }, [data, dimensions, debouncedSearchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder, starredPinnedFilter])
 
   const handleSliderChange = useCallback((value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev: typeof dimensions) => ({ ...prev, [dimension]: value }))
@@ -867,8 +877,25 @@ export default function ProcessorComparison() {
           </div>
 
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input type="text" placeholder="Search processors by name..." className="w-full px-4 py-2 border rounded-md" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <div className="flex-1 relative">
+              <input
+                type="text"
+                placeholder="Search processors by name..."
+                className="w-full px-4 py-2 pr-10 border rounded-md"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                  title="Clear search"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
             </div>
             <div className="flex gap-2">
               <select className="px-2 py-1 border rounded-md" value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)}>
