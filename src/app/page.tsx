@@ -137,9 +137,10 @@ type processorcardprops = {
   priceEstimationMetric: keyof ProcessorData,
   getCachedMarketPrice: (processorName: string) => number | undefined,
   setCachedMarketPrice: (processorName: string, price: number | undefined) => void,
+  visibleMetrics: Set<string>,
 }
 
-const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, setStarredProcessors, priceEstimationMetric, getCachedMarketPrice, setCachedMarketPrice }: processorcardprops) => {
+const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, setStarredProcessors, priceEstimationMetric, getCachedMarketPrice, setCachedMarketPrice, visibleMetrics }: processorcardprops) => {
   const [localMarketPrice, setLocalMarketPrice] = useState<string>(() => getCachedMarketPrice(item.name)?.toString() || '')
 
   // Sync local state with stored value when component mounts
@@ -273,42 +274,50 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         </button>
       </CardHeader>
       <CardContent className="space-y-2">
-        <p>AnTuTu Score: {item.antutuScore?.toLocaleString() || "N/A"}
-          {percentageCache.antutu !== undefined && (
-            <Badge className={`ml-2 ${percentageCache.antutu > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {percentageCache.antutu > 0 ? "+" : ""}{percentageCache.antutu}%
-            </Badge>
-          )}
-        </p>
-        <p className="flex items-center gap-1">
-          Geekbench Single: {item.geekbenchSingle}
-          {percentageCache.geekbenchSingle !== undefined && (
-            <Badge className={`ml-2 ${percentageCache.geekbenchSingle > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {percentageCache.geekbenchSingle > 0 ? "+" : ""}{percentageCache.geekbenchSingle}%
-            </Badge>
-          )}
-        </p>
-        <p>Geekbench Multi: {item.geekbenchMulti}
-          {percentageCache.geekbenchMulti !== undefined && (
-            <Badge className={`ml-2 ${percentageCache.geekbenchMulti > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {percentageCache.geekbenchMulti > 0 ? "+" : ""}{percentageCache.geekbenchMulti}%
-            </Badge>
-          )}
-        </p>
-        <p>Clock Speed: {item.clockSpeed} MHz
-          {percentageCache.clockSpeed !== undefined && (
-            <Badge className={`ml-2 ${percentageCache.clockSpeed > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {percentageCache.clockSpeed > 0 ? "+" : ""}{percentageCache.clockSpeed}%
-            </Badge>
-          )}
-        </p>
-        <p>GPU: {item.gpu}</p>
-        {item["CPU Cores"] && <p>CPU Details: {item["CPU Cores"]}</p>}
-        {item["AI Accelerator"] && <p>AI Hardware: {item["AI Accelerator"]}</p>}
-        {item.Year && <p>Release Year: {item.Year}</p>}
+        {visibleMetrics.has('antutu') && (
+          <p>AnTuTu Score: {item.antutuScore?.toLocaleString() || "N/A"}
+            {percentageCache.antutu !== undefined && (
+              <Badge className={`ml-2 ${percentageCache.antutu > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                {percentageCache.antutu > 0 ? "+" : ""}{percentageCache.antutu}%
+              </Badge>
+            )}
+          </p>
+        )}
+        {visibleMetrics.has('geekbench') && (
+          <>
+            <p className="flex items-center gap-1">
+              Geekbench Single: {item.geekbenchSingle}
+              {percentageCache.geekbenchSingle !== undefined && (
+                <Badge className={`ml-2 ${percentageCache.geekbenchSingle > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {percentageCache.geekbenchSingle > 0 ? "+" : ""}{percentageCache.geekbenchSingle}%
+                </Badge>
+              )}
+            </p>
+            <p>Geekbench Multi: {item.geekbenchMulti}
+              {percentageCache.geekbenchMulti !== undefined && (
+                <Badge className={`ml-2 ${percentageCache.geekbenchMulti > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {percentageCache.geekbenchMulti > 0 ? "+" : ""}{percentageCache.geekbenchMulti}%
+                </Badge>
+              )}
+            </p>
+          </>
+        )}
+        {visibleMetrics.has('clockSpeed') && (
+          <p>Clock Speed: {item.clockSpeed} MHz
+            {percentageCache.clockSpeed !== undefined && (
+              <Badge className={`ml-2 ${percentageCache.clockSpeed > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                {percentageCache.clockSpeed > 0 ? "+" : ""}{percentageCache.clockSpeed}%
+              </Badge>
+            )}
+          </p>
+        )}
+        {visibleMetrics.has('gpu') && <p>GPU: {item.gpu}</p>}
+        {visibleMetrics.has('cpuDetails') && item["CPU Cores"] && <p>CPU Details: {item["CPU Cores"]}</p>}
+        {visibleMetrics.has('aiHardware') && item["AI Accelerator"] && <p>AI Hardware: {item["AI Accelerator"]}</p>}
+        {visibleMetrics.has('year') && item.Year && <p>Release Year: {item.Year}</p>}
 
         {/* AI Performance Metrics */}
-        {item["AI Score"] && (
+        {visibleMetrics.has('aiScore') && item["AI Score"] && (
           <p className="flex items-center gap-1">
             AI Score: {item["AI Score"]?.toLocaleString()}
             <InfoPopover title="AI Score" srText="What is AI Score?" text="Overall AI performance benchmark score based on neural network inference tests."/>
@@ -321,7 +330,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         )}
 
         {/* CPU Benchmark Scores */}
-        {(item["CPU-Q Score"] || item["CPU-F Score"]) && (
+        {visibleMetrics.has('cpuScores') && (item["CPU-Q Score"] || item["CPU-F Score"]) && (
           <div className="space-y-1">
             {item["CPU-Q Score"] && (
               <p className="flex items-center gap-1">
@@ -349,7 +358,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         )}
 
         {/* Neural Network Performance */}
-        {(item["INT8 CNNs"] || item["INT8 Transformer"] || item["FP16 CNNs"] || item["FP16 Transformer"]) && (
+        {visibleMetrics.has('neuralNetwork') && (item["INT8 CNNs"] || item["INT8 Transformer"] || item["FP16 CNNs"] || item["FP16 Transformer"]) && (
           <div className="space-y-1">
             <p className="text-sm font-semibold">Neural Network Performance:</p>
             {item["INT8 CNNs"] && (
@@ -400,7 +409,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         )}
 
         {/* Accuracy Metrics */}
-        {(item["INT8 Accuracy"] || item["FP16 Accuracy"]) && (
+        {visibleMetrics.has('accuracy') && (item["INT8 Accuracy"] || item["FP16 Accuracy"]) && (
           <div className="space-y-1">
             <p className="text-sm font-semibold">Model Accuracy:</p>
             {item["INT8 Accuracy"] && (
@@ -429,7 +438,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         )}
 
         {/* Parallel Processing */}
-        {(item["INT8 Parallel"] || item["FP16 Parallel"]) && (
+        {visibleMetrics.has('parallelProcessing') && (item["INT8 Parallel"] || item["FP16 Parallel"]) && (
           <div className="space-y-1">
             <p className="text-sm font-semibold">Parallel Processing:</p>
             {item["INT8 Parallel"] && (
@@ -458,7 +467,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         )}
 
         {/* INT16 CNNs */}
-        {item["INT16 CNNs"] && (
+        {visibleMetrics.has('int16CNNs') && item["INT16 CNNs"] && (
           <p className="flex items-center gap-1 text-sm">
             INT16 CNNs: {item["INT16 CNNs"]?.toLocaleString()} TOPS
             <InfoPopover title="INT16 CNNs" srText="What is INT16 CNNs?" text="16-bit integer convolutional neural network performance in trillions of operations per second."/>
@@ -469,29 +478,34 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
             )}
           </p>
         )}
-        <p className="flex items-center gap-1">
-          Performance Score: {item.performanceScore}
-          <InfoPopover title="Performance Score" srText="What is Performance Score?" text="This is a composite score that represents the overall performance capability of the processor based on various benchmarks and specifications."/>
-          {percentageCache.performanceScore !== undefined && (
-            <Badge className={`ml-2 ${percentageCache.performanceScore > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-              {percentageCache.performanceScore > 0 ? "+" : ""}{percentageCache.performanceScore}%
-            </Badge>
-          )}
-        </p>
-        <p className="flex items-center gap-1">
-          Core Configuration: {item.coreConfig}
-          <InfoPopover title="Core Configuration" srText="What is Core Configuration?" text="This describes how the processor cores are arranged. For example, '2+4' means 2 high-performance cores and 4 efficiency cores."/>
-        </p>
-        <p className="flex items-center gap-1">
-          Performance Grade: {item.performanceGrade}
-          <InfoPopover title="Performance Grade" srText="What is Performance Grade?" text="A letter grade (A+, A, B, C, D) that categorizes the processor's overall performance level."/>
-        </p>
+        {visibleMetrics.has('performanceMetrics') && (
+          <>
+            <p className="flex items-center gap-1">
+              Performance Score: {item.performanceScore}
+              <InfoPopover title="Performance Score" srText="What is Performance Score?" text="This is a composite score that represents the overall performance capability of the processor based on various benchmarks and specifications."/>
+              {percentageCache.performanceScore !== undefined && (
+                <Badge className={`ml-2 ${percentageCache.performanceScore > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {percentageCache.performanceScore > 0 ? "+" : ""}{percentageCache.performanceScore}%
+                </Badge>
+              )}
+            </p>
+            <p className="flex items-center gap-1">
+              Core Configuration: {item.coreConfig}
+              <InfoPopover title="Core Configuration" srText="What is Core Configuration?" text="This describes how the processor cores are arranged. For example, '2+4' means 2 high-performance cores and 4 efficiency cores."/>
+            </p>
+            <p className="flex items-center gap-1">
+              Performance Grade: {item.performanceGrade}
+              <InfoPopover title="Performance Grade" srText="What is Performance Grade?" text="A letter grade (A+, A, B, C, D) that categorizes the processor's overall performance level."/>
+            </p>
+          </>
+        )}
         {/* Market Price Section */}
-        <div className="pt-2 border-t">
-          <div className="flex items-center gap-2 mb-2">
-            <label htmlFor={`marketPrice-${item.name}`} className="text-sm font-medium">
-              Market Price :
-            </label>
+        {visibleMetrics.has('marketPrice') && (
+          <div className="pt-2 border-t">
+            <div className="flex items-center gap-2 mb-2">
+              <label htmlFor={`marketPrice-${item.name}`} className="text-sm font-medium">
+                Market Price :
+              </label>
             <input
               id={`marketPrice-${item.name}`}
               type="number"
@@ -527,10 +541,11 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
             </div>
           )}
         </div>
+       )}
 
-        <div className="pt-2">
-          <SizeComparisonDialog item={item} pinnedProcessor={pinnedProcessor} />
-        </div>
+       <div className="pt-2">
+         <SizeComparisonDialog item={item} pinnedProcessor={pinnedProcessor} />
+       </div>
       </CardContent>
     </Card>
   )
@@ -672,6 +687,14 @@ export default function ProcessorComparison() {
   const [priceEstimationMetric, setPriceEstimationMetric] = useState<keyof ProcessorData>(() =>
     loadFromStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, 'antutuScore')
   )
+  const [visibleMetrics, setVisibleMetrics] = useState<Set<string>>(() => {
+    const saved = loadFromStorage<string[]>('sortedproc_visibleMetrics', [])
+    return saved.length > 0 ? new Set(saved) : new Set([
+      'basic', 'antutu', 'geekbench', 'clockSpeed', 'gpu', 'cpuDetails', 'aiHardware',
+      'year', 'aiScore', 'cpuScores', 'neuralNetwork', 'accuracy', 'parallelProcessing',
+      'int16CNNs', 'performanceMetrics', 'marketPrice'
+    ])
+  })
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
@@ -685,6 +708,7 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage('sortedproc_comparisons', comparisons) }, [comparisons])
   useEffect(() => { saveToStorage('sortedproc_starredPinnedFilter', starredPinnedFilter) }, [starredPinnedFilter])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, priceEstimationMetric) }, [priceEstimationMetric])
+  useEffect(() => { saveToStorage('sortedproc_visibleMetrics', Array.from(visibleMetrics)) }, [visibleMetrics])
 
   const getGridClasses = useCallback((itemsPerRow: number) => {
     const baseClasses = "grid gap-4"
@@ -872,6 +896,59 @@ export default function ProcessorComparison() {
             <select id="itemsPerRow" className="px-2 py-1 border rounded-md" value={itemsPerRow} onChange={(e) => setItemsPerRow(Number(e.target.value))}>
               <option value={2}>2</option><option value={3}>3</option><option value={4}>4</option><option value={5}>5</option><option value={6}>6</option><option value={8}>8</option>
             </select>
+          </div>
+
+          <div className="flex gap-2 items-center">
+            <label htmlFor="visibleMetrics" className="text-sm font-medium">Visible metrics:</label>
+            <select
+              id="visibleMetrics"
+              multiple
+              className="px-2 py-1 border rounded-md min-w-48 max-w-64"
+              value={Array.from(visibleMetrics)}
+              onChange={(e) => {
+                const selectedOptions = Array.from(e.target.selectedOptions, option => option.value)
+                if (selectedOptions.length === 0) {
+                  // If nothing selected, default to all
+                  setVisibleMetrics(new Set([
+                    'basic', 'antutu', 'geekbench', 'clockSpeed', 'gpu', 'cpuDetails', 'aiHardware',
+                    'year', 'aiScore', 'cpuScores', 'neuralNetwork', 'accuracy', 'parallelProcessing',
+                    'int16CNNs', 'performanceMetrics', 'marketPrice'
+                  ]))
+                } else {
+                  setVisibleMetrics(new Set(selectedOptions))
+                }
+              }}
+            >
+              <option value="basic">Basic Info</option>
+              <option value="antutu">AnTuTu Score</option>
+              <option value="geekbench">Geekbench Scores</option>
+              <option value="clockSpeed">Clock Speed</option>
+              <option value="gpu">GPU</option>
+              <option value="cpuDetails">CPU Details</option>
+              <option value="aiHardware">AI Hardware</option>
+              <option value="year">Release Year</option>
+              <option value="aiScore">AI Score</option>
+              <option value="cpuScores">CPU Scores</option>
+              <option value="neuralNetwork">Neural Network Performance</option>
+              <option value="accuracy">Model Accuracy</option>
+              <option value="parallelProcessing">Parallel Processing</option>
+              <option value="int16CNNs">INT16 CNNs</option>
+              <option value="performanceMetrics">Performance Metrics</option>
+              <option value="marketPrice">Market Price & Estimation</option>
+            </select>
+            <button
+              onClick={() => {
+                // Select all metrics
+                setVisibleMetrics(new Set([
+                  'basic', 'antutu', 'geekbench', 'clockSpeed', 'gpu', 'cpuDetails', 'aiHardware',
+                  'year', 'aiScore', 'cpuScores', 'neuralNetwork', 'accuracy', 'parallelProcessing',
+                  'int16CNNs', 'performanceMetrics', 'marketPrice'
+                ]))
+              }}
+              className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Select All
+            </button>
           </div>
 
           {pinnedProcessor && (
@@ -1090,7 +1167,7 @@ export default function ProcessorComparison() {
 
         <div className={getGridClasses(itemsPerRow)}>
           {filteredData.slice(0, 100).map((item) => (
-            <ProcessorCard key={item.name} item={item} pinnedProcessor={pinnedProcessor} setPinnedProcessor={setPinnedProcessor} starredProcessors={starredProcessors} setStarredProcessors={setStarredProcessors} priceEstimationMetric={priceEstimationMetric} getCachedMarketPrice={getCachedMarketPrice} setCachedMarketPrice={setCachedMarketPrice} />
+            <ProcessorCard key={item.name} item={item} pinnedProcessor={pinnedProcessor} setPinnedProcessor={setPinnedProcessor} starredProcessors={starredProcessors} setStarredProcessors={setStarredProcessors} priceEstimationMetric={priceEstimationMetric} getCachedMarketPrice={getCachedMarketPrice} setCachedMarketPrice={setCachedMarketPrice} visibleMetrics={visibleMetrics} />
           ))}
         </div>
 
