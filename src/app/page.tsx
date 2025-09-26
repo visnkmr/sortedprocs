@@ -39,6 +39,7 @@ export type ProcessorData = {
   "INT8 Parallel": number
   "FP16 Parallel": number
   "AI Score": number
+  marketPrice?: number
 }
 
 const STORAGE_KEYS = {
@@ -51,6 +52,8 @@ const STORAGE_KEYS = {
   SORT_ORDER: 'sortedproc_sortOrder',
   MANUFACTURER_FILTER: 'sortedproc_manufacturerFilter',
   SHOW_DIMENSIONS: 'sortedproc_showDimensionsRange',
+  MARKET_PRICES: 'sortedproc_marketPrices',
+  PRICE_ESTIMATION_METRIC: 'sortedproc_priceEstimationMetric',
 } as const
 
 const saveToStorage = (key: string, value: unknown): void => {
@@ -71,6 +74,30 @@ const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
     console.warn('Failed to load from localStorage:', error)
     return defaultValue
   }
+}
+
+// Market price utilities
+const loadMarketPrices = (): Record<string, number> => {
+  return loadFromStorage(STORAGE_KEYS.MARKET_PRICES, {})
+}
+
+const saveMarketPrices = (marketPrices: Record<string, number>): void => {
+  saveToStorage(STORAGE_KEYS.MARKET_PRICES, marketPrices)
+}
+
+const getMarketPrice = (processorName: string): number | undefined => {
+  const marketPrices = loadMarketPrices()
+  return marketPrices[processorName]
+}
+
+const setMarketPrice = (processorName: string, price: number | undefined): void => {
+  const marketPrices = loadMarketPrices()
+  if (price !== undefined && price > 0) {
+    marketPrices[processorName] = price
+  } else {
+    delete marketPrices[processorName]
+  }
+  saveMarketPrices(marketPrices)
 }
 
 function finddataspecs(data: ProcessorData[]) {
@@ -107,13 +134,45 @@ type processorcardprops = {
   setPinnedProcessor: React.Dispatch<React.SetStateAction<ProcessorData | null>>,
   starredProcessors: string[]|null,
   setStarredProcessors: React.Dispatch<React.SetStateAction<string[]|null>>,
+  priceEstimationMetric: keyof ProcessorData,
+  getCachedMarketPrice: (processorName: string) => number | undefined,
+  setCachedMarketPrice: (processorName: string, price: number | undefined) => void,
 }
 
-const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, setStarredProcessors }: processorcardprops) => {
+const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starredProcessors, setStarredProcessors, priceEstimationMetric, getCachedMarketPrice, setCachedMarketPrice }: processorcardprops) => {
+  const [localMarketPrice, setLocalMarketPrice] = useState<string>(() => getCachedMarketPrice(item.name)?.toString() || '')
+
+  // Sync local state with stored value when component mounts
+  useEffect(() => {
+    const storedPrice = getCachedMarketPrice(item.name)
+    setLocalMarketPrice(storedPrice?.toString() || '')
+  }, [item.name, getCachedMarketPrice])
   const calculatePercentage = useCallback((value: number, reference: number) => {
     if (!reference) return 0
     return Math.round(((value - reference) / reference) * 100)
   }, [])
+
+  // Price estimation logic
+  const getEstimatedPrice = useCallback(() => {
+    if (!pinnedProcessor || !pinnedProcessor.marketPrice || pinnedProcessor.name === item.name) {
+      return null
+    }
+
+    const pinnedMetricValue = pinnedProcessor[priceEstimationMetric] as number
+    const currentMetricValue = item[priceEstimationMetric] as number
+
+    if (!pinnedMetricValue || !currentMetricValue || pinnedMetricValue === 0) {
+      return null
+    }
+
+    // Calculate the ratio between current processor's metric and pinned processor's metric
+    const metricRatio = currentMetricValue / pinnedMetricValue
+
+    // Estimate price based on the metric ratio
+    const estimatedPrice = pinnedProcessor.marketPrice * metricRatio
+
+    return Math.round(estimatedPrice * 100) / 100 // Round to 2 decimal places
+  }, [pinnedProcessor, item, priceEstimationMetric])
 
   // Memoize percentage calculations for this specific processor
   const percentageCache = useMemo(() => {
@@ -427,6 +486,48 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
           Performance Grade: {item.performanceGrade}
           <InfoPopover title="Performance Grade" srText="What is Performance Grade?" text="A letter grade (A+, A, B, C, D) that categorizes the processor's overall performance level."/>
         </p>
+        {/* Market Price Section */}
+        <div className="pt-2 border-t">
+          <div className="flex items-center gap-2 mb-2">
+            <label htmlFor={`marketPrice-${item.name}`} className="text-sm font-medium">
+              Market Price :
+            </label>
+            <input
+              id={`marketPrice-${item.name}`}
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="Enter price"
+              className="px-2 py-1 text-sm border rounded w-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={localMarketPrice}
+              onChange={(e) => setLocalMarketPrice(e.target.value)}
+              onBlur={(e) => {
+                const price = e.target.value ? parseFloat(e.target.value) : undefined
+                setCachedMarketPrice(item.name, price)
+                // Update the current item to reflect the change immediately
+                item.marketPrice = price
+              }}
+            />
+          </div>
+          {(localMarketPrice || getCachedMarketPrice(item.name)) && (
+            <p className="text-sm text-green-600">
+              Current Price: {getCachedMarketPrice(item.name)?.toLocaleString()}
+            </p>
+          )}
+
+          {/* Estimated Price Section */}
+          {getEstimatedPrice() && (
+            <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-950 rounded">
+              <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                Estimated Price: {getEstimatedPrice()?.toLocaleString()}
+              </p>
+              <p className="text-xs text-blue-600 dark:text-blue-300">
+                Based on {priceEstimationMetric} comparison with {pinnedProcessor?.name}
+              </p>
+            </div>
+          )}
+        </div>
+
         <div className="pt-2">
           <SizeComparisonDialog item={item} pinnedProcessor={pinnedProcessor} />
         </div>
@@ -439,6 +540,9 @@ ProcessorCard.displayName = 'ProcessorCard'
 
 export default function ProcessorComparison() {
   const { theme, setTheme } = useTheme()
+
+  // Market price cache to avoid repeated localStorage lookups
+  const [marketPriceCache, setMarketPriceCache] = useState<Map<string, number>>(new Map())
 
   type DimensionsType = {
     cores: number[]
@@ -497,9 +601,47 @@ export default function ProcessorComparison() {
     }
     return defaultDimensions
   })
-  const [pinnedProcessor, setPinnedProcessor] = useState<ProcessorData | null>(() =>
-    loadFromStorage(STORAGE_KEYS.PINNED_PROCESSOR, null)
-  )
+  const [pinnedProcessor, setPinnedProcessor] = useState<ProcessorData | null>(() => {
+    const stored = loadFromStorage<ProcessorData | null>(STORAGE_KEYS.PINNED_PROCESSOR, null)
+    if (stored && stored.name) {
+      const marketPrice = getMarketPrice(stored.name)
+      return marketPrice ? { ...stored, marketPrice } : stored
+    }
+    return stored
+  })
+
+  // Cached market price getter - only loads from localStorage when not in cache
+  const getCachedMarketPrice = useCallback((processorName: string): number | undefined => {
+    if (marketPriceCache.has(processorName)) {
+      return marketPriceCache.get(processorName)
+    }
+
+    // Load from localStorage only when not cached
+    const price = getMarketPrice(processorName)
+    if (price !== undefined) {
+      setMarketPriceCache(prev => new Map(prev.set(processorName, price)))
+    }
+    return price
+  }, [marketPriceCache])
+
+  // Cached market price setter - updates both localStorage and cache
+  const setCachedMarketPrice = useCallback((processorName: string, price: number | undefined): void => {
+    setMarketPrice(processorName, price)
+    setMarketPriceCache(prev => {
+      const newCache = new Map(prev)
+      if (price !== undefined && price > 0) {
+        newCache.set(processorName, price)
+      } else {
+        newCache.delete(processorName)
+      }
+      return newCache
+    })
+
+    // Update pinnedProcessor state if the market price being set is for the pinned processor
+    if (pinnedProcessor && pinnedProcessor.name === processorName) {
+      setPinnedProcessor(prev => prev ? { ...prev, marketPrice: price } : null)
+    }
+  }, [pinnedProcessor])
   const [starredProcessors, setStarredProcessors] = useState<string[] | null>(() =>
     loadFromStorage(STORAGE_KEYS.STARRED_PROCESSORS, null)
   )
@@ -527,6 +669,9 @@ export default function ProcessorComparison() {
   const [starredPinnedFilter, setStarredPinnedFilter] = useState<'all' | 'only' | 'hide'>(() =>
     loadFromStorage('sortedproc_starredPinnedFilter', 'all')
   )
+  const [priceEstimationMetric, setPriceEstimationMetric] = useState<keyof ProcessorData>(() =>
+    loadFromStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, 'antutuScore')
+  )
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
@@ -539,6 +684,7 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage(STORAGE_KEYS.ITEMS_PER_ROW, itemsPerRow) }, [itemsPerRow])
   useEffect(() => { saveToStorage('sortedproc_comparisons', comparisons) }, [comparisons])
   useEffect(() => { saveToStorage('sortedproc_starredPinnedFilter', starredPinnedFilter) }, [starredPinnedFilter])
+  useEffect(() => { saveToStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, priceEstimationMetric) }, [priceEstimationMetric])
 
   const getGridClasses = useCallback((itemsPerRow: number) => {
     const baseClasses = "grid gap-4"
@@ -730,6 +876,24 @@ export default function ProcessorComparison() {
 
           {pinnedProcessor && (
             <div className="flex flex-col gap-2 items-center">
+              <div className="flex items-center gap-2 mb-2">
+                <span>Price estimation based on:</span>
+                <select
+                  className="px-2 py-1 border rounded-md text-sm"
+                  value={priceEstimationMetric}
+                  onChange={(e) => setPriceEstimationMetric(e.target.value as keyof ProcessorData)}
+                >
+                  <option value="antutuScore">AnTuTu Score</option>
+                  <option value="geekbenchSingle">Geekbench Single</option>
+                  <option value="geekbenchMulti">Geekbench Multi</option>
+                  <option value="performanceScore">Performance Score</option>
+                  <option value="AI Score">AI Score</option>
+                  <option value="CPU-Q Score">CPU-Q Score</option>
+                  <option value="CPU-F Score">CPU-F Score</option>
+                  <option value="clockSpeed">Clock Speed</option>
+                  <option value="cores">Cores</option>
+                </select>
+              </div>
               <span>Find processors with:</span>
               <button onClick={addComparison} className="px-2 py-1 border rounded-md">Add Comparison</button>
               {comparisons.map((comparison, index) => (
@@ -926,7 +1090,7 @@ export default function ProcessorComparison() {
 
         <div className={getGridClasses(itemsPerRow)}>
           {filteredData.slice(0, 100).map((item) => (
-            <ProcessorCard key={item.name} item={item} pinnedProcessor={pinnedProcessor} setPinnedProcessor={setPinnedProcessor} starredProcessors={starredProcessors} setStarredProcessors={setStarredProcessors} />
+            <ProcessorCard key={item.name} item={item} pinnedProcessor={pinnedProcessor} setPinnedProcessor={setPinnedProcessor} starredProcessors={starredProcessors} setStarredProcessors={setStarredProcessors} priceEstimationMetric={priceEstimationMetric} getCachedMarketPrice={getCachedMarketPrice} setCachedMarketPrice={setCachedMarketPrice} />
           ))}
         </div>
 
