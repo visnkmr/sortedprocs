@@ -695,6 +695,9 @@ export default function ProcessorComparison() {
       'int16CNNs', 'performanceMetrics', 'marketPrice'
     ])
   })
+  const [showMetricsPanel, setShowMetricsPanel] = useState(() =>
+    loadFromStorage('sortedproc_showMetricsPanel', true)
+  )
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
@@ -709,6 +712,7 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage('sortedproc_starredPinnedFilter', starredPinnedFilter) }, [starredPinnedFilter])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, priceEstimationMetric) }, [priceEstimationMetric])
   useEffect(() => { saveToStorage('sortedproc_visibleMetrics', Array.from(visibleMetrics)) }, [visibleMetrics])
+  useEffect(() => { saveToStorage('sortedproc_showMetricsPanel', showMetricsPanel) }, [showMetricsPanel])
 
   const getGridClasses = useCallback((itemsPerRow: number) => {
     const baseClasses = "grid gap-4"
@@ -898,57 +902,89 @@ export default function ProcessorComparison() {
             </select>
           </div>
 
-          <div className="flex gap-2 items-center">
-            <label htmlFor="visibleMetrics" className="text-sm font-medium">Visible metrics:</label>
-            <select
-              id="visibleMetrics"
-              multiple
-              className="px-2 py-1 border rounded-md min-w-48 max-w-64"
-              value={Array.from(visibleMetrics)}
-              onChange={(e) => {
-                const selectedOptions = Array.from(e.target.selectedOptions, option => option.value)
-                if (selectedOptions.length === 0) {
-                  // If nothing selected, default to all
-                  setVisibleMetrics(new Set([
-                    'basic', 'antutu', 'geekbench', 'clockSpeed', 'gpu', 'cpuDetails', 'aiHardware',
-                    'year', 'aiScore', 'cpuScores', 'neuralNetwork', 'accuracy', 'parallelProcessing',
-                    'int16CNNs', 'performanceMetrics', 'marketPrice'
-                  ]))
-                } else {
-                  setVisibleMetrics(new Set(selectedOptions))
-                }
-              }}
-            >
-              <option value="basic">Basic Info</option>
-              <option value="antutu">AnTuTu Score</option>
-              <option value="geekbench">Geekbench Scores</option>
-              <option value="clockSpeed">Clock Speed</option>
-              <option value="gpu">GPU</option>
-              <option value="cpuDetails">CPU Details</option>
-              <option value="aiHardware">AI Hardware</option>
-              <option value="year">Release Year</option>
-              <option value="aiScore">AI Score</option>
-              <option value="cpuScores">CPU Scores</option>
-              <option value="neuralNetwork">Neural Network Performance</option>
-              <option value="accuracy">Model Accuracy</option>
-              <option value="parallelProcessing">Parallel Processing</option>
-              <option value="int16CNNs">INT16 CNNs</option>
-              <option value="performanceMetrics">Performance Metrics</option>
-              <option value="marketPrice">Market Price & Estimation</option>
-            </select>
-            <button
-              onClick={() => {
-                // Select all metrics
-                setVisibleMetrics(new Set([
-                  'basic', 'antutu', 'geekbench', 'clockSpeed', 'gpu', 'cpuDetails', 'aiHardware',
-                  'year', 'aiScore', 'cpuScores', 'neuralNetwork', 'accuracy', 'parallelProcessing',
-                  'int16CNNs', 'performanceMetrics', 'marketPrice'
-                ]))
-              }}
-              className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Select All
-            </button>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium">Visible metrics:</label>
+                <span className="text-xs text-gray-500">({visibleMetrics.size}/16 selected)</span>
+              </div>
+              <button
+                onClick={() => setShowMetricsPanel(!showMetricsPanel)}
+                className="px-2 py-1 text-xs bg-gray-500 text-white rounded hover:bg-gray-600 flex items-center gap-1"
+              >
+                {showMetricsPanel ? 'Hide' : 'Show'}
+              </button>
+            </div>
+
+            {showMetricsPanel && (
+              <>
+                <div className="flex items-center justify-between pt-2 border-t">
+                  <span className="text-xs text-gray-600 dark:text-gray-400">Choose which metrics to display in processor cards</span>
+                  <button
+                    onClick={() => {
+                      // Toggle all metrics
+                      const allMetrics = [
+                        'basic', 'antutu', 'geekbench', 'clockSpeed', 'gpu', 'cpuDetails', 'aiHardware',
+                        'year', 'aiScore', 'cpuScores', 'neuralNetwork', 'accuracy', 'parallelProcessing',
+                        'int16CNNs', 'performanceMetrics', 'marketPrice'
+                      ]
+                      if (visibleMetrics.size === allMetrics.length) {
+                        // If all are selected, deselect all
+                        setVisibleMetrics(new Set())
+                      } else {
+                        // Otherwise select all
+                        setVisibleMetrics(new Set(allMetrics))
+                      }
+                    }}
+                    className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    {visibleMetrics.size === 16 ? 'Deselect All' : 'Select All'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-64 overflow-y-auto">
+                  {[
+                    { id: 'basic', label: 'Basic Info', desc: 'Name, cores, performance grade' },
+                    { id: 'antutu', label: 'AnTuTu Score', desc: 'Overall benchmark score' },
+                    { id: 'geekbench', label: 'Geekbench Scores', desc: 'Single & multi-core performance' },
+                    { id: 'clockSpeed', label: 'Clock Speed', desc: 'Processor frequency' },
+                    { id: 'gpu', label: 'GPU', desc: 'Graphics processor info' },
+                    { id: 'cpuDetails', label: 'CPU Details', desc: 'Architecture & core config' },
+                    { id: 'aiHardware', label: 'AI Hardware', desc: 'Neural processing units' },
+                    { id: 'year', label: 'Release Year', desc: 'When the processor launched' },
+                    { id: 'aiScore', label: 'AI Score', desc: 'AI performance benchmark' },
+                    { id: 'cpuScores', label: 'CPU Scores', desc: 'CPU-Q & CPU-F benchmarks' },
+                    { id: 'neuralNetwork', label: 'Neural Network', desc: 'CNN & transformer performance' },
+                    { id: 'accuracy', label: 'Model Accuracy', desc: 'INT8 & FP16 accuracy metrics' },
+                    { id: 'parallelProcessing', label: 'Parallel Processing', desc: 'Multi-threaded performance' },
+                    { id: 'int16CNNs', label: 'INT16 CNNs', desc: '16-bit neural network ops' },
+                    { id: 'performanceMetrics', label: 'Performance Metrics', desc: 'Score, grade & configuration' },
+                    { id: 'marketPrice', label: 'Market Price', desc: 'Price input & estimation' }
+                  ].map((metric) => (
+                    <label key={metric.id} className="flex items-start gap-2 p-2 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={visibleMetrics.has(metric.id)}
+                        onChange={(e) => {
+                          const newVisibleMetrics = new Set(visibleMetrics)
+                          if (e.target.checked) {
+                            newVisibleMetrics.add(metric.id)
+                          } else {
+                            newVisibleMetrics.delete(metric.id)
+                          }
+                          setVisibleMetrics(newVisibleMetrics)
+                        }}
+                        className="mt-0.5 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium">{metric.label}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{metric.desc}</div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           {pinnedProcessor && (
