@@ -687,6 +687,12 @@ export default function ProcessorComparison() {
   const [starredPinnedFilter, setStarredPinnedFilter] = useState<'all' | 'only' | 'hide'>(() =>
     loadFromStorage('sortedproc_starredPinnedFilter', 'all')
   )
+  const [alwaysShowStarredPinned, setAlwaysShowStarredPinned] = useState(() =>
+    loadFromStorage('sortedproc_alwaysShowStarredPinned', false)
+  )
+  const [disableSearchFilter, setDisableSearchFilter] = useState(() =>
+    loadFromStorage('sortedproc_disableSearchFilter', false)
+  )
   const [priceEstimationMetric, setPriceEstimationMetric] = useState<keyof ProcessorData>(() =>
     loadFromStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, 'antutuScore')
   )
@@ -722,6 +728,8 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage(STORAGE_KEYS.ITEMS_PER_ROW, itemsPerRow) }, [itemsPerRow])
   useEffect(() => { saveToStorage('sortedproc_comparisons', comparisons) }, [comparisons])
   useEffect(() => { saveToStorage('sortedproc_starredPinnedFilter', starredPinnedFilter) }, [starredPinnedFilter])
+  useEffect(() => { saveToStorage('sortedproc_alwaysShowStarredPinned', alwaysShowStarredPinned) }, [alwaysShowStarredPinned])
+  useEffect(() => { saveToStorage('sortedproc_disableSearchFilter', disableSearchFilter) }, [disableSearchFilter])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, priceEstimationMetric) }, [priceEstimationMetric])
   useEffect(() => { saveToStorage('sortedproc_visibleMetrics', Array.from(visibleMetrics)) }, [visibleMetrics])
   useEffect(() => { saveToStorage('sortedproc_showMetricsPanel', showMetricsPanel) }, [showMetricsPanel])
@@ -774,8 +782,8 @@ export default function ProcessorComparison() {
 
   const filteredData = useMemo(() => {
     let filtered = data
-    if (debouncedSearchQuery) {
-      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+    if (debouncedSearchQuery && !disableSearchFilter) {
+      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) || (alwaysShowStarredPinned &&  (starredProcessors && starredProcessors?.includes(item.name) || pinnedProcessor && item.name === pinnedProcessor.name)))
     }
     filtered = filtered.filter((item) => {
       if (starredProcessors && starredProcessors?.includes(item.name)) return true
@@ -797,7 +805,62 @@ export default function ProcessorComparison() {
         (item.Year || 2018) >= dimensions.year[0] && (item.Year || 2025) <= dimensions.year[1]
       )
     })
-    if (starredPinnedFilter === 'only') {
+    // Apply search filter (if not disabled)
+    if (debouncedSearchQuery && !disableSearchFilter) {
+      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+    }
+
+    // Apply specification range filters
+    filtered = filtered.filter((item) => {
+      if (starredProcessors && starredProcessors?.includes(item.name)) return true
+      if (pinnedProcessor && item.name === pinnedProcessor.name) return true
+      return (
+        item.cores >= dimensions.cores[0] && item.cores <= dimensions.cores[1] &&
+        item.clockSpeed >= dimensions.clockSpeed[0] && item.clockSpeed <= dimensions.clockSpeed[1] &&
+        item.antutuScore >= dimensions.antutuScore[0] && item.antutuScore <= dimensions.antutuScore[1] &&
+        item.geekbenchSingle >= dimensions.geekbenchSingle[0] && item.geekbenchSingle <= dimensions.geekbenchSingle[1] &&
+        item.geekbenchMulti >= dimensions.geekbenchMulti[0] && item.geekbenchMulti <= dimensions.geekbenchMulti[1] &&
+        item.performanceScore >= dimensions.performanceScore[0] && item.performanceScore <= dimensions.performanceScore[1] &&
+        (item["AI Score"] || 0) >= dimensions.aiScore[0] && (item["AI Score"] || 0) <= dimensions.aiScore[1] &&
+        (item["CPU-Q Score"] || 0) >= dimensions.cpuQScore[0] && (item["CPU-Q Score"] || 0) <= dimensions.cpuQScore[1] &&
+        (item["CPU-F Score"] || 0) >= dimensions.cpuFScore[0] && (item["CPU-F Score"] || 0) <= dimensions.cpuFScore[1] &&
+        (item["INT8 CNNs"] || 0) >= dimensions.int8CNNs[0] && (item["INT8 CNNs"] || 0) <= dimensions.int8CNNs[1] &&
+        (item["INT8 Transformer"] || 0) >= dimensions.int8Transformer[0] && (item["INT8 Transformer"] || 0) <= dimensions.int8Transformer[1] &&
+        (item["FP16 CNNs"] || 0) >= dimensions.fp16CNNs[0] && (item["FP16 CNNs"] || 0) <= dimensions.fp16CNNs[1] &&
+        (item["FP16 Transformer"] || 0) >= dimensions.fp16Transformer[0] && (item["FP16 Transformer"] || 0) <= dimensions.fp16Transformer[1] &&
+        (item.Year || 2018) >= dimensions.year[0] && (item.Year || 2025) <= dimensions.year[1]
+      )
+    })
+
+    // Apply manufacturer and comparison filters
+    filtered = filtered
+      .filter((item) => {
+        if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
+        return comparisons.every((comparison) => {
+          if (pinnedProcessor) {
+            const processorValue = item[comparison.field]
+            const pinnedProcessorValue = pinnedProcessor[comparison.field]
+            // Handle undefined values for optional fields
+            if (processorValue == null || pinnedProcessorValue == null) {
+              return false
+            }
+            if (comparison.operator === ">") return processorValue > pinnedProcessorValue
+            else if (comparison.operator === "<") return processorValue < pinnedProcessorValue
+          }
+          return true
+        })
+      })
+
+    if (alwaysShowStarredPinned) {
+      // Get starred and pinned processors that were filtered out and add them back
+      const filteredOutStarredAndPinned = data.filter((item) => {
+        const isStarredOrPinned = (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
+        const isCurrentlyInFiltered = filtered.some(filteredItem => filteredItem.name === item.name)
+        return isStarredOrPinned && !isCurrentlyInFiltered
+      })
+      // Add them back to the filtered results
+      filtered = [...filtered, ...filteredOutStarredAndPinned]
+    } else if (starredPinnedFilter === 'only') {
       filtered = filtered.filter((item) => {
         return (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
       })
@@ -830,7 +893,7 @@ export default function ProcessorComparison() {
           return sortBy === "name" || sortBy === "manufacturer" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
         }
       })
-  }, [data, dimensions, debouncedSearchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder, starredPinnedFilter])
+  }, [data, dimensions, debouncedSearchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder, starredPinnedFilter, alwaysShowStarredPinned, disableSearchFilter])
 
   const handleSliderChange = useCallback((value: number[], dimension: keyof typeof dimensions) => {
     setDimensions((prev: typeof dimensions) => ({ ...prev, [dimension]: value }))
@@ -871,7 +934,7 @@ export default function ProcessorComparison() {
               </a>
             </div>
             <div className="flex items-center gap-4">
-              <p>{filteredData.length} of {totalProcessorModels} processors found</p>
+              <p>{filteredData.length} / {totalProcessorModels} </p>
               <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title={theme === 'dark' ? "Switch to light theme" : "Switch to dark theme"}>
                 {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
@@ -899,6 +962,32 @@ export default function ProcessorComparison() {
                 </button>
               )}
             </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={alwaysShowStarredPinned}
+                    onChange={(e) => setAlwaysShowStarredPinned(e.target.checked)}
+                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium">Always show starred & pinned processors</span>
+                </label>
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={disableSearchFilter}
+                    onChange={(e) => setDisableSearchFilter(e.target.checked)}
+                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium">Disable search filter</span>
+                </label>
+              </div>
+            </div>
+
             <div className="flex gap-2">
               <select className="px-2 py-1 border rounded-md" value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)}>
                 <option value="All">All Manufacturers</option>
