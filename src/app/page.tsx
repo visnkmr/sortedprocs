@@ -1046,9 +1046,40 @@ export default function ProcessorComparison() {
                     </select>
                   </div>
                 )}
+
+                {pinnedProcessor && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Find processors with:</span>
+                    </div>
+                    <button onClick={addComparison} className="px-2 py-1 border rounded-md text-sm">Add Comparison</button>
+                    {comparisons.map((comparison, index) => (
+                      <div key={index} className="flex gap-2 items-center mb-2">
+                        <select className="px-2 py-1 border rounded-md text-sm" value={comparison.field} onChange={(e) => updateComparison(index, e.target.value as keyof ProcessorData, comparison.operator)}>
+                          <option value="cores">Cores</option><option value="clockSpeed">Clock Speed</option><option value="antutuScore">AnTuTu Score</option><option value="geekbenchSingle">Geekbench Single</option><option value="geekbenchMulti">Geekbench Multi</option><option value="performanceScore">Performance Score</option>
+                          <option value="AI Score">AI Score</option><option value="CPU-Q Score">CPU-Q Score</option><option value="CPU-F Score">CPU-F Score</option><option value="Year">Release Year</option>
+                          <option value="INT8 CNNs">INT8 CNNs</option><option value="INT8 Transformer">INT8 Transformer</option><option value="INT8 Accuracy">INT8 Accuracy</option><option value="FP16 CNNs">FP16 CNNs</option><option value="FP16 Transformer">FP16 Transformer</option><option value="FP16 Accuracy">FP16 Accuracy</option><option value="INT16 CNNs">INT16 CNNs</option><option value="INT8 Parallel">INT8 Parallel</option><option value="FP16 Parallel">FP16 Parallel</option>
+                        </select>
+                        <select className="px-2 py-1 border rounded-md text-sm" value={comparison.operator} onChange={(e) => updateComparison(index, comparison.field, e.target.value as ">" | "<")}>
+                          <option value=">">Greater than {pinnedProcessor.name}</option>
+                          <option value="<">Less than {pinnedProcessor.name}</option>
+                        </select>
+                        <button onClick={() => removeComparison(index)} className="px-2 py-1 bg-red-500 text-white rounded-md text-sm">
+                          <Delete />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between pt-2">
+                  <button className="px-3 py-1 border rounded-md text-sm" onClick={toggleDimensionsRange}>
+                    {showDimensionsRange ? "Hide" : "Show"} Specifications Range
+                  </button>
+                </div>
               </>
-            )}
-          </div>
+             )}
+           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -1135,35 +1166,6 @@ export default function ProcessorComparison() {
             )}
           </div>
 
-          {pinnedProcessor && (
-            <div className="flex flex-col gap-2 items-center">
-              
-              <span>Find processors with:</span>
-              <button onClick={addComparison} className="px-2 py-1 border rounded-md">Add Comparison</button>
-              {comparisons.map((comparison, index) => (
-                <div key={index} className="flex gap-2 items-center mb-2">
-                  <select className="px-2 py-1 border rounded-md" value={comparison.field} onChange={(e) => updateComparison(index, e.target.value as keyof ProcessorData, comparison.operator)}>
-                    <option value="cores">Cores</option><option value="clockSpeed">Clock Speed</option><option value="antutuScore">AnTuTu Score</option><option value="geekbenchSingle">Geekbench Single</option><option value="geekbenchMulti">Geekbench Multi</option><option value="performanceScore">Performance Score</option>
-                    <option value="AI Score">AI Score</option><option value="CPU-Q Score">CPU-Q Score</option><option value="CPU-F Score">CPU-F Score</option><option value="Year">Release Year</option>
-                    <option value="INT8 CNNs">INT8 CNNs</option><option value="INT8 Transformer">INT8 Transformer</option><option value="INT8 Accuracy">INT8 Accuracy</option><option value="FP16 CNNs">FP16 CNNs</option><option value="FP16 Transformer">FP16 Transformer</option><option value="FP16 Accuracy">FP16 Accuracy</option><option value="INT16 CNNs">INT16 CNNs</option><option value="INT8 Parallel">INT8 Parallel</option><option value="FP16 Parallel">FP16 Parallel</option>
-                  </select>
-                  <select className="px-2 py-1 border rounded-md" value={comparison.operator} onChange={(e) => updateComparison(index, comparison.field, e.target.value as ">" | "<")}>
-                    <option value=">">Greater than {pinnedProcessor.name}</option>
-                    <option value="<">Less than {pinnedProcessor.name}</option>
-                  </select>
-                  <button onClick={() => removeComparison(index)} className="px-2 py-1 bg-red-500 text-white rounded-md">
-                    <Delete />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          
-
-          <button className="px-3 py-1 border rounded-md" onClick={toggleDimensionsRange}>
-            {showDimensionsRange ? "Hide" : "Show"} Specifications Range
-          </button>
         </div>
 
         {showDimensionsRange && (
