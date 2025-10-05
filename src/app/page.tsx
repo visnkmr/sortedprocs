@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useState, useMemo, useCallback, memo, useEffect } from "react"
@@ -707,6 +708,7 @@ export default function ProcessorComparison() {
   const [showMetricsPanel, setShowMetricsPanel] = useState(() =>
     loadFromStorage('sortedproc_showMetricsPanel', true)
   )
+  const [isUsingFallbackSearch, setIsUsingFallbackSearch] = useState(false)
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PINNED_PROCESSOR, pinnedProcessor) }, [pinnedProcessor])
@@ -781,37 +783,8 @@ export default function ProcessorComparison() {
   }, [data])
 
   const filteredData = useMemo(() => {
-    let filtered = data
-    if (debouncedSearchQuery && !disableSearchFilter) {
-      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) || (alwaysShowStarredPinned &&  (starredProcessors && starredProcessors?.includes(item.name) || pinnedProcessor && item.name === pinnedProcessor.name)))
-    }
-    filtered = filtered.filter((item) => {
-      if (starredProcessors && starredProcessors?.includes(item.name)) return true
-      if (pinnedProcessor && item.name === pinnedProcessor.name) return true
-      return (
-        item.cores >= dimensions.cores[0] && item.cores <= dimensions.cores[1] &&
-        item.clockSpeed >= dimensions.clockSpeed[0] && item.clockSpeed <= dimensions.clockSpeed[1] &&
-        item.antutuScore >= dimensions.antutuScore[0] && item.antutuScore <= dimensions.antutuScore[1] &&
-        item.geekbenchSingle >= dimensions.geekbenchSingle[0] && item.geekbenchSingle <= dimensions.geekbenchSingle[1] &&
-        item.geekbenchMulti >= dimensions.geekbenchMulti[0] && item.geekbenchMulti <= dimensions.geekbenchMulti[1] &&
-        item.performanceScore >= dimensions.performanceScore[0] && item.performanceScore <= dimensions.performanceScore[1] &&
-        (item["AI Score"] || 0) >= dimensions.aiScore[0] && (item["AI Score"] || 0) <= dimensions.aiScore[1] &&
-        (item["CPU-Q Score"] || 0) >= dimensions.cpuQScore[0] && (item["CPU-Q Score"] || 0) <= dimensions.cpuQScore[1] &&
-        (item["CPU-F Score"] || 0) >= dimensions.cpuFScore[0] && (item["CPU-F Score"] || 0) <= dimensions.cpuFScore[1] &&
-        (item["INT8 CNNs"] || 0) >= dimensions.int8CNNs[0] && (item["INT8 CNNs"] || 0) <= dimensions.int8CNNs[1] &&
-        (item["INT8 Transformer"] || 0) >= dimensions.int8Transformer[0] && (item["INT8 Transformer"] || 0) <= dimensions.int8Transformer[1] &&
-        (item["FP16 CNNs"] || 0) >= dimensions.fp16CNNs[0] && (item["FP16 CNNs"] || 0) <= dimensions.fp16CNNs[1] &&
-        (item["FP16 Transformer"] || 0) >= dimensions.fp16Transformer[0] && (item["FP16 Transformer"] || 0) <= dimensions.fp16Transformer[1] &&
-        (item.Year || 2018) >= dimensions.year[0] && (item.Year || 2025) <= dimensions.year[1]
-      )
-    })
-    // Apply search filter (if not disabled)
-    if (debouncedSearchQuery && !disableSearchFilter) {
-      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
-    }
-
-    // Apply specification range filters
-    filtered = filtered.filter((item) => {
+    // First, apply all filters except search to get baseline results
+    let filtered = data.filter((item) => {
       if (starredProcessors && starredProcessors?.includes(item.name)) return true
       if (pinnedProcessor && item.name === pinnedProcessor.name) return true
       return (
@@ -833,66 +806,88 @@ export default function ProcessorComparison() {
     })
 
     // Apply manufacturer and comparison filters
-    filtered = filtered
-      .filter((item) => {
-        if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
-        return comparisons.every((comparison) => {
-          if (pinnedProcessor) {
-            const processorValue = item[comparison.field]
-            const pinnedProcessorValue = pinnedProcessor[comparison.field]
-            // Handle undefined values for optional fields
-            if (processorValue == null || pinnedProcessorValue == null) {
-              return false
-            }
-            if (comparison.operator === ">") return processorValue > pinnedProcessorValue
-            else if (comparison.operator === "<") return processorValue < pinnedProcessorValue
+    filtered = filtered.filter((item) => {
+      if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
+      return comparisons.every((comparison) => {
+        if (pinnedProcessor) {
+          const processorValue = item[comparison.field]
+          const pinnedProcessorValue = pinnedProcessor[comparison.field]
+          // Handle undefined values for optional fields
+          if (processorValue == null || pinnedProcessorValue == null) {
+            return false
           }
-          return true
-        })
-      })
-
-    if (alwaysShowStarredPinned) {
-      // Get starred and pinned processors that were filtered out and add them back
-      const filteredOutStarredAndPinned = data.filter((item) => {
-        const isStarredOrPinned = (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
-        const isCurrentlyInFiltered = filtered.some(filteredItem => filteredItem.name === item.name)
-        return isStarredOrPinned && !isCurrentlyInFiltered
-      })
-      // Add them back to the filtered results
-      filtered = [...filtered, ...filteredOutStarredAndPinned]
-    } else if (starredPinnedFilter === 'only') {
-      filtered = filtered.filter((item) => {
-        return (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
-      })
-    } else if (starredPinnedFilter === 'hide') {
-      filtered = filtered.filter((item) => {
-        return !(starredProcessors && starredProcessors.includes(item.name)) && !(pinnedProcessor && item.name === pinnedProcessor.name)
-      })
-    }
-    return filtered
-      .filter((item) => {
-        if (manufacturerFilter !== "All" && item.manufacturer !== manufacturerFilter) return false
-        return comparisons.every((comparison) => {
-          if (pinnedProcessor) {
-            const processorValue = item[comparison.field]
-            const pinnedProcessorValue = pinnedProcessor[comparison.field]
-            // Handle undefined values for optional fields
-            if (processorValue == null || pinnedProcessorValue == null) {
-              return false
-            }
-            if (comparison.operator === ">") return processorValue > pinnedProcessorValue
-            else if (comparison.operator === "<") return processorValue < pinnedProcessorValue
-          }
-          return true
-        })
-      })
-      .sort((a, b) => {
-        if (sortOrder === "asc") {
-          return sortBy === "name" || sortBy === "manufacturer" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
-        } else {
-          return sortBy === "name" || sortBy === "manufacturer" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
+          if (comparison.operator === ">") return processorValue > pinnedProcessorValue
+          else if (comparison.operator === "<") return processorValue < pinnedProcessorValue
         }
+        return true
       })
+    })
+
+
+    // Apply search filter if enabled
+    if (debouncedSearchQuery && !disableSearchFilter) {
+      filtered = filtered.filter((item) => item.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+
+      // If search didn't find results and we have a search query, implement fallback search
+      if (filtered.length === 0 && debouncedSearchQuery.trim()) {
+        // Use fuzzy search across all processors that match the search criteria
+        // trim spaces and remove other special characters from proc name
+        const fallbackResults = data.filter((item) => item.name.toLowerCase().trim().replace(/[^a-zA-Z0-9]/g, '') .includes(debouncedSearchQuery.toLowerCase()))
+        console.log(`Fallback search results for "${debouncedSearchQuery}":`, fallbackResults)
+
+        // Apply starred/pinned filter logic to fallback results
+        // if (alwaysShowStarredPinned) {
+        //   filtered = fallbackResults
+        // } else if (starredPinnedFilter === 'only') {
+        //   filtered = fallbackResults.filter((item) => {
+        //     return (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
+        //   })
+        // } else if (starredPinnedFilter === 'hide') {
+        //   filtered = fallbackResults.filter((item) => {
+        //     return !(starredProcessors && starredProcessors.includes(item.name)) && !(pinnedProcessor && item.name === pinnedProcessor.name)
+        //   })
+        // } else {
+          filtered = fallbackResults
+        // }
+
+        setIsUsingFallbackSearch(true)
+      } else {
+        setIsUsingFallbackSearch(false)
+      }
+    } else {
+      setIsUsingFallbackSearch(false)
+    }
+
+    // Handle starred/pinned filter for non-search results
+    if (!isUsingFallbackSearch && !debouncedSearchQuery) {
+      if (alwaysShowStarredPinned) {
+        // Get starred and pinned processors that were filtered out and add them back
+        const filteredOutStarredAndPinned = data.filter((item) => {
+          const isStarredOrPinned = (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
+          const isCurrentlyInFiltered = filtered.some(filteredItem => filteredItem.name === item.name)
+          return isStarredOrPinned && !isCurrentlyInFiltered
+        })
+        // Add them back to the filtered results
+        filtered = [...filtered, ...filteredOutStarredAndPinned]
+      } else if (starredPinnedFilter === 'only') {
+        filtered = filtered.filter((item) => {
+          return (starredProcessors && starredProcessors.includes(item.name)) || (pinnedProcessor && item.name === pinnedProcessor.name)
+        })
+      } else if (starredPinnedFilter === 'hide') {
+        filtered = filtered.filter((item) => {
+          return !(starredProcessors && starredProcessors.includes(item.name)) && !(pinnedProcessor && item.name === pinnedProcessor.name)
+        })
+      }
+    }
+
+    // Sort the results
+    return filtered.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return sortBy === "name" || sortBy === "manufacturer" ? a.name.localeCompare(b.name) : (a[sortBy] as number) - (b[sortBy] as number)
+      } else {
+        return sortBy === "name" || sortBy === "manufacturer" ? b.name.localeCompare(a.name) : (b[sortBy] as number) - (a[sortBy] as number)
+      }
+    })
   }, [data, dimensions, debouncedSearchQuery, manufacturerFilter, comparisons, pinnedProcessor, starredProcessors, sortBy, sortOrder, starredPinnedFilter, alwaysShowStarredPinned, disableSearchFilter])
 
   const handleSliderChange = useCallback((value: number[], dimension: keyof typeof dimensions) => {
@@ -934,7 +929,14 @@ export default function ProcessorComparison() {
               </a>
             </div>
             <div className="flex items-center gap-4">
-              <p>{filteredData.length} / {totalProcessorModels} </p>
+              <div className="flex items-center gap-2">
+                <p>{filteredData.length} / {totalProcessorModels}</p>
+                {isUsingFallbackSearch && (
+                  <Badge variant="secondary" className="text-xs">
+                    Similar Matches
+                  </Badge>
+                )}
+              </div>
               <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title={theme === 'dark' ? "Switch to light theme" : "Switch to dark theme"}>
                 {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
