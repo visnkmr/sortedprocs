@@ -1,6 +1,7 @@
 import { ProcessorData } from "./page";
 
 export const processors:ProcessorData[] = [
+  
   {
     "name": "Dimensity 9400 Plus",
     "manufacturer": "MediaTek",
@@ -5800,5 +5801,63 @@ export const processors:ProcessorData[] = [
     "INT8 Parallel": 0.1,
     "FP16 Parallel": 0.3,
     "AI Score": 59
+  },
+  {
+    "name": "Snapdragon 8 Elite Gen 5",
+    "manufacturer": "Qualcomm",
+    "performanceScore": 98,
+    "performanceGrade": "A+",
+    "antutuScore": 3749435,
+    "geekbenchSingle": 3834,
+    "geekbenchMulti": 12396,
+    "cores": 8,
+    "coreConfig": "2+6",
+    "clockSpeed": 4610,
+    "gpu": "Adreno 840",
+    "CPU Cores": "",
+    "AI Accelerator": "",
+    "Year": 0,
+    "Lib": "",
+    "CPU-Q Score": 0,
+    "CPU-F Score": 0,
+    "INT8 CNNs": 0,
+    "INT8 Transformer": 0,
+    "INT8 Accuracy": 0,
+    "FP16 CNNs": 0,
+    "FP16 Transformer": 0,
+    "FP16 Accuracy": 0,
+    "INT16 CNNs": 0,
+    "INT8 Parallel": 0,
+    "FP16 Parallel": 0,
+    "AI Score": 0
+  },
+  {
+    "name": "Dimensity 9500",
+    "manufacturer": "MediaTek",
+    "performanceScore": 98,
+    "performanceGrade": "A+",
+    "antutuScore": 4011932,
+    "geekbenchSingle": 3781,
+    "geekbenchMulti": 12189,
+    "cores": 8,
+    "coreConfig": "1+3+4",
+    "clockSpeed": 4210,
+    "gpu": "Mali-G1 Ultra MP12",
+    "CPU Cores": "1x4.21GHz +3x3.5GHz X930 & 4x2.7GHz A730",
+    "AI Accelerator": "NPU 9th Gen",
+    "Year": 2025,
+    "Lib": "mm",
+    "CPU-Q Score": 162,
+    "CPU-F Score": 158,
+    "INT8 CNNs": 1277,
+    "INT8 Transformer": 7216,
+    "INT8 Accuracy": 77.2,
+    "FP16 CNNs": 1704,
+    "FP16 Transformer": 3725,
+    "FP16 Accuracy": 97.8,
+    "INT16 CNNs": 703,
+    "INT8 Parallel": 97,
+    "FP16 Parallel": 160,
+    "AI Score": 15015
   }
 ];
