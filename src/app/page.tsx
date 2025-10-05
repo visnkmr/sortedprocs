@@ -965,7 +965,7 @@ export default function ProcessorComparison() {
               )}
             </div>
 
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -988,7 +988,7 @@ export default function ProcessorComparison() {
                   <span className="text-sm font-medium">Disable search filter</span>
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex gap-2">
               <select className="px-2 py-1 border rounded-md" value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)}>
@@ -1020,6 +1020,32 @@ export default function ProcessorComparison() {
             <select id="itemsPerRow" className="px-2 py-1 border rounded-md" value={itemsPerRow} onChange={(e) => setItemsPerRow(Number(e.target.value))}>
               <option value={2}>2</option><option value={3}>3</option><option value={4}>4</option><option value={5}>5</option><option value={6}>6</option><option value={8}>8</option>
             </select>
+            <div className="flex items-center gap-2">
+            <label htmlFor="starredPinnedFilter" className="text-sm font-medium">Processor display:</label>
+            <select id="starredPinnedFilter" className="px-2 py-1 border rounded-md" value={starredPinnedFilter} onChange={(e) => setStarredPinnedFilter(e.target.value as 'all' | 'only' | 'hide')}>
+              <option value="all">Show all processors</option><option value="only">Show only starred & pinned</option><option value="hide">Hide starred & pinned</option>
+            </select>
+          </div>
+          {pinnedProcessor && (
+            <div className="flex items-center gap-2 mb-2">
+            <span>Price estimation based on:</span>
+            <select
+              className="px-2 py-1 border rounded-md text-sm"
+              value={priceEstimationMetric}
+              onChange={(e) => setPriceEstimationMetric(e.target.value as keyof ProcessorData)}
+            >
+              <option value="antutuScore">AnTuTu Score</option>
+              <option value="geekbenchSingle">Geekbench Single</option>
+              <option value="geekbenchMulti">Geekbench Multi</option>
+              <option value="performanceScore">Performance Score</option>
+              <option value="AI Score">AI Score</option>
+              <option value="CPU-Q Score">CPU-Q Score</option>
+              <option value="CPU-F Score">CPU-F Score</option>
+              <option value="clockSpeed">Clock Speed</option>
+              <option value="cores">Cores</option>
+            </select>
+          </div>
+          )}
           </div>
 
           <div className="space-y-3">
@@ -1109,24 +1135,7 @@ export default function ProcessorComparison() {
 
           {pinnedProcessor && (
             <div className="flex flex-col gap-2 items-center">
-              <div className="flex items-center gap-2 mb-2">
-                <span>Price estimation based on:</span>
-                <select
-                  className="px-2 py-1 border rounded-md text-sm"
-                  value={priceEstimationMetric}
-                  onChange={(e) => setPriceEstimationMetric(e.target.value as keyof ProcessorData)}
-                >
-                  <option value="antutuScore">AnTuTu Score</option>
-                  <option value="geekbenchSingle">Geekbench Single</option>
-                  <option value="geekbenchMulti">Geekbench Multi</option>
-                  <option value="performanceScore">Performance Score</option>
-                  <option value="AI Score">AI Score</option>
-                  <option value="CPU-Q Score">CPU-Q Score</option>
-                  <option value="CPU-F Score">CPU-F Score</option>
-                  <option value="clockSpeed">Clock Speed</option>
-                  <option value="cores">Cores</option>
-                </select>
-              </div>
+              
               <span>Find processors with:</span>
               <button onClick={addComparison} className="px-2 py-1 border rounded-md">Add Comparison</button>
               {comparisons.map((comparison, index) => (
@@ -1148,12 +1157,7 @@ export default function ProcessorComparison() {
             </div>
           )}
 
-          <div className="flex items-center gap-2">
-            <label htmlFor="starredPinnedFilter" className="text-sm font-medium">Processor display:</label>
-            <select id="starredPinnedFilter" className="px-2 py-1 border rounded-md" value={starredPinnedFilter} onChange={(e) => setStarredPinnedFilter(e.target.value as 'all' | 'only' | 'hide')}>
-              <option value="all">Show all processors</option><option value="only">Show only starred & pinned</option><option value="hide">Hide starred & pinned</option>
-            </select>
-          </div>
+          
 
           <button className="px-3 py-1 border rounded-md" onClick={toggleDimensionsRange}>
             {showDimensionsRange ? "Hide" : "Show"} Specifications Range
@@ -1334,6 +1338,19 @@ export default function ProcessorComparison() {
             </a>
           </div>
           <p>Submit new Processors as PR on GitHub. Thanks.</p>
+          <div className="mt-4 mb-4">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Data sources: Special thanks to{' '}
+              <a href="https://ai-benchmark.com/ranking_processors.html" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700 underline">
+                AI-Benchmark
+              </a>
+              {' '}and{' '}
+              <a href="https://nanoreview.net/en/soc-list/rating" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700 underline">
+                NanoReview
+              </a>
+              {' '}for providing comprehensive processor benchmark data.
+            </p>
+          </div>
           <p className="italic text-xs leading-relaxed p-4 text-foreground">
             Disclaimer: The information provided on this website regarding processor specifications, performance benchmarks, and other related details is for general informational purposes only. While we strive to ensure the accuracy and completeness of the information, the specifications, benchmarks, and details listed are subject to change by the manufacturers without notice. We do not guarantee the accuracy, reliability, or completeness of the information provided on this site. Processor specifications and performance may vary by region, manufacturing process, and other factors. Always verify any critical processor details with the manufacturer or authorized sources before making purchasing decisions. We are not liable for any errors, omissions, or discrepancies in the information provided. By using this website, you agree that we are not responsible for any direct, indirect, incidental, or consequential damages arising from the use of the information provided.
           </p>
