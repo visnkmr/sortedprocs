@@ -708,6 +708,9 @@ export default function ProcessorComparison() {
   const [showMetricsPanel, setShowMetricsPanel] = useState(() =>
     loadFromStorage('sortedproc_showMetricsPanel', true)
   )
+  const [showFiltersPanel, setShowFiltersPanel] = useState(() =>
+    loadFromStorage('sortedproc_showFiltersPanel', true)
+  )
   const [isUsingFallbackSearch, setIsUsingFallbackSearch] = useState(false)
 
   useEffect(() => { saveToStorage(STORAGE_KEYS.DIMENSIONS, dimensions) }, [dimensions])
@@ -735,6 +738,7 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, priceEstimationMetric) }, [priceEstimationMetric])
   useEffect(() => { saveToStorage('sortedproc_visibleMetrics', Array.from(visibleMetrics)) }, [visibleMetrics])
   useEffect(() => { saveToStorage('sortedproc_showMetricsPanel', showMetricsPanel) }, [showMetricsPanel])
+  useEffect(() => { saveToStorage('sortedproc_showFiltersPanel', showFiltersPanel) }, [showFiltersPanel])
 
   const getGridClasses = useCallback((itemsPerRow: number) => {
     const baseClasses = "grid gap-4"
@@ -943,109 +947,107 @@ export default function ProcessorComparison() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <input
-                type="text"
-                placeholder="Search processors by name..."
-                className="w-full px-4 py-2 pr-10 border rounded-md"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
-                  title="Clear search"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
-            </div>
+          {/* Search bar - always visible */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search processors by name..."
+              className="w-full px-4 py-2 pr-10 border rounded-md"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                title="Clear search"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
 
-            {/* <div className="flex flex-col gap-2">
+          {/* Filters and sort controls - hideable */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={alwaysShowStarredPinned}
-                    onChange={(e) => setAlwaysShowStarredPinned(e.target.checked)}
-                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-sm font-medium">Always show starred & pinned processors</span>
-                </label>
+                <label className="text-sm font-medium">Filters & Sort:</label>
               </div>
-              <div className="flex items-center gap-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={disableSearchFilter}
-                    onChange={(e) => setDisableSearchFilter(e.target.checked)}
-                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-sm font-medium">Disable search filter</span>
-                </label>
-              </div>
-            </div> */}
-
-            <div className="flex gap-2">
-              <select className="px-2 py-1 border rounded-md" value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)}>
-                <option value="All">All Manufacturers</option>
-                {manufacturers.map((m) => (<option key={m} value={m}>{m}</option>))}
-              </select>
-              <select className="px-2 py-1 border rounded-md" value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)}>
-                <option value="name">Sort by Name</option>
-                <option value="cores">Sort by Cores</option>
-                <option value="clockSpeed">Sort by Clock Speed</option>
-                <option value="antutuScore">Sort by AnTuTu Score</option>
-                <option value="geekbenchSingle">Sort by Geekbench Single</option>
-                <option value="geekbenchMulti">Sort by Geekbench Multi</option>
-                <option value="performanceScore">Sort by Performance Score</option>
-                <option value="manufacturer">Sort by Manufacturer</option>
-                <option value="AI Score">Sort by AI Score</option>
-                <option value="CPU-Q Score">Sort by CPU-Q Score</option>
-                <option value="CPU-F Score">Sort by CPU-F Score</option>
-                <option value="Year">Sort by Release Year</option>
-              </select>
-              <button className="px-3 py-1 border rounded-md flex items-center gap-1" onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
-                {sortOrder === "asc" ? "↑ Asc" : "↓ Desc"}
+              <button
+                onClick={() => setShowFiltersPanel(!showFiltersPanel)}
+                className="px-2 py-1 text-xs bg-gray-500 text-white rounded hover:bg-gray-600 flex items-center gap-1"
+              >
+                {showFiltersPanel ? 'Hide' : 'Show'}
               </button>
             </div>
-          </div>
 
-          <div className="flex gap-2 items-center">
-            <label htmlFor="itemsPerRow" className="text-sm font-medium">Items per row:</label>
-            <select id="itemsPerRow" className="px-2 py-1 border rounded-md" value={itemsPerRow} onChange={(e) => setItemsPerRow(Number(e.target.value))}>
-              <option value={2}>2</option><option value={3}>3</option><option value={4}>4</option><option value={5}>5</option><option value={6}>6</option><option value={8}>8</option>
-            </select>
-            <div className="flex items-center gap-2">
-            <label htmlFor="starredPinnedFilter" className="text-sm font-medium">Processor display:</label>
-            <select id="starredPinnedFilter" className="px-2 py-1 border rounded-md" value={starredPinnedFilter} onChange={(e) => setStarredPinnedFilter(e.target.value as 'all' | 'only' | 'hide')}>
-              <option value="all">Show all processors</option><option value="only">Show only starred & pinned</option><option value="hide">Hide starred & pinned</option>
-            </select>
-          </div>
-          {pinnedProcessor && (
-            <div className="flex items-center gap-2 mb-2">
-            <span>Price estimation based on:</span>
-            <select
-              className="px-2 py-1 border rounded-md text-sm"
-              value={priceEstimationMetric}
-              onChange={(e) => setPriceEstimationMetric(e.target.value as keyof ProcessorData)}
-            >
-              <option value="antutuScore">AnTuTu Score</option>
-              <option value="geekbenchSingle">Geekbench Single</option>
-              <option value="geekbenchMulti">Geekbench Multi</option>
-              <option value="performanceScore">Performance Score</option>
-              <option value="AI Score">AI Score</option>
-              <option value="CPU-Q Score">CPU-Q Score</option>
-              <option value="CPU-F Score">CPU-F Score</option>
-              <option value="clockSpeed">Clock Speed</option>
-              <option value="cores">Cores</option>
-            </select>
-          </div>
-          )}
+            {showFiltersPanel && (
+              <>
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <select className="px-2 py-1 border rounded-md" value={manufacturerFilter} onChange={(e) => setManufacturerFilter(e.target.value)}>
+                      <option value="All">All Manufacturers</option>
+                      {manufacturers.map((m) => (<option key={m} value={m}>{m}</option>))}
+                    </select>
+                    <select className="px-2 py-1 border rounded-md" value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)}>
+                      <option value="name">Sort by Name</option>
+                      <option value="cores">Sort by Cores</option>
+                      <option value="clockSpeed">Sort by Clock Speed</option>
+                      <option value="antutuScore">Sort by AnTuTu Score</option>
+                      <option value="geekbenchSingle">Sort by Geekbench Single</option>
+                      <option value="geekbenchMulti">Sort by Geekbench Multi</option>
+                      <option value="performanceScore">Sort by Performance Score</option>
+                      <option value="manufacturer">Sort by Manufacturer</option>
+                      <option value="AI Score">Sort by AI Score</option>
+                      <option value="CPU-Q Score">Sort by CPU-Q Score</option>
+                      <option value="CPU-F Score">Sort by CPU-F Score</option>
+                      <option value="Year">Sort by Release Year</option>
+                    </select>
+                    <button className="px-3 py-1 border rounded-md flex items-center gap-1" onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
+                      {sortOrder === "asc" ? "↑ Asc" : "↓ Desc"}
+                    </button>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-2 items-start">
+                    <div className="flex items-center gap-2">
+                      <label htmlFor="itemsPerRow" className="text-sm font-medium whitespace-nowrap">Items per row:</label>
+                      <select id="itemsPerRow" className="px-2 py-1 border rounded-md" value={itemsPerRow} onChange={(e) => setItemsPerRow(Number(e.target.value))}>
+                        <option value={2}>2</option><option value={3}>3</option><option value={4}>4</option><option value={5}>5</option><option value={6}>6</option><option value={8}>8</option>
+                      </select>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label htmlFor="starredPinnedFilter" className="text-sm font-medium whitespace-nowrap">Processor display:</label>
+                      <select id="starredPinnedFilter" className="px-2 py-1 border rounded-md" value={starredPinnedFilter} onChange={(e) => setStarredPinnedFilter(e.target.value as 'all' | 'only' | 'hide')}>
+                        <option value="all">Show all processors</option><option value="only">Show only starred & pinned</option><option value="hide">Hide starred & pinned</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {pinnedProcessor && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium">Price estimation based on:</span>
+                    <select
+                      className="px-2 py-1 border rounded-md text-sm"
+                      value={priceEstimationMetric}
+                      onChange={(e) => setPriceEstimationMetric(e.target.value as keyof ProcessorData)}
+                    >
+                      <option value="antutuScore">AnTuTu Score</option>
+                      <option value="geekbenchSingle">Geekbench Single</option>
+                      <option value="geekbenchMulti">Geekbench Multi</option>
+                      <option value="performanceScore">Performance Score</option>
+                      <option value="AI Score">AI Score</option>
+                      <option value="CPU-Q Score">CPU-Q Score</option>
+                      <option value="CPU-F Score">CPU-F Score</option>
+                      <option value="clockSpeed">Clock Speed</option>
+                      <option value="cores">Cores</option>
+                    </select>
+                  </div>
+                )}
+              </>
+            )}
           </div>
 
           <div className="space-y-3">
