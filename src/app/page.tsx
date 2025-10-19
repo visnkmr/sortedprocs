@@ -319,7 +319,11 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
         {visibleMetrics.has('gpu') && <p>GPU: {item.gpu}</p>}
         {visibleMetrics.has('cpuDetails') && item["CPU Cores"] && <p>CPU Details: {item["CPU Cores"]}</p>}
         {visibleMetrics.has('aiHardware') && item["AI Accelerator"] && <p>AI Hardware: {item["AI Accelerator"]}</p>}
-        {visibleMetrics.has('year') && item.Year && <p>Release Year: {item.Year}</p>}
+        {visibleMetrics.has('year') && item.Year && <p>Release Year: {item.Year}{pinnedProcessor && pinnedProcessor?.Year !== undefined && (item.Year - pinnedProcessor.Year > 0 || item.Year - pinnedProcessor.Year < 0) && (
+                <Badge className={`ml-2 ${item.Year - pinnedProcessor.Year > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {item.Year - pinnedProcessor.Year > 0 ? "+ " : ""}{item.Year - pinnedProcessor.Year}
+                </Badge>
+              )}</p>}
 
         {/* AI Performance Metrics */}
         {visibleMetrics.has('aiScore') && item["AI Score"] && (
