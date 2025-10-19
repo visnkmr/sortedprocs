@@ -188,7 +188,9 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
     cache.geekbenchMulti = calculatePercentage(item.geekbenchMulti, pinnedProcessor.geekbenchMulti)
     cache.clockSpeed = calculatePercentage(item.clockSpeed, pinnedProcessor.clockSpeed)
     cache.performanceScore = calculatePercentage(item.performanceScore, pinnedProcessor.performanceScore)
-
+    if (getCachedMarketPrice(item.name)!==null && getEstimatedPrice()!==null) {
+      cache.marketpricediff= calculatePercentage(getCachedMarketPrice(item.name)!, getEstimatedPrice()!)
+    }
     // AI metrics
     if (item["AI Score"] && pinnedProcessor["AI Score"]) {
       cache.aiScore = calculatePercentage(item["AI Score"], pinnedProcessor["AI Score"])
@@ -238,7 +240,7 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
     }
 
     return cache
-  }, [item, pinnedProcessor, calculatePercentage])
+  }, [pinnedProcessor, item, calculatePercentage, getCachedMarketPrice, getEstimatedPrice])
 
   return (
     <Card className={`${pinnedProcessor?.name === item.name ? "border-2 border-primary" : ""} ${pinnedProcessor?.name === item.name ? "bg-primary/5" : ""}`}>
@@ -529,6 +531,11 @@ const ProcessorCard = memo(({ item, pinnedProcessor, setPinnedProcessor, starred
           {(localMarketPrice || getCachedMarketPrice(item.name)) && (
             <p className="text-sm text-green-600">
               Current Price: {getCachedMarketPrice(item.name)?.toLocaleString()}
+              {percentageCache.marketpricediff !== undefined && (
+                <Badge className={`ml-2 ${percentageCache.marketpricediff < 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                  {percentageCache.marketpricediff > 0 ? "+" : ""}{percentageCache.marketpricediff}%
+                </Badge>
+              )}
             </p>
           )}
 
