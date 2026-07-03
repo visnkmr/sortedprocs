@@ -705,6 +705,9 @@ export default function ProcessorComparison() {
   const [disableSearchFilter, setDisableSearchFilter] = useState(() =>
     loadFromStorage('sortedproc_disableSearchFilter', false)
   )
+  const [tableViewEnabled, setTableViewEnabled] = useState(() =>
+    loadFromStorage('sortedproc_tableView', false)
+  )
   const [priceEstimationMetric, setPriceEstimationMetric] = useState<keyof ProcessorData>(() =>
     loadFromStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, 'antutuScore')
   )
@@ -746,6 +749,7 @@ export default function ProcessorComparison() {
   useEffect(() => { saveToStorage('sortedproc_starredPinnedFilter', starredPinnedFilter) }, [starredPinnedFilter])
   useEffect(() => { saveToStorage('sortedproc_alwaysShowStarredPinned', alwaysShowStarredPinned) }, [alwaysShowStarredPinned])
   useEffect(() => { saveToStorage('sortedproc_disableSearchFilter', disableSearchFilter) }, [disableSearchFilter])
+  useEffect(() => { saveToStorage('sortedproc_tableView', tableViewEnabled) }, [tableViewEnabled])
   useEffect(() => { saveToStorage(STORAGE_KEYS.PRICE_ESTIMATION_METRIC, priceEstimationMetric) }, [priceEstimationMetric])
   useEffect(() => { saveToStorage('sortedproc_visibleMetrics', Array.from(visibleMetrics)) }, [visibleMetrics])
   useEffect(() => { saveToStorage('sortedproc_showMetricsPanel', showMetricsPanel) }, [showMetricsPanel])
@@ -1034,6 +1038,17 @@ export default function ProcessorComparison() {
                         <option value="all">Show all processors</option><option value="only">Show only starred & pinned</option><option value="hide">Hide starred & pinned</option>
                       </select>
                     </div>
+                    {starredPinnedFilter === 'only' && (
+                      <label className="flex items-center gap-1 text-sm cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={tableViewEnabled}
+                          onChange={(e) => setTableViewEnabled(e.target.checked)}
+                          className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                        />
+                        Show as table
+                      </label>
+                    )}
                   </div>
                 </div>
 
@@ -1340,11 +1355,150 @@ export default function ProcessorComparison() {
           </Card>
         )}
 
-        <div className={getGridClasses(itemsPerRow)}>
-          {filteredData.slice(0, 100).map((item) => (
-            <ProcessorCard key={item.name} item={item} pinnedProcessor={pinnedProcessor} setPinnedProcessor={setPinnedProcessor} starredProcessors={starredProcessors} setStarredProcessors={setStarredProcessors} priceEstimationMetric={priceEstimationMetric} getCachedMarketPrice={getCachedMarketPrice} setCachedMarketPrice={setCachedMarketPrice} visibleMetrics={visibleMetrics} />
-          ))}
-        </div>
+        {tableViewEnabled && starredPinnedFilter === 'only' ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="border-b bg-muted/50">
+                  <th className="p-2 text-left font-medium">Name</th>
+                  <th className="p-2 text-left font-medium">Manufacturer</th>
+                  <th className="p-2 text-right font-medium">Cores</th>
+                  <th className="p-2 text-right font-medium">Clock (MHz)</th>
+                  <th className="p-2 text-right font-medium">AnTuTu</th>
+                  <th className="p-2 text-right font-medium">Geekbench S</th>
+                  <th className="p-2 text-right font-medium">Geekbench M</th>
+                  <th className="p-2 text-right font-medium">Perf Score</th>
+                  <th className="p-2 text-left font-medium">GPU</th>
+                  <th className="p-2 text-right font-medium">Year</th>
+                  <th className="p-2 text-right font-medium">AI Score</th>
+                  {pinnedProcessor && <th className="p-2 text-right font-medium">Price</th>}
+                  {pinnedProcessor && <th className="p-2 text-center font-medium">Actions</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.slice(0, 100).map((item) => {
+                  const pc = pinnedProcessor && pinnedProcessor.name !== item.name ? {
+                    antutu: Math.round(((item.antutuScore - pinnedProcessor.antutuScore) / pinnedProcessor.antutuScore) * 100),
+                    gbSingle: Math.round(((item.geekbenchSingle - pinnedProcessor.geekbenchSingle) / pinnedProcessor.geekbenchSingle) * 100),
+                    gbMulti: Math.round(((item.geekbenchMulti - pinnedProcessor.geekbenchMulti) / pinnedProcessor.geekbenchMulti) * 100),
+                    perfScore: Math.round(((item.performanceScore - pinnedProcessor.performanceScore) / pinnedProcessor.performanceScore) * 100),
+                    clock: Math.round(((item.clockSpeed - pinnedProcessor.clockSpeed) / pinnedProcessor.clockSpeed) * 100),
+                    aiScore: item["AI Score"] && pinnedProcessor["AI Score"] ? Math.round(((item["AI Score"] - pinnedProcessor["AI Score"]) / pinnedProcessor["AI Score"]) * 100) : undefined,
+                  } : null
+                  const renderPct = (pct: number | undefined) => {
+                    if (pct === undefined) return null
+                    return (
+                      <span className={`ml-1 text-xs ${pct > 0 ? "text-green-600" : "text-red-600"}`}>
+                        ({pct > 0 ? "+" : ""}{pct}%)
+                      </span>
+                    )
+                  }
+                  const isPinned = pinnedProcessor?.name === item.name
+                  const isStarred = starredProcessors?.includes(item.name)
+                  return (
+                    <tr key={item.name} className={`border-b hover:bg-muted/30 ${isPinned ? "bg-primary/5" : ""}`}>
+                      <td className="p-2 font-medium">
+                        <div className="flex items-center gap-1">
+                          {isStarred && <Star className="h-3 w-3 text-yellow-500" />}
+                          {isPinned && <PinIcon className="h-3 w-3 text-blue-500" />}
+                          {item.name}
+                        </div>
+                      </td>
+                      <td className="p-2">{item.manufacturer}</td>
+                      <td className="p-2 text-right">{item.cores}</td>
+                      <td className="p-2 text-right">
+                        {item.clockSpeed}
+                        {pinnedProcessor && renderPct(pc?.clock)}
+                      </td>
+                      <td className="p-2 text-right">
+                        {item.antutuScore?.toLocaleString() || "N/A"}
+                        {pinnedProcessor && renderPct(pc?.antutu)}
+                      </td>
+                      <td className="p-2 text-right">
+                        {item.geekbenchSingle}
+                        {pinnedProcessor && renderPct(pc?.gbSingle)}
+                      </td>
+                      <td className="p-2 text-right">
+                        {item.geekbenchMulti}
+                        {pinnedProcessor && renderPct(pc?.gbMulti)}
+                      </td>
+                      <td className="p-2 text-right">
+                        {item.performanceScore}
+                        {pinnedProcessor && renderPct(pc?.perfScore)}
+                      </td>
+                      <td className="p-2">{item.gpu}</td>
+                      <td className="p-2 text-right">{item.Year || "—"}</td>
+                      <td className="p-2 text-right">
+                        {item["AI Score"]?.toLocaleString() || "—"}
+                        {pinnedProcessor && renderPct(pc?.aiScore)}
+                      </td>
+                      {pinnedProcessor && (
+                        <td className="p-2 text-right">
+                          {(() => {
+                            const marketPrice = getCachedMarketPrice(item.name)
+                            const pinnedMetricVal = pinnedProcessor[priceEstimationMetric] as number
+                            const currentMetricVal = item[priceEstimationMetric] as number
+                            const showEst = pinnedProcessor.name !== item.name && pinnedProcessor.marketPrice && pinnedMetricVal && currentMetricVal && pinnedMetricVal > 0
+                            const estimatedPrice = showEst ? Math.round((pinnedProcessor.marketPrice! * currentMetricVal / pinnedMetricVal) * 100) / 100 : null
+                            if (!marketPrice && !estimatedPrice) return "—"
+                            return (
+                              <div className="text-xs">
+                                {marketPrice && <div>${marketPrice.toLocaleString()}</div>}
+                                {estimatedPrice && (
+                                  <div className="text-blue-600 dark:text-blue-400">
+                                    Est: ${estimatedPrice.toLocaleString()}
+                                    {marketPrice && (() => {
+                                      const diff = Math.round(((marketPrice - estimatedPrice) / estimatedPrice) * 100)
+                                      return (
+                                        <span className={`ml-1 ${diff > 0 ? "text-red-600" : "text-green-600"}`}>
+                                          ({diff > 0 ? "+" : ""}{diff}%)
+                                        </span>
+                                      )
+                                    })()}
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          })()}
+                        </td>
+                      )}
+                      {pinnedProcessor && (
+                        <td className="p-2 text-center">
+                          <div className="flex items-center justify-center gap-1">
+                            <button
+                              onClick={() => setPinnedProcessor(pinnedProcessor?.name === item.name ? null : item)}
+                              className="p-1 rounded hover:bg-muted"
+                              title={isPinned ? "Unpin" : "Pin"}
+                            >
+                              {isPinned ? <PinIcon className="h-3 w-3" /> : <PinOff className="h-3 w-3" />}
+                            </button>
+                            <button
+                              onClick={() => setStarredProcessors(
+                                isStarred
+                                  ? starredProcessors!.filter((p) => p !== item.name)
+                                  : [...(starredProcessors || []), item.name]
+                              )}
+                              className="p-1 rounded hover:bg-muted"
+                              title={isStarred ? "Unstar" : "Star"}
+                            >
+                              {isStarred ? <Star className="h-3 w-3 text-yellow-500" /> : <StarOff className="h-3 w-3" />}
+                            </button>
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className={getGridClasses(itemsPerRow)}>
+            {filteredData.slice(0, 100).map((item) => (
+              <ProcessorCard key={item.name} item={item} pinnedProcessor={pinnedProcessor} setPinnedProcessor={setPinnedProcessor} starredProcessors={starredProcessors} setStarredProcessors={setStarredProcessors} priceEstimationMetric={priceEstimationMetric} getCachedMarketPrice={getCachedMarketPrice} setCachedMarketPrice={setCachedMarketPrice} visibleMetrics={visibleMetrics} />
+            ))}
+          </div>
+        )}
 
         <footer className="mt-8 text-center">
           <div className="flex justify-center space-x-4 mb-4">
